@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RouteMaster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    rel="stylesheet">
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgs1UleSCfaYKQDhqldEYhSTFWV0Kmxnk&libraries=places"></script>
+
+</head>
+
+<body>
+
+
+
+
+  <div class="load" id="load">
+    <div class="logo">
+      <img class="logoSvg" src="/logo.svg" alt="">
+
+    </div>
+    <div class="load__title">
+     Журнал нарядів
+    </div>
+
+  </div>
+  <div class="container">
+    <!-- import '../styles/style.scss'; -->
+    <h1 class="title">
+      <img class="logoTitle" src="/logo.png" alt="">
+     Журнал нарядів
+
+    </h1>
+
+    <form id="logForm">
+
+      <div class="head">
+
+
+        <label>Дата: <input class="req"  type="date" id="date" required></label>
+        <label>Наряд:
+          <select class="req" id="unit" required>
+            <option value="" selected>Оберіть наряд</option>
+            <option value="Байкал 1">Байкал 1</option>
+            <option value="Байкал 2">Байкал 2</option>
+            <option value="Байкал 3">Байкал 3</option>
+            <option value="Байкал 4">Байкал 4</option>
+            <option value="Байкал 5">Байкал 5</option>
+            <option value="Байкал 6">Байкал 6</option>
+          </select>
+        </label>
+        <label>Водій: <input class="req" type="text" id="driver" required></label>
+        <label>Старший:
+          <input class="req" id="senior" required>
+
+
+        </label>
+        <label>Авто: <input class="req" type="text" id="car" required></label>
+        <label>Спідометр (початок): <input class="req" type="number" id="startOdometer" required></label>
+      </div>
+
+      <h2 class="routs__title">Маршрути</h2>
+      <div id="routesContainer">
+        <!-- <div class="route">
+          <div class="route__title" data-toggle="${index + 1}">
+            <h2>Маршрут <span>${index + 1}</span> </h2>
+            <div class="route__hide">Свернуть</div>
+
+          </div>
+          <div class="route__row-box " id="${index + 1}">
+            <div>
+              <div class="hide__box">
+
+                <div class="route__row">
+                  <input class="input" type="text" placeholder="Откуда" required="" value="${
+                          route.from
+                        }">
+                  <input class="input" type="time" required="" value="${
+                          route.departureTime
+                        }">
+                </div>
+                <div class="route__row">
+                  <input class="input" type="text" placeholder="Куда" required="" value="${
+                          route.to
+                        }">
+                  <input class="input" type="time" required="" value="${
+                          route.arrivalTime
+                        }">
+                </div>
+                <div class="route__row last" id="last">
+                  <input class="input distance" type="number" placeholder="Расстояние(км)" required=""
+                    value="${route.distance}">
+
+
+                  <select class="input" id="target" required>
+                    <option value="" selected>цель поездки</option>
+                    <option data-toggle="${routeCounter}arest" data-value="signal" value="Сработка">Сработка Х</option>
+                    <option data-toggle="${routeCounter}arest" data-value="signal" value="Сработка">Сработка В</option>
+                    <option data-value="point" value="Точка отстоя">точка отстоя</option>
+                    <option data-value="familiarization" value="Ознакмоление">Ознакмоление</option>
+                    <option data-value="patrol" value="Патруль">Патруль</option>
+                    <option data-value="breaks" value="Туалет/обед">Туалет/обед</option>
+                    <option data-value="pickupH" value="Подвоз Х">Подвоз Х</option>
+                    <option data-value="pickupV" value="Подвоз В">Подвоз В</option>
+                    <option data-value="wash" value="Мойка">Мойка</option>
+                    <option data-value="service" value="СТО">СТО</option>
+                    <option data-value="check" value="Проверка">Проверка</option>
+                    <option data-value="other" value="Прочее">Прочее</option>
+                  </select>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <div class="arrested dn" id="${routeCounter}arest">
+                  <div class="overflow">
+
+
+                    <div class="arrested__row">
+                      <span>Задержанно</span>
+                      <input class="input" id="${index}delayed" placeholder="Задержанно" value="0" type="number"
+                        id="arest">
+                    </div>
+                    <div class="arrested__row">
+                      <span>Из них передано полиции</span>
+                      <input id="${index}transferred" value="0" type="number">
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+                <div class="route__row">
+                  <textarea class="input" placeholder="Примечания..." id="message" cols="20" rows="5"> ${
+                          route.message
+                        }</textarea>
+                </div>
+
+                <button type="button" class="deleteRoute">Удалить</button>
+              </div>
+
+            </div>
+          </div>
+        </div> -->
+        <!-- Маршруты будут добавляться сюда -->
+
+      </div>
+      <button type="button" id="addRoute">Додати маршрут</button>
+
+
+      <div class="signals">
+
+        <label class="disabledLabel">Спрацювань ХОЛДІНГ: <input disabled id="signalsHolding" class="total disabled"
+            type="number" required></label>
+        <label class="disabledLabel">Спрацювань ВЕНБЕСТ: <input disabled id="signalsVenbest" class="total disabled"
+            type="number" required></label>
+        <label>Дод. спрацювання: <input value="0" id="signalsDop" class="total" type="number" required></label>
+      </div>
+      <div class="results">
+        <div class="result__btn" id="resulBtn">
+          <h2 class="results__title">Підсумки роботи</h2>
+        </div>
+        <div class="result__info" id="results">
+          <div class="resultHideBox">
+
+            <div id="endOdometer">Спідометр (кінець): <span id="endOdometerValue">0</span></div>
+            <div class="dailyMileage">Пробіг за добу: <span id="dailyMileage">0</span> </div>
+            <div class="extended"> - Спрацювання: <span id="signal">0</span> </div>
+            <div class="extended"> - Точка відстою: <span id="point">0</span> </div>
+            <div class="extended"> - Ознайомлення: <span id="familiarization">0</span> </div>
+            <div class="extended"> - Патруль: <span id="patrol">0</span> </div>
+            <div class="extended"> - Туалет/Обід: <span id="breaks">0</span> </div>
+            <div class="extended"> - Підвіз ОХ: <span id="pickupH">0</span> </div>
+            <div class="extended"> - Підвіз ВБ: <span id="pickupV">0</span> </div>
+            <div class="extended"> - Мийка: <span id="wash">0</span> </div>
+            <div class="extended"> - СТО: <span id="service">0</span> </div>
+            <div class="extended"> - Перевірка: <span id="check">0</span> </div>
+            <div class="extended"> - Перезмінка: <span id="change">0</span> </div>
+            <div class="extended"> - Інше: <span id="other">0</span> </div>
+
+
+
+            <div class="totalSignals">Усього спрацювань: <span id="totalSignals">0</span></div>
+            <div class="totalH">ХОЛДІНГ: <span id="totalH">0</span></div>
+            <div class="totalV">ВЕНБЕСТ: <span id="totalV">0</span></div>
+            <div class="totalD">Дод.: <span id="totalD">0</span></div>
+
+            <div class="arestedResult">
+              <div class="totalArest">Усього затримано: <span id="totalArest">0</span></div>
+              <div class="totalTransferred">- передано до полиції:<span id="totalTransferred">0</span></div>
+
+            </div>
+          </div>
+
+        </div> 
+
+
+
+      </div>
+      <div class="btns">
+        <!-- <div id="saveBtn" class="btn btn--save">Сохранить </div> -->
+        <button class="btn btn--send" type="submit">Відправити</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal__save dn">
+    <div class="modal__save-box">
+      <img class="logo" src="/logo.png" alt="">
+      <div class="modal__message save">
+        Дані успішно збережені!
+      </div>
+      <div class="forward">ПРОДОВЖИТИ</div>
+    </div>
+  </div>
+
+  <div class="modal__delete dn">
+    <div class="modal__delete-box">
+      <img class="logo" src="/logo.png" alt="">
+      <div class="modal__message save">
+        Ви дійсно бажаєте видалити маршрут?
+      </div>
+      <div class="btnBox">
+
+        <div class="btnBox__btn buttonCancel">Ні</div>
+        <div class="btnBox__btn buttonDelete">Так</div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+</body>
+
+</html>
+<script type="module" src="/src/js/main.js"></script>
+
+
+</body>
+
+</html>
