@@ -11,7 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
-    <script
+  <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgs1UleSCfaYKQDhqldEYhSTFWV0Kmxnk&libraries=places"></script>
 
 </head>
@@ -27,7 +27,7 @@
 
     </div>
     <div class="load__title">
-     Журнал нарядів
+      Журнал нарядів
     </div>
 
   </div>
@@ -35,7 +35,7 @@
     <!-- import '../styles/style.scss'; -->
     <h1 class="title">
       <img class="logoTitle" src="/logo.png" alt="">
-     Журнал нарядів
+      Журнал нарядів
 
     </h1>
 
@@ -44,28 +44,33 @@
       <div class="head">
 
 
-        <label>Дата: <input class="req"  type="date" id="date" required></label>
+        <label>Дата: <input class="req" type="date" id="date" required></label>
         <label>Наряд:
           <select class="req" id="unit" required>
-            <option value="" selected>Оберіть наряд</option>
-            <option value="Байкал 1">Байкал 1</option>
+             <option value="" selected>Оберіть наряд</option>
+            <!--<option value="Байкал 1">Байкал 1</option>
             <option value="Байкал 2">Байкал 2</option>
             <option value="Байкал 3">Байкал 3</option>
             <option value="Байкал 4">Байкал 4</option>
             <option value="Байкал 5">Байкал 5</option>
-            <option value="Байкал 6">Байкал 6</option>
+            <option value="Байкал 6">Байкал 6</option> -->
           </select>
         </label>
-        <label>Водій: <input class="req" type="text" id="driver" required></label>
+        <label>Водій: <input list="employee" class="req" type="text" id="driver" required></label>
         <label>Старший:
-          <input class="req" id="senior" required>
+          <input list="employee" class="req" id="senior" required>
 
 
         </label>
-        <label>Авто: <input class="req" type="text" id="car" required></label>
+        <label>Авто: <input list="cars" class="req" type="text" id="car" required></label>
         <label>Спідометр (початок): <input class="req" type="number" id="startOdometer" required></label>
       </div>
+      <datalist id="employee">
 
+      </datalist>
+      <datalist id="cars">
+
+      </datalist>
       <h2 class="routs__title">Маршрути</h2>
       <div id="routesContainer">
         <!-- <div class="route">
@@ -213,7 +218,7 @@
             </div>
           </div>
 
-        </div> 
+        </div>
 
 
 
@@ -249,6 +254,20 @@
     </div>
   </div>
 
+
+  <div class="modal__send dn" id="modalSend">
+    <div class="modal__delete-box">
+      <img class="logo" src="/logo.png" alt="">
+      <div class="modal__message save">
+        Ви дійсно бажаєте видправити маршрут?
+      </div>
+      <div class="btnBox">
+
+        <div class="btnBox__btn buttonSend-Cancel" id="buttonSend-Cancel">Ні</div>
+        <div class="btnBox__btn buttonSend-Send" id="buttonSend-Send">Так</div>
+      </div>
+    </div>
+  </div>
 
 
 

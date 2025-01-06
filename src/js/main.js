@@ -2,6 +2,10 @@ import "../styles/style.scss";
 import { specificKilometer } from "./specificKilometer.js";
 import { whoseSingnal } from "./whoseSingnal.js";
 // localStorage.clear();
+const googleApiAdress ='https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec'
+const employee = document.getElementById('employee');
+const cars = document.getElementById('cars');
+const unit = document.getElementById('unit');
 
 let routeCounter = 0;
 const routesContainer = document.getElementById('routesContainer')
@@ -41,7 +45,7 @@ document.addEventListener("change", (event) => {
 
       // Проверяем значение data-value
       if (arrestedDiv && selectedOption.dataset.value === "signal") {
-        arrestedDiv.classList.add("active"); 
+        arrestedDiv.classList.add("active");
         arrestedDiv.closest(".route").classList.add("signal");
         // console.log("daaaaaaa");
       } else if (arrestedDiv && selectedOption.dataset.value !== "signal") {
@@ -268,28 +272,23 @@ function loadFromLocalStorage() {
                 <div class="hide__box">
 
                     <div class="route__row streetRow">
-                        <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${index + 1}" required="" value="${
-                          route.from
-                        }">
-                        <input class="input req" type="time" required="" value="${
-                          route.departureTime
-                        }">
+                        <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${index + 1}" required="" value="${route.from
+        }">
+                        <input class="input req" type="time" required="" value="${route.departureTime
+        }">
                     </div>
                     <div class="route__row streetRow">
-                        <input class="input req suggestions" type="text" placeholder="Куди" id="to${index + 1}" required="" value="${
-                          route.to
-                        }">
-                        <input class="input req" type="time" required="" value="${
-                          route.arrivalTime
-                        }">
+                        <input class="input req suggestions" type="text" placeholder="Куди" id="to${index + 1}" required="" value="${route.to
+        }">
+                        <input class="input req" type="time" required="" value="${route.arrivalTime
+        }">
                     </div>
                     <div class="route__row last" id="last">
                         <input class="input distance req" type="number"  placeholder="Відстань(км)" required=""
                         value="${route.distance}">
 
-                           <select class="input req" id="target${
-                            index + 1
-                          }" required>
+                           <select class="input req" id="target${index + 1
+        }" required>
                     <option data-toggle="arest${index + 1}" value="" selected>                    мета поїздки</option>
                     
                     <option data-toggle="arest${index + 1}" data-value="signal" data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
@@ -312,33 +311,29 @@ function loadFromLocalStorage() {
                         </div>
 
 
-  <div class="isCombat ${
-    route.purpose.includes("Спрацювання") ? "active" : ""
-  }"" id="arest${index + 1}">
+  <div class="isCombat ${route.purpose.includes("Спрацювання") ? "active" : ""
+        }"" id="arest${index + 1}">
   <div class="isCombat__overflow">
     <span>Бойова??</span>
     <div class="isCombat__box ${route.isCombat ? "combat" : ""}"></div>
   </div>
   </div>
 
-                          <div class="arrested ${
-                            route.isCombat ? "" : "dn"
-                          }"  >
+                          <div class="arrested ${route.isCombat ? "" : "dn"
+        }"  >
 
 
 <div class="overflow">
 
                   <div class="arrested__row">
                     <span>Затримано</span>
-                    <input class="input req" value="${
-                      route.delayed
-                    }" type="number" id="arest">
+                    <input class="input req" value="${route.delayed
+        }" type="number" id="arest">
                   </div>
                   <div class="arrested__row">
                     <span>передано до полиції</span>
-                    <input class="input req" value="${
-                      route.transferred
-                    }" type="number" >
+                    <input class="input req" value="${route.transferred
+        }" type="number" >
                   </div>
  </div>
 
@@ -347,9 +342,8 @@ function loadFromLocalStorage() {
 
 
                         <div class="route__row">
-                        <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5"> ${
-                          route.message
-                        }</textarea>
+                        <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5"> ${route.message
+        }</textarea>
                     </div>
             
                     <button type="button" class="deleteRoute">Видалити</button>
@@ -361,18 +355,18 @@ function loadFromLocalStorage() {
       // console.log("route.purpose=", route.purpose);
       const targetSelect = routeDiv.querySelector(`#target${index + 1}`);
       // console.log(targetSelect);
-      
+
       if (targetSelect) {
         const options = targetSelect.options;
         // console.log(options);
-        
+
         for (let i = 0; i < options.length; i++) {
           if (options[i].value.trim() === route.purpose.trim()) {
             options[i].selected = true;
             if (route.purpose.includes("Спрацювання")) {
               routeDiv.classList.add("signal");
               console.log('!!!!!!!!!!!!!!!!!!!!!!');
-              
+
             }
             break;
           }
@@ -385,7 +379,7 @@ function loadFromLocalStorage() {
   updateEndOdometer();
   saveinchange();
   // initAutocomplete()
-  
+
 }
 
 // Добавляем обработчик для кнопки сохранения
@@ -452,7 +446,7 @@ function addEventListeners() {
 
   document.getElementById("addRoute").addEventListener("click", () => {
     console.log('ds');
-    
+
     routeCounter++;
     const container = document.getElementById("routesContainer");
     const routeDiv = document.createElement("div");
@@ -535,19 +529,19 @@ function addEventListeners() {
         </div>
     </div>
         `;
-   
-        
+
+
     container.appendChild(routeDiv);
-    if (routeCounter>1){
+    if (routeCounter > 1) {
       let toInput = document.getElementById(`to${routeCounter - 1}`).value;
       let fromInput = document.getElementById(`from${routeCounter}`)
-      fromInput.value= `${toInput}`; 
+      fromInput.value = `${toInput}`;
 
-      console.log(routeCounter);
+      // console.log(routeCounter);
 
-      console.log(fromInput);
-      console.log(toInput);
-      
+      // console.log(fromInput);
+      // console.log(toInput);
+
     }
     // Обновляем значение конечного спидометра при добавлении маршрута
     updateEndOdometer();
@@ -556,18 +550,18 @@ function addEventListeners() {
     // initAutocomplete()
   });
 
- 
+
 }
 
 // Обработка формы
 async function handleFormSubmit(event) {
 
   // event.preventDefault();
- 
 
- 
 
- 
+
+
+
   const modalSendForm = document.createElement("div");
   modalSendForm.className = "modal__sendForm";
 
@@ -652,37 +646,36 @@ async function handleFormSubmit(event) {
       parseFloat(document.getElementById("totalArest").textContent) || 0,
     totalTransferred:
       parseFloat(document.getElementById("totalTransferred").textContent) || 0,
-
+    // odometr ***********************************
     startOdometer:
-      parseFloat(document.getElementById("startOdometer").value) || 0,
+      Math.round(parseFloat(document.getElementById("startOdometer").value) || 0),
     routes: [],
     endOdometer:
-      parseFloat(document.getElementById("endOdometerValue").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("endOdometerValue").textContent) || 0),
     signalOdometer:
-      parseFloat(document.getElementById("signal").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("signal").textContent) || 0),
     pointOdometer:
-      parseFloat(document.getElementById("point").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("point").textContent) || 0),
     familiarizationOdometer:
-      parseFloat(document.getElementById("familiarization").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("familiarization").textContent) || 0),
     patrolOdometer:
-      parseFloat(document.getElementById("patrol").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("patrol").textContent) || 0),
     breaksOdometer:
-      parseFloat(document.getElementById("breaks").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("breaks").textContent) || 0),
     pickupHOdometer:
-      parseFloat(document.getElementById("pickupH").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("pickupH").textContent) || 0),
     pickupVOdometer:
-      parseFloat(document.getElementById("pickupV").textContent) || 0,
-    washOdometer: parseFloat(document.getElementById("wash").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("pickupV").textContent) || 0),
+    washOdometer:
+      Math.round(parseFloat(document.getElementById("wash").textContent) || 0),
     serviceOdometer:
-      parseFloat(document.getElementById("service").textContent) || 0,
-
+      Math.round(parseFloat(document.getElementById("service").textContent) || 0),
     checkOdometer:
-      parseFloat(document.getElementById("check").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("check").textContent) || 0),
     changeOdometer:
-      parseFloat(document.getElementById("change").textContent) || 0,
-
+      Math.round(parseFloat(document.getElementById("change").textContent) || 0),
     otherOdometer:
-      parseFloat(document.getElementById("other").textContent) || 0,
+      Math.round(parseFloat(document.getElementById("other").textContent) || 0),
   };
 
   document.querySelectorAll("#routesContainer .route").forEach((route) => {
@@ -706,18 +699,18 @@ async function handleFormSubmit(event) {
       arest: inputs[6].value || "",
       transferred: inputs[7].value || "",
       message: inputs[8].value || "",
-      isCombat:isCombat,
+      isCombat: isCombat,
     });
   });
   data.signalsCombat = signalsCombat;
 
   try {
-    console.log("---------------------------");
-    console.log(data);
-    console.log("---------------------------");
+    // console.log("---------------------------");
+    // console.log(data);
+    // console.log("---------------------------");
 
     const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec",
+      googleApiAdress,
       {
         method: "POST",
         headers: {
@@ -776,7 +769,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         { once: true }
       );
-    }, 1500);
+    }, 3000);
   }
 });
 
@@ -806,7 +799,7 @@ document.addEventListener("click", (event) => {
       // console.log("Блок arrested не найден.");
     }
 
- 
+
     saveToLocalStorage();
   }
 });
@@ -850,61 +843,9 @@ document
 
 saveinchange();
 
-const submit = document.querySelector('.btn--send');
 
-submit.addEventListener('click', (e)=>{
-  e.preventDefault()
-  console.log('sdsd');
-  let er= []
-  let req = document.querySelectorAll('.req');
-  let allBox = document.querySelectorAll('.route');
-  if (allBox){
-    allBox.forEach((box)=>{
-      let boxTitle = box.querySelector('.route__title')
-      let boxBody = box.querySelector('.route__row-box')
-      boxTitle.classList.remove('active')
-      boxBody.classList.remove('active')
-    })
-  }
-  
-  for (let input of req) {
-    input.classList.remove('errore');
-    if (input.value.trim() === '') {
-      input.classList.add('errore');
-      let box = input.closest('.route')
-      console.log(box);
-      
-      if(box){
-        let boxTitle = box.querySelector('.route__title')
-        let boxBody = box.querySelector('.route__row-box')
-        boxTitle.classList.add('active')
-        boxBody.classList.add('active')
-      }
-      const rect = input.getBoundingClientRect();
-      setTimeout(() => {
-        
-        window.scrollTo({
-          top: window.scrollY + rect.top - 150, // Прокрутка на 100 пикселей выше
-          behavior: 'smooth'                   // Плавная прокрутка
-        });
-      }, 555);
-      er.push(input);
-      break; // Останавливаем выполнение цикла
-    }
-  }
-  console.log(er);
-  
-if(er.length ==0){
- 
-  handleFormSubmit()
-  
-}
-  
-  
 
-  //******************************* */
-  
-})
+
 
 
 function initAutocomplete(input) {
@@ -949,7 +890,7 @@ function initAutocomplete(input) {
           fullAddress += `, ${houseNumber}`;
         }
 
-        console.log("Полный адрес:", fullAddress);
+        // console.log("Полный адрес:", fullAddress);
         input.value = fullAddress;  // Записываем полный адрес в инпут
         saveToLocalStorage();  // Сохраняем в localStorage
       }
@@ -960,7 +901,7 @@ function initAutocomplete(input) {
 routesContainer.addEventListener('click', (e) => {
   // Инициализируем автозаполнение для каждого инпута с классом "suggestions"
   if (e.target.classList.contains('suggestions')) {
-    initAutocomplete(e.target); 
+    initAutocomplete(e.target);
   }
 });
 
@@ -968,3 +909,111 @@ routesContainer.addEventListener('click', (e) => {
 // document.querySelectorAll('.suggestions').forEach(input => {
 //   initAutocomplete(input);
 // });
+const buttonSendCancel = document.getElementById('buttonSend-Cancel')
+const buttonSendSend = document.getElementById('buttonSend-Send')
+const modalSend = document.getElementById('modalSend')
+const submit = document.querySelector('.btn--send');
+
+submit.addEventListener('click', (e) => {
+
+  e.preventDefault()
+  console.log('sdsd');
+  let er = []
+  let req = document.querySelectorAll('.req');
+  let allBox = document.querySelectorAll('.route');
+  if (allBox) {
+    allBox.forEach((box) => {
+      let boxTitle = box.querySelector('.route__title')
+      let boxBody = box.querySelector('.route__row-box')
+      boxTitle.classList.remove('active')
+      boxBody.classList.remove('active')
+    })
+  }
+
+  for (let input of req) {
+    input.classList.remove('errore');
+    if (input.value.trim() === '') {
+      input.classList.add('errore');
+      let box = input.closest('.route')
+      console.log(box);
+
+      if (box) {
+        let boxTitle = box.querySelector('.route__title')
+        let boxBody = box.querySelector('.route__row-box')
+        boxTitle.classList.add('active')
+        boxBody.classList.add('active')
+      }
+      const rect = input.getBoundingClientRect();
+      setTimeout(() => {
+
+        window.scrollTo({
+          top: window.scrollY + rect.top - 75, // Прокрутка на 100 пикселей выше
+          behavior: 'smooth'                   // Плавная прокрутка
+        });
+      }, 555);
+      er.push(input);
+      break; // Останавливаем выполнение цикла
+    }
+  }
+  console.log(er);
+
+  if (er.length == 0) {
+    modalSend.classList.remove('dn')
+
+
+  }
+
+  //******************************* */
+
+})
+
+buttonSendSend.addEventListener('click', (e) => {
+
+  handleFormSubmit()
+})
+buttonSendCancel.addEventListener('click', () => {
+  modalSend.classList.add('dn')
+})
+
+
+
+
+fetch(googleApiAdress)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Ошибка сети');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // console.log('Данные из столбца B:', data.columnB);
+    // console.log('Данные из столбца C:', data.columnC);
+    console.log(data);
+    
+    employee.innerHTML = '';
+    if(data.columnB){
+      data.columnB.forEach(item =>{
+        let newOption = document.createElement('option');
+        newOption.value = item;
+        employee.appendChild(newOption)
+      })
+    }
+    if(data.columnC){
+      data.columnC.forEach(item =>{
+        let newOption = document.createElement('option');
+        newOption.value = item;
+        cars.appendChild(newOption)
+      })
+    }
+    if(data.columnD){
+      data.columnD.forEach(item =>{
+        let newOption = document.createElement('option');
+        newOption.value = item;
+        newOption.textContent = item;
+        unit.appendChild(newOption)
+      })
+    }
+  })
+  .catch(error => {
+    console.error('Ошибка:', error);
+  });

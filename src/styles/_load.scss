@@ -61,7 +61,8 @@
 // -------- modal send form
 .modal__sendForm,
 .modal__save,
-.modal__delete {
+.modal__delete,
+.modal__send {
   position: fixed;
   width: 100dvw;
   height: 100dvh;
@@ -278,7 +279,13 @@
     }
   }
 }
-.buttonDelete {
+.buttonSend-Send{
+  background: linear-gradient(45deg, #2196f3, #64b5f6);
+        color: #fff;
+        border: none;
+        width: 120px;
+}
+.buttonDelete,.buttonSend-Cancel {
   cursor: pointer;
   color: #f5f5f5;
   border: none;
@@ -288,7 +295,8 @@
   width: 120px;
 }
 .modal__save,
-.modal__delete {
+.modal__delete,
+.modal__send {
   transition: all 0.3s;
   &.dn {
     pointer-events: none;
