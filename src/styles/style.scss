@@ -21,6 +21,9 @@ option {
   width: 15dvw;
   filter: drop-shadow(1px 1px 1px #000);
 }
+.logo{
+  filter: drop-shadow(1px 1px 5px #f2d7a5);
+}
 input,
 select,
 textarea {
@@ -71,13 +74,30 @@ textarea {
   padding: 5px;
   border-radius: 10px;
   // box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 6px #d8ae5e;
 
   background: linear-gradient(to bottom, #f2d7a5 0%, #d8ae5e 100%);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   &.signal {
-    background: linear-gradient(to bottom, #f2bca5 0%, #d87e5e 100%);
+    background: linear-gradient(to bottom, #fef2b8 0%, #f3d257 100%);
+
+
+
+
     .route__title {
+      background: linear-gradient(to bottom, #fef2b8 0%, #f3d257 100%);
+
+
+
+
+    }
+    &.combat{
       background: linear-gradient(to bottom, #f2bca5 0%, #d87e5e 100%);
+
+      .route__title {
+        background: linear-gradient(to bottom, #f2bca5 0%, #d87e5e 100%);
+  
+      }
     }
   }
 }
@@ -94,6 +114,7 @@ textarea {
   // border: 1px solid #b0b0b0; /* Легкий бордер для выделения */
   color: #555; /* Темный текст для контраста */
   background: linear-gradient(to bottom, #f2d7a5 0%, #d8ae5e 100%);
+  box-shadow: 0px 0px 6px #d8ae5e;
  
 }
 
@@ -518,4 +539,13 @@ textarea {
 }
 .streetRow{
   flex-direction: column;
+}
+
+.footer{
+  color: #555;text-align: center;
+  a{
+    color: inherit;
+    text-decoration:revert;
+   
+  }
 }

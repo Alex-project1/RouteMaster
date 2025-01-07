@@ -2,7 +2,9 @@ import "../styles/style.scss";
 import { specificKilometer } from "./specificKilometer.js";
 import { whoseSingnal } from "./whoseSingnal.js";
 // localStorage.clear();
-const googleApiAdress ='https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec'
+const zp = 'https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec';
+const dn = 'https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec'
+const googleApiAdress = zp;
 const employee = document.getElementById('employee');
 const cars = document.getElementById('cars');
 const unit = document.getElementById('unit');
@@ -32,7 +34,7 @@ function hide() {
   });
 }
 // сворачивание маршрута начало *****************************
-// Добавление задержанных начало ****************************
+// Боевая или не боевая сработка начало ****************************
 document.addEventListener("change", (event) => {
   // Проверяем, является ли изменённый элемент селектом
   if (event.target.matches("select")) {
@@ -51,16 +53,22 @@ document.addEventListener("change", (event) => {
       } else if (arrestedDiv && selectedOption.dataset.value !== "signal") {
         // console.log("neeeee");
         arrestedDiv.classList.remove("active");
-        arrestedDiv.closest(".route").classList.remove("signal");
-        const inputs = arrestedDiv.querySelectorAll("input");
+        const routeDiv =  arrestedDiv.closest(".route")
+        routeDiv.classList.remove("signal");
+        const isCombatBox  = routeDiv.querySelector('.isCombat__box ')
+        const arrestedBox = routeDiv.querySelector('.arrested')
+        const inputs = arrestedBox.querySelectorAll("input");
         inputs.forEach((input) => {
           input.value = 0;
         });
+        isCombatBox.classList.remove('combat')
+        arrestedBox.classList.add('dn')
+        routeDiv.classList.remove('combat')
       }
     }
   }
 });
-// Добавление задержанных конец ****************************
+// Боевая или не боевая сработка конец ****************************
 // Функция-обработчик
 function toggleRoute(event) {
   const title = event.currentTarget; // Текущий элемент
@@ -183,7 +191,7 @@ function saveToLocalStorage() {
 
   // Сохраняем данные в localStorage
   localStorage.setItem("formData", JSON.stringify(data));
-  console.log("Данные сохранены в localStorage:", data);
+  // console.log("Данные сохранены в localStorage:", data);
   // modalContainer.classList.remove("dn");
   updateTotalSignals();
 }
@@ -197,7 +205,7 @@ function loadFromLocalStorage() {
   const savedData = localStorage.getItem("formData");
   if (savedData) {
     const data = JSON.parse(savedData);
-    // console.log(data, "-------");
+    console.log(data, "-------");
 
     document.getElementById("date").value = data.date || "";
     document.getElementById("unit").value = data.unit || "";
@@ -253,11 +261,14 @@ function loadFromLocalStorage() {
       // console.log("route");
       // console.log(route);
       // console.log("route");
-
+      // let isCombat = false;
       const routeDiv = document.createElement("div");
       routeDiv.classList.add("route");
       if (route.purpose === "Спрацювання") {
         routeDiv.classList.add("signal");
+      }
+      if(route.isCombat){
+        routeDiv.classList.add('combat')
       }
       routeDiv.setAttribute("data-id", `box${index + 1}`);
 
@@ -791,8 +802,16 @@ document.addEventListener("click", (event) => {
 
     // Добавляем класс combat только текущему элементу
     isCombat.classList.toggle("combat");
+    const routeDiv = isCombat.closest('.route')
+    const arestedBox = routeDiv.querySelector('.arrested')
+    const arestedInputs = arestedBox.querySelectorAll('input')
+    
     let isCombatBox = isCombat.closest(".isCombat");
     let arrested = isCombatBox?.nextElementSibling;
+    routeDiv.classList.toggle('combat')
+    arestedInputs.forEach(input=>{
+      input.value = 0
+    })
     if (arrested && arrested.classList.contains("arrested")) {
       arrested.classList.toggle('dn')
     } else {
@@ -915,57 +934,55 @@ const modalSend = document.getElementById('modalSend')
 const submit = document.querySelector('.btn--send');
 
 submit.addEventListener('click', (e) => {
-
-  e.preventDefault()
+  e.preventDefault();
   console.log('sdsd');
-  let er = []
+  
+  let er = [];
   let req = document.querySelectorAll('.req');
   let allBox = document.querySelectorAll('.route');
+  
+  // Скрытие всех родительских элементов до проверки
   if (allBox) {
     allBox.forEach((box) => {
-      let boxTitle = box.querySelector('.route__title')
-      let boxBody = box.querySelector('.route__row-box')
-      boxTitle.classList.remove('active')
-      boxBody.classList.remove('active')
-    })
+      let boxTitle = box.querySelector('.route__title');
+      let boxBody = box.querySelector('.route__row-box');
+      boxTitle.classList.remove('active');
+      boxBody.classList.remove('active');
+    });
   }
 
+  // Проверка всех обязательных полей
   for (let input of req) {
     input.classList.remove('errore');
     if (input.value.trim() === '') {
       input.classList.add('errore');
-      let box = input.closest('.route')
-      console.log(box);
-
+      let box = input.closest('.route');
+      
       if (box) {
-        let boxTitle = box.querySelector('.route__title')
-        let boxBody = box.querySelector('.route__row-box')
-        boxTitle.classList.add('active')
-        boxBody.classList.add('active')
+        let boxTitle = box.querySelector('.route__title');
+        let boxBody = box.querySelector('.route__row-box');
+        boxTitle.classList.add('active');
+        boxBody.classList.add('active');
       }
-      const rect = input.getBoundingClientRect();
-      setTimeout(() => {
 
-        window.scrollTo({
-          top: window.scrollY + rect.top - 75, // Прокрутка на 100 пикселей выше
-          behavior: 'smooth'                   // Плавная прокрутка
-        });
-      }, 555);
+      // Прокрутка к первому пустому полю
+      const rect = input.getBoundingClientRect();
+      window.scrollTo({
+        top: window.scrollY + rect.top - 75, // Прокрутка на 75 пикселей выше
+        behavior: 'smooth'                   // Плавная прокрутка
+      });
+
       er.push(input);
-      break; // Останавливаем выполнение цикла
+      break; // Прерываем цикл, если нашли первое пустое поле
     }
   }
+
   console.log(er);
 
   if (er.length == 0) {
-    modalSend.classList.remove('dn')
-
-
+    modalSend.classList.remove('dn');
   }
-
-  //******************************* */
-
-})
+});
 
 buttonSendSend.addEventListener('click', (e) => {
 
@@ -989,24 +1006,24 @@ fetch(googleApiAdress)
     // console.log('Данные из столбца B:', data.columnB);
     // console.log('Данные из столбца C:', data.columnC);
     console.log(data);
-    
+
     employee.innerHTML = '';
-    if(data.columnB){
-      data.columnB.forEach(item =>{
+    if (data.columnB) {
+      data.columnB.forEach(item => {
         let newOption = document.createElement('option');
         newOption.value = item;
         employee.appendChild(newOption)
       })
     }
-    if(data.columnC){
-      data.columnC.forEach(item =>{
+    if (data.columnC) {
+      data.columnC.forEach(item => {
         let newOption = document.createElement('option');
         newOption.value = item;
         cars.appendChild(newOption)
       })
     }
-    if(data.columnD){
-      data.columnD.forEach(item =>{
+    if (data.columnD) {
+      data.columnD.forEach(item => {
         let newOption = document.createElement('option');
         newOption.value = item;
         newOption.textContent = item;
