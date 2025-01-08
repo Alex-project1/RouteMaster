@@ -79,16 +79,10 @@ textarea {
   background: linear-gradient(to bottom, #f2d7a5 0%, #d8ae5e 100%);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   &.signal {
-    background: linear-gradient(to bottom, #fef2b8 0%, #f3d257 100%);
-
-
-
+    background: linear-gradient(to bottom left, #fff0a5 0%, #f39c42 100%);
 
     .route__title {
-      background: linear-gradient(to bottom, #fef2b8 0%, #f3d257 100%);
-
-
-
+      background: linear-gradient(to bottom left, #fff0a5 0%, #f39c42 100%);
 
     }
     &.combat{
@@ -543,9 +537,72 @@ textarea {
 
 .footer{
   color: #555;text-align: center;
+  margin-top: 10px;
   a{
     color: inherit;
     text-decoration:revert;
    
   }
+}
+
+.searchCard {
+  margin-top: 20px;
+  text-align: center;
+  padding: 20px;
+  background: #f7f7f7;
+  border-radius: 10px;
+  border-top: 3px solid #4caf50;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.searchCard h1 {
+  font-size: 24px;
+  // margin: 10px 0 20px;
+  margin-bottom: 10px;
+  color: #2e7d32;
+  // font-family: 'Arial', sans-serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.searchCard input {
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.searchCard input:focus {
+  outline: none;
+  border: 1px solid #66bb6a;
+  box-shadow: 0px 0px 5px rgba(102, 187, 106, 0.5);
+}
+
+#searchCard__btn {
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: #ffffff;
+  border: none;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, #66bb6a, #43a047);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 10px auto;
+  display: inline-block;
+}
+
+
+#searchCard__btn:active {
+  background: #2e7d32;
+  // box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(.95);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }

@@ -3,7 +3,7 @@ import { specificKilometer } from "./specificKilometer.js";
 import { whoseSingnal } from "./whoseSingnal.js";
 // localStorage.clear();
 const zp = 'https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec';
-const dn = 'https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec'
+const dp = 'https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec'
 const googleApiAdress = zp;
 const employee = document.getElementById('employee');
 const cars = document.getElementById('cars');
@@ -53,9 +53,9 @@ document.addEventListener("change", (event) => {
       } else if (arrestedDiv && selectedOption.dataset.value !== "signal") {
         // console.log("neeeee");
         arrestedDiv.classList.remove("active");
-        const routeDiv =  arrestedDiv.closest(".route")
+        const routeDiv = arrestedDiv.closest(".route")
         routeDiv.classList.remove("signal");
-        const isCombatBox  = routeDiv.querySelector('.isCombat__box ')
+        const isCombatBox = routeDiv.querySelector('.isCombat__box ')
         const arrestedBox = routeDiv.querySelector('.arrested')
         const inputs = arrestedBox.querySelectorAll("input");
         inputs.forEach((input) => {
@@ -267,7 +267,7 @@ function loadFromLocalStorage() {
       if (route.purpose === "Спрацювання") {
         routeDiv.classList.add("signal");
       }
-      if(route.isCombat){
+      if (route.isCombat) {
         routeDiv.classList.add('combat')
       }
       routeDiv.setAttribute("data-id", `box${index + 1}`);
@@ -716,9 +716,9 @@ async function handleFormSubmit(event) {
   data.signalsCombat = signalsCombat;
 
   try {
-    // console.log("---------------------------");
-    // console.log(data);
-    // console.log("---------------------------");
+    console.log("---------------------------");
+    console.log(data);
+    console.log("---------------------------");
 
     const response = await fetch(
       googleApiAdress,
@@ -805,11 +805,11 @@ document.addEventListener("click", (event) => {
     const routeDiv = isCombat.closest('.route')
     const arestedBox = routeDiv.querySelector('.arrested')
     const arestedInputs = arestedBox.querySelectorAll('input')
-    
+
     let isCombatBox = isCombat.closest(".isCombat");
     let arrested = isCombatBox?.nextElementSibling;
     routeDiv.classList.toggle('combat')
-    arestedInputs.forEach(input=>{
+    arestedInputs.forEach(input => {
       input.value = 0
     })
     if (arrested && arrested.classList.contains("arrested")) {
@@ -936,11 +936,11 @@ const submit = document.querySelector('.btn--send');
 submit.addEventListener('click', (e) => {
   e.preventDefault();
   console.log('sdsd');
-  
+
   let er = [];
   let req = document.querySelectorAll('.req');
   let allBox = document.querySelectorAll('.route');
-  
+
   // Скрытие всех родительских элементов до проверки
   if (allBox) {
     allBox.forEach((box) => {
@@ -957,7 +957,7 @@ submit.addEventListener('click', (e) => {
     if (input.value.trim() === '') {
       input.classList.add('errore');
       let box = input.closest('.route');
-      
+
       if (box) {
         let boxTitle = box.querySelector('.route__title');
         let boxBody = box.querySelector('.route__row-box');
@@ -1005,7 +1005,7 @@ fetch(googleApiAdress)
   .then(data => {
     // console.log('Данные из столбца B:', data.columnB);
     // console.log('Данные из столбца C:', data.columnC);
-    console.log(data);
+    console.log('vse dannie',data);
 
     employee.innerHTML = '';
     if (data.columnB) {
@@ -1030,7 +1030,34 @@ fetch(googleApiAdress)
         unit.appendChild(newOption)
       })
     }
+    const savedData = localStorage.getItem("formData");
+    if (savedData) {
+      const data = JSON.parse(savedData);
+  
+      document.getElementById("unit").value = data.unit || "";
+    }
   })
   .catch(error => {
     console.error('Ошибка:', error);
   });
+
+
+  const checCard = document.querySelector("#searchCard__value");
+  const buttonCheck = document.querySelector("#searchCard__btn");
+  
+  buttonCheck.addEventListener("click", () => {
+    let value = checCard.value.toUpperCase().replace(/\s+/g, '');
+
+  
+    if (value !== "") {
+      let pdfUrl = `https://l-cs.ohholding.com.ua/storage//object_cards/pdf/2/${value}.pdf`;
+  
+      // Используем InAppBrowser для открытия ссылки на мобильных устройствах
+      if (window.cordova && window.cordova.InAppBrowser) {
+        window.cordova.InAppBrowser.open(pdfUrl, '_system');  // Открытие ссылки в стандартном браузере
+      } else {
+        window.open(pdfUrl, "_blank");
+      }
+    }
+  });
+  

@@ -3,6 +3,7 @@
   <name>RouteMaster</name>
   <description>My Project is an app.</description>
   <plugin name="cordova-plugin-device" />
+  <plugin name="cordova-plugin-inappbrowser" />
   <access origin="*" />
  
   <!-- Указываем иконку для Android -->
