@@ -733,12 +733,19 @@ async function handleFormSubmit(event) {
     );
 
     const result = await response.json();
+    // console.log("---------------------------");
+    // console.log("---------------------------");
+    // console.log("---------------------------");
+    // console.log(result);
+
     if (result.status === "success") {
       alert("Данные успешно сохранены в Google Таблицу!");
     } else {
       alert(`Ошибка1: ${result.message}`);
     }
   } catch (error) {
+    console.log(error);
+    
     const box = document.querySelector(".box");
     const lastBtn = document.querySelector(".lastBtn");
 
@@ -1005,7 +1012,7 @@ fetch(googleApiAdress)
   .then(data => {
     // console.log('Данные из столбца B:', data.columnB);
     // console.log('Данные из столбца C:', data.columnC);
-    console.log('vse dannie',data);
+    console.log('vse dannie', data);
 
     employee.innerHTML = '';
     if (data.columnB) {
@@ -1033,7 +1040,7 @@ fetch(googleApiAdress)
     const savedData = localStorage.getItem("formData");
     if (savedData) {
       const data = JSON.parse(savedData);
-  
+
       document.getElementById("unit").value = data.unit || "";
     }
   })
@@ -1042,22 +1049,29 @@ fetch(googleApiAdress)
   });
 
 
-  const checCard = document.querySelector("#searchCard__value");
-  const buttonCheck = document.querySelector("#searchCard__btn");
-  
-  buttonCheck.addEventListener("click", () => {
-    let value = checCard.value.toUpperCase().replace(/\s+/g, '');
+const checCard = document.querySelector("#searchCard__value");
+const buttonCheck = document.querySelector("#searchCard__btn");
 
-  
-    if (value !== "") {
-      let pdfUrl = `https://l-cs.ohholding.com.ua/storage//object_cards/pdf/2/${value}.pdf`;
-  
-      // Используем InAppBrowser для открытия ссылки на мобильных устройствах
-      if (window.cordova && window.cordova.InAppBrowser) {
-        window.cordova.InAppBrowser.open(pdfUrl, '_system');  // Открытие ссылки в стандартном браузере
-      } else {
-        window.open(pdfUrl, "_blank");
-      }
+buttonCheck.addEventListener("click", () => {
+  let value = checCard.value.toUpperCase().replace(/\s+/g, '');
+
+
+  if (value !== "") {
+    let pdfUrl = `https://l-cs.ohholding.com.ua/storage//object_cards/pdf/2/${value}.pdf`;
+
+    // Используем InAppBrowser для открытия ссылки на мобильных устройствах
+    if (window.cordova && window.cordova.InAppBrowser) {
+      window.cordova.InAppBrowser.open(pdfUrl, '_system');  // Открытие ссылки в стандартном браузере
+    } else {
+      window.open(pdfUrl, "_blank");
     }
-  });
-  
+  }
+});
+const tgLink = document.querySelector('.tgLink');
+tgLink.addEventListener('click', ()=>{
+  if (window.cordova && window.cordova.InAppBrowser) {
+    window.cordova.InAppBrowser.open('https://t.me/Alexandrr32', '_system');  // Открытие ссылки в стандартном браузере
+  } else {
+    window.open('https://t.me/Alexandrr32', "_blank");
+  }
+})
