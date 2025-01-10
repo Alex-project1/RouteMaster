@@ -426,12 +426,15 @@ function updateEndOdometer() {
       totalDistance += parseFloat(input.value) || 0;
     });
   document.getElementById("dailyMileage").textContent = totalDistance;
+  document.getElementById("dailyKm").textContent = totalDistance +' км';
 
   // Рассчитываем и обновляем конечное значение спидометра
   const endOdometer = startOdometer + totalDistance;
 
   document.getElementById("endOdometerValue").textContent =
-    endOdometer.toFixed(2);
+    endOdometer.toFixed(1);
+  document.getElementById("endOd").textContent =
+    endOdometer.toFixed(1) +' км';
   document
     .getElementById("signalsHolding")
     .addEventListener("input", updateTotalSignals);
