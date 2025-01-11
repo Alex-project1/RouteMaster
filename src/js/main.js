@@ -778,21 +778,7 @@ function reload() {
 // Запуск
 init();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const load = document.getElementById("load");
-  if (load) {
-    setTimeout(() => {
-      load.classList.add("finish");
-      load.addEventListener(
-        "transitionend",
-        () => {
-          load.remove();
-        },
-        { once: true }
-      );
-    }, 3000);
-  }
-});
+
 
 // Слушаем изменения на всех инпутах и селектах
 function saveinchange() {
@@ -1046,6 +1032,22 @@ fetch(googleApiAdress)
 
       document.getElementById("unit").value = data.unit || "";
     }
+  console.log('loading finish');
+  
+      const load = document.getElementById("load");
+      if (load) {
+        setTimeout(() => {
+          load.classList.add("finish");
+          load.addEventListener(
+            "transitionend",
+            () => {
+              load.remove();
+            },
+            { once: true }
+          );
+        }, 1000);
+      }
+   
   })
   .catch(error => {
     console.error('Ошибка:', error);

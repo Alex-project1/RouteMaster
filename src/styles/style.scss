@@ -286,6 +286,7 @@ textarea {
 // margin: 0 auto;
   justify-content: center;
   // padding-bottom: 10px;
+  margin-bottom: 20px;
  
 
 }
@@ -622,16 +623,19 @@ textarea {
   -webkit-tap-highlight-color: transparent;
 }
 .dailyOdometer, .endOd{
-  // padding-top: 10px; 
-  margin-top: 10px;
   font-size: 18px;
-  color: #555;
-  font-weight: 600;
+  // color: #555;
+  font-weight: 500;
   color: #000;
   max-width: 500px;
   margin: 10px auto;
   display: flex;
   justify-content: space-between;
+  span{
+    color: #000;
+    font-weight: 600;
+  
+  }
 
 }
 // .dailyOdometer{
