@@ -277,17 +277,32 @@
 
 
   <div class="searchCard">
-    <h1>Пошук карточки об'єкту</h1>
-    <input type="text" id="searchCard__value" placeholder="введіть номер">
-    <div id="searchCard__btn">ПОШУК</div>
+    <div class="searchCard__inner">
+      <h1>Пошук карточки об'єкту</h1>
+      <input type="text" id="searchCard__value" placeholder="введіть номер">
+      <div id="searchCard__btn">ПОШУК</div>
+      <div id='preloader'>
+        <div class='spinner dn' id="spinner">
+          <div class='loader'>
+            <div class='moving-dot'></div>
+            <div class='moving-dot'></div>
+            <div class='moving-dot'></div>
+            <div class='moving-dot'></div>
+            <div class='moving-dot'></div>
+            <div class='moving-dot'></div>
+          </div>
+        </div>
+        <div class="searchCardErrore dn">Помилка пошуку <span id="searchCardErrore"></span></div>
+      </div>
 
+    </div>
     <div class="resultCardBox">
 
-      <div class="nameCard  text">Назва об'єкту:  <span id="nameCard"></span></div>
-      <div class="adressCard text"> Адреса:  <span id="adressCard"></span></div>
+      <div class="nameCard  text">Назва об'єкту: <span id="nameCard"></span></div>
+      <div class="adressCard text"> Адреса: <span id="adressCard"></span></div>
 
       <div class="routeCardBtns">
-        <div class="routeCard routeCardBtn btn" id="routeCard" >Картка</div>
+        <div class="routeCard routeCardBtn btn" id="routeCard">Картка</div>
         <div class="routeRoute routeCardBtn btn" id="routeRoute">Їхати</div>
 
       </div>

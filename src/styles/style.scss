@@ -99,7 +99,6 @@ textarea {
 
     .route__title {
       background: linear-gradient(to bottom left, #fff0a5 0%, #f39c42 100%);
-
     }
 
     &.combat {
@@ -107,7 +106,6 @@ textarea {
 
       .route__title {
         background: linear-gradient(to bottom, #f2bca5 0%, #d87e5e 100%);
-
       }
     }
   }
@@ -128,9 +126,7 @@ textarea {
   /* Темный текст для контраста */
   background: linear-gradient(to bottom, #f2d7a5 0%, #d8ae5e 100%);
   box-shadow: 0px 0px 6px #d8ae5e;
-
 }
-
 
 .route__row-box {
   display: grid;
@@ -150,7 +146,7 @@ textarea {
   // padding: 5px;
 }
 
-.route__row-box>div {
+.route__row-box > div {
   overflow: hidden;
 }
 
@@ -320,8 +316,6 @@ textarea {
   justify-content: center;
   // padding-bottom: 10px;
   margin-bottom: 20px;
-
-
 }
 
 #addRoute {
@@ -351,7 +345,7 @@ textarea {
   margin: 0 auto;
 }
 
-btn btn-block btn-outline-primary .signals label {
+.signals label {
   display: flex;
   flex-direction: column;
   max-width: 500px;
@@ -546,7 +540,7 @@ btn btn-block btn-outline-primary .signals label {
 .isCombat {
   display: grid;
   grid-template-rows: 0fr;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &__overflow {
     overflow: hidden;
@@ -594,7 +588,7 @@ btn btn-block btn-outline-primary .signals label {
 // }
 .errore {
   border: 2px solid red;
-  animation: erroreAnim .5s ease-out infinite alternate;
+  animation: erroreAnim 0.5s ease-out infinite alternate;
   border-color: red;
 }
 
@@ -606,7 +600,6 @@ btn btn-block btn-outline-primary .signals label {
 @keyframes erroreAnim {
   to {
     border-color: transparent;
-
   }
 }
 
@@ -631,7 +624,6 @@ btn btn-block btn-outline-primary .signals label {
   a {
     color: inherit;
     text-decoration: revert;
-
   }
 }
 
@@ -687,11 +679,10 @@ btn btn-block btn-outline-primary .signals label {
   display: inline-block;
 }
 
-
 #searchCard__btn:active {
   background: #2e7d32;
   // box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.2);
-  transform: scale(.95);
+  transform: scale(0.95);
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -711,9 +702,7 @@ btn btn-block btn-outline-primary .signals label {
   span {
     color: #000;
     font-weight: 600;
-
   }
-
 }
 
 // .dailyOdometer{
@@ -749,7 +738,7 @@ btn btn-block btn-outline-primary .signals label {
     text-transform: uppercase;
     pointer-events: none;
     cursor: pointer;
-    &.active{
+    &.active {
       background: linear-gradient(45deg, #2196f3, #64b5f6);
       color: #fff;
       pointer-events: auto;
@@ -773,6 +762,5 @@ btn btn-block btn-outline-primary .signals label {
 
   .routeCardBtn {
     width: 110px;
-
   }
 }

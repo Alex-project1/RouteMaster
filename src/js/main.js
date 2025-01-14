@@ -2,20 +2,26 @@ import "../styles/style.scss";
 import { specificKilometer } from "./specificKilometer.js";
 import { whoseSingnal } from "./whoseSingnal.js";
 // localStorage.clear();
-const zp = 'https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec';
-const dp = 'https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec'
+const zp =
+  "https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec";
+const dp =
+  "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
 const googleApiAdress = zp;
-const employee = document.getElementById('employee');
-const cars = document.getElementById('cars');
-const unit = document.getElementById('unit');
-const routeCard = document.getElementById('routeCard');
+const employee = document.getElementById("employee");
+const cars = document.getElementById("cars");
+const unit = document.getElementById("unit");
+const routeCard = document.getElementById("routeCard");
 let routeCounter = 0;
-const routesContainer = document.getElementById('routesContainer')
+const routesContainer = document.getElementById("routesContainer");
 const forward = document.querySelector(".forward");
 const modalContainer = document.querySelector(".modal__save ");
 let routeTitles;
 const resulBtn = document.getElementById("resulBtn");
 const resultsBody = document.getElementById("results");
+const searchCardErrore = document.getElementById("searchCardErrore");
+const spinner = document.getElementById("spinner");
+const searchCardErroreBox = document.querySelector(".searchCardErrore");
+
 resulBtn.addEventListener("click", () => {
   resultsBody.classList.toggle("active");
 });
@@ -53,17 +59,17 @@ document.addEventListener("change", (event) => {
       } else if (arrestedDiv && selectedOption.dataset.value !== "signal") {
         // console.log("neeeee");
         arrestedDiv.classList.remove("active");
-        const routeDiv = arrestedDiv.closest(".route")
+        const routeDiv = arrestedDiv.closest(".route");
         routeDiv.classList.remove("signal");
-        const isCombatBox = routeDiv.querySelector('.isCombat__box ')
-        const arrestedBox = routeDiv.querySelector('.arrested')
+        const isCombatBox = routeDiv.querySelector(".isCombat__box ");
+        const arrestedBox = routeDiv.querySelector(".arrested");
         const inputs = arrestedBox.querySelectorAll("input");
         inputs.forEach((input) => {
           input.value = 0;
         });
-        isCombatBox.classList.remove('combat')
-        arrestedBox.classList.add('dn')
-        routeDiv.classList.remove('combat')
+        isCombatBox.classList.remove("combat");
+        arrestedBox.classList.add("dn");
+        routeDiv.classList.remove("combat");
       }
     }
   }
@@ -268,7 +274,7 @@ function loadFromLocalStorage() {
         routeDiv.classList.add("signal");
       }
       if (route.isCombat) {
-        routeDiv.classList.add('combat')
+        routeDiv.classList.add("combat");
       }
       routeDiv.setAttribute("data-id", `box${index + 1}`);
 
@@ -283,68 +289,103 @@ function loadFromLocalStorage() {
                 <div class="hide__box">
 
                     <div class="route__row streetRow">
-                        <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${index + 1}" required="" value="${route.from
-        }">
-                        <input class="input req" type="time" required="" value="${route.departureTime
-        }">
+                        <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${
+                          index + 1
+                        }" required="" value="${route.from}">
+                        <input class="input req" type="time" required="" value="${
+                          route.departureTime
+                        }">
                     </div>
                     <div class="route__row streetRow">
-                        <input class="input req suggestions" type="text" placeholder="Куди" id="to${index + 1}" required="" value="${route.to
-        }">
-                        <input class="input req" type="time" required="" value="${route.arrivalTime
-        }">
+                        <input class="input req suggestions" type="text" placeholder="Куди" id="to${
+                          index + 1
+                        }" required="" value="${route.to}">
+                        <input class="input req" type="time" required="" value="${
+                          route.arrivalTime
+                        }">
                     </div>
                     <div class="route__row last" id="last">
                         <input class="input distance req" type="number"  placeholder="Відстань(км)" required=""
                         value="${route.distance}">
 
-                           <select class="input req" id="target${index + 1
-        }" required>
-                    <option data-toggle="arest${index + 1}" value="" selected>                    мета поїздки</option>
+                           <select class="input req" id="target${
+                             index + 1
+                           }" required>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" value="" selected>                    мета поїздки</option>
                     
-                    <option data-toggle="arest${index + 1}" data-value="signal" data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="signal" data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
 
-                    <option data-toggle="arest${index + 1}" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання ВБ">Спрацювання ВБ</option>
-                    <option data-toggle="arest${index + 1}"  data-value="point" value="Точка відстою">Точка відстою</option>
-                    <option data-toggle="arest${index + 1}" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
-                    <option data-toggle="arest${index + 1}" data-value="patrol" value="Патруль">Патруль</option>
-                    <option data-toggle="arest${index + 1}" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
-                    <option data-toggle="arest${index + 1}" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
-                    <option data-toggle="arest${index + 1}" data-value="pickupV" value="Підвіз ВБ">Підвіз ВБ</option>
-                    <option data-toggle="arest${index + 1}" data-value="wash" value="Мийка">Мийка</option>
-                    <option data-toggle="arest${index + 1}" data-value="service" value="СТО">СТО</option>                    
-                    <option data-toggle="arest${index + 1}" data-value="check" value="Перевірка">Перевірка</option>                    
-                    <option data-toggle="arest${index + 1}" data-value="change" value="Перезмінка">Перезмінка</option>                    
-                    <option data-toggle="arest${index + 1}" data-value="other" value="Інше">Інше</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання ВБ">Спрацювання ВБ</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }"  data-value="point" value="Точка відстою">Точка відстою</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="patrol" value="Патруль">Патруль</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="pickupV" value="Підвіз ВБ">Підвіз ВБ</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="wash" value="Мийка">Мийка</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="service" value="СТО">СТО</option>                    
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="check" value="Перевірка">Перевірка</option>                    
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="change" value="Перезмінка">Перезмінка</option>                    
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="other" value="Інше">Інше</option>
                   </select>
                   
                       
                         </div>
 
 
-  <div class="isCombat ${route.purpose.includes("Спрацювання") ? "active" : ""
-        }"" id="arest${index + 1}">
+  <div class="isCombat ${
+    route.purpose.includes("Спрацювання") ? "active" : ""
+  }"" id="arest${index + 1}">
   <div class="isCombat__overflow">
     <span>Бойова??</span>
     <div class="isCombat__box ${route.isCombat ? "combat" : ""}"></div>
   </div>
   </div>
 
-                          <div class="arrested ${route.isCombat ? "" : "dn"
-        }"  >
+                          <div class="arrested ${route.isCombat ? "" : "dn"}"  >
 
 
 <div class="overflow">
 
                   <div class="arrested__row">
                     <span>Затримано</span>
-                    <input class="input req" value="${route.delayed
-        }" type="number" id="arest">
+                    <input class="input req" value="${
+                      route.delayed
+                    }" type="number" id="arest">
                   </div>
                   <div class="arrested__row">
                     <span>передано до полиції</span>
-                    <input class="input req" value="${route.transferred
-        }" type="number" >
+                    <input class="input req" value="${
+                      route.transferred
+                    }" type="number" >
                   </div>
  </div>
 
@@ -353,8 +394,9 @@ function loadFromLocalStorage() {
 
 
                         <div class="route__row">
-                        <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5"> ${route.message
-        }</textarea>
+                        <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5"> ${
+                          route.message
+                        }</textarea>
                     </div>
             
                     <button type="button" class="deleteRoute">Видалити</button>
@@ -376,8 +418,7 @@ function loadFromLocalStorage() {
             options[i].selected = true;
             if (route.purpose.includes("Спрацювання")) {
               routeDiv.classList.add("signal");
-              console.log('!!!!!!!!!!!!!!!!!!!!!!');
-
+              console.log("!!!!!!!!!!!!!!!!!!!!!!");
             }
             break;
           }
@@ -390,7 +431,6 @@ function loadFromLocalStorage() {
   updateEndOdometer();
   saveinchange();
   // initAutocomplete()
-
 }
 
 // Добавляем обработчик для кнопки сохранения
@@ -426,15 +466,14 @@ function updateEndOdometer() {
       totalDistance += parseFloat(input.value) || 0;
     });
   document.getElementById("dailyMileage").textContent = totalDistance;
-  document.getElementById("dailyKm").textContent = totalDistance + ' км';
+  document.getElementById("dailyKm").textContent = totalDistance + " км";
 
   // Рассчитываем и обновляем конечное значение спидометра
   const endOdometer = startOdometer + totalDistance;
 
   document.getElementById("endOdometerValue").textContent =
     endOdometer.toFixed(1);
-  document.getElementById("endOd").textContent =
-    endOdometer.toFixed(1) + ' км';
+  document.getElementById("endOd").textContent = endOdometer.toFixed(1) + " км";
   document
     .getElementById("signalsHolding")
     .addEventListener("input", updateTotalSignals);
@@ -459,7 +498,7 @@ function addEventListeners() {
     });
 
   document.getElementById("addRoute").addEventListener("click", () => {
-    console.log('ds');
+    console.log("ds");
 
     routeCounter++;
     const container = document.getElementById("routesContainer");
@@ -544,18 +583,16 @@ function addEventListeners() {
     </div>
         `;
 
-
     container.appendChild(routeDiv);
     if (routeCounter > 1) {
       let toInput = document.getElementById(`to${routeCounter - 1}`).value;
-      let fromInput = document.getElementById(`from${routeCounter}`)
+      let fromInput = document.getElementById(`from${routeCounter}`);
       fromInput.value = `${toInput}`;
 
       // console.log(routeCounter);
 
       // console.log(fromInput);
       // console.log(toInput);
-
     }
     // Обновляем значение конечного спидометра при добавлении маршрута
     updateEndOdometer();
@@ -563,18 +600,11 @@ function addEventListeners() {
     saveinchange();
     // initAutocomplete()
   });
-
-
 }
 
 // Обработка формы
 async function handleFormSubmit(event) {
-
   // event.preventDefault();
-
-
-
-
 
   const modalSendForm = document.createElement("div");
   modalSendForm.className = "modal__sendForm";
@@ -661,46 +691,60 @@ async function handleFormSubmit(event) {
     totalTransferred:
       parseFloat(document.getElementById("totalTransferred").textContent) || 0,
     // odometr ***********************************
-    startOdometer:
-      Math.round(parseFloat(document.getElementById("startOdometer").value) || 0),
+    startOdometer: Math.round(
+      parseFloat(document.getElementById("startOdometer").value) || 0
+    ),
     routes: [],
-    endOdometer:
-      Math.round(parseFloat(document.getElementById("endOdometerValue").textContent) || 0),
-    signalOdometer:
-      Math.round(parseFloat(document.getElementById("signal").textContent) || 0),
-    pointOdometer:
-      Math.round(parseFloat(document.getElementById("point").textContent) || 0),
-    familiarizationOdometer:
-      Math.round(parseFloat(document.getElementById("familiarization").textContent) || 0),
-    patrolOdometer:
-      Math.round(parseFloat(document.getElementById("patrol").textContent) || 0),
-    breaksOdometer:
-      Math.round(parseFloat(document.getElementById("breaks").textContent) || 0),
-    pickupHOdometer:
-      Math.round(parseFloat(document.getElementById("pickupH").textContent) || 0),
-    pickupVOdometer:
-      Math.round(parseFloat(document.getElementById("pickupV").textContent) || 0),
-    washOdometer:
-      Math.round(parseFloat(document.getElementById("wash").textContent) || 0),
-    serviceOdometer:
-      Math.round(parseFloat(document.getElementById("service").textContent) || 0),
-    checkOdometer:
-      Math.round(parseFloat(document.getElementById("check").textContent) || 0),
-    changeOdometer:
-      Math.round(parseFloat(document.getElementById("change").textContent) || 0),
-    otherOdometer:
-      Math.round(parseFloat(document.getElementById("other").textContent) || 0),
+    endOdometer: Math.round(
+      parseFloat(document.getElementById("endOdometerValue").textContent) || 0
+    ),
+    signalOdometer: Math.round(
+      parseFloat(document.getElementById("signal").textContent) || 0
+    ),
+    pointOdometer: Math.round(
+      parseFloat(document.getElementById("point").textContent) || 0
+    ),
+    familiarizationOdometer: Math.round(
+      parseFloat(document.getElementById("familiarization").textContent) || 0
+    ),
+    patrolOdometer: Math.round(
+      parseFloat(document.getElementById("patrol").textContent) || 0
+    ),
+    breaksOdometer: Math.round(
+      parseFloat(document.getElementById("breaks").textContent) || 0
+    ),
+    pickupHOdometer: Math.round(
+      parseFloat(document.getElementById("pickupH").textContent) || 0
+    ),
+    pickupVOdometer: Math.round(
+      parseFloat(document.getElementById("pickupV").textContent) || 0
+    ),
+    washOdometer: Math.round(
+      parseFloat(document.getElementById("wash").textContent) || 0
+    ),
+    serviceOdometer: Math.round(
+      parseFloat(document.getElementById("service").textContent) || 0
+    ),
+    checkOdometer: Math.round(
+      parseFloat(document.getElementById("check").textContent) || 0
+    ),
+    changeOdometer: Math.round(
+      parseFloat(document.getElementById("change").textContent) || 0
+    ),
+    otherOdometer: Math.round(
+      parseFloat(document.getElementById("other").textContent) || 0
+    ),
   };
 
   document.querySelectorAll("#routesContainer .route").forEach((route) => {
     const inputs = route.querySelectorAll(".input");
     const isCombatBox = route.querySelector(".isCombat__box");
     // console.log(isCombatBox);
-    let isCombat = 'нет';
+    let isCombat = "нет";
     if (isCombatBox) {
       if (isCombatBox.classList.contains("combat")) {
-        isCombat = 'да';
-        signalsCombat++
+        isCombat = "да";
+        signalsCombat++;
       }
     }
     data.routes.push({
@@ -723,17 +767,14 @@ async function handleFormSubmit(event) {
     console.log(data);
     console.log("---------------------------");
 
-    const response = await fetch(
-      googleApiAdress,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        mode: "no-cors", // Запрос с режимом no-cors
-      }
-    );
+    const response = await fetch(googleApiAdress, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      mode: "no-cors", // Запрос с режимом no-cors
+    });
 
     const result = await response.json();
     // console.log("---------------------------");
@@ -778,8 +819,6 @@ function reload() {
 // Запуск
 init();
 
-
-
 // Слушаем изменения на всех инпутах и селектах
 function saveinchange() {
   // console.log("save");
@@ -791,29 +830,28 @@ function saveinchange() {
 }
 
 document.addEventListener("click", (event) => {
-  let isCombat = event.target
+  let isCombat = event.target;
   // Проверяем, что клик был по элементу с классом isCombat
   if (isCombat.classList.contains("isCombat__box")) {
     // Удаляем класс combat у всех элементов, если нужно
 
     // Добавляем класс combat только текущему элементу
     isCombat.classList.toggle("combat");
-    const routeDiv = isCombat.closest('.route')
-    const arestedBox = routeDiv.querySelector('.arrested')
-    const arestedInputs = arestedBox.querySelectorAll('input')
+    const routeDiv = isCombat.closest(".route");
+    const arestedBox = routeDiv.querySelector(".arrested");
+    const arestedInputs = arestedBox.querySelectorAll("input");
 
     let isCombatBox = isCombat.closest(".isCombat");
     let arrested = isCombatBox?.nextElementSibling;
-    routeDiv.classList.toggle('combat')
-    arestedInputs.forEach(input => {
-      input.value = 0
-    })
+    routeDiv.classList.toggle("combat");
+    arestedInputs.forEach((input) => {
+      input.value = 0;
+    });
     if (arrested && arrested.classList.contains("arrested")) {
-      arrested.classList.toggle('dn')
+      arrested.classList.toggle("dn");
     } else {
       // console.log("Блок arrested не найден.");
     }
-
 
     saveToLocalStorage();
   }
@@ -822,33 +860,33 @@ document
   .getElementById("routesContainer")
   .addEventListener("click", (event) => {
     if (event.target.classList.contains("deleteRoute")) {
-      const modalDelete = document.querySelector('.modal__delete');
+      const modalDelete = document.querySelector(".modal__delete");
       let routeBox = event.target.closest(".route");
 
       // console.log(routeBox);
-      modalDelete.classList.remove('dn');
+      modalDelete.classList.remove("dn");
 
       // Получаем кнопки
-      const buttonCancel = document.querySelector('.buttonCancel');
-      const buttonDelete = document.querySelector('.buttonDelete');
+      const buttonCancel = document.querySelector(".buttonCancel");
+      const buttonDelete = document.querySelector(".buttonDelete");
 
       // Удаляем предыдущие обработчики событий (если они есть)
       buttonCancel.replaceWith(buttonCancel.cloneNode(true));
       buttonDelete.replaceWith(buttonDelete.cloneNode(true));
 
       // Заново получаем новые элементы после замены
-      const newButtonCancel = document.querySelector('.buttonCancel');
-      const newButtonDelete = document.querySelector('.buttonDelete');
+      const newButtonCancel = document.querySelector(".buttonCancel");
+      const newButtonDelete = document.querySelector(".buttonDelete");
 
       // Добавляем обработчики для новых кнопок
-      newButtonCancel.addEventListener('click', () => {
-        modalDelete.classList.add('dn');
+      newButtonCancel.addEventListener("click", () => {
+        modalDelete.classList.add("dn");
       });
 
-      newButtonDelete.addEventListener('click', () => {
+      newButtonDelete.addEventListener("click", () => {
         routeCounter--;
         routeBox.remove();
-        modalDelete.classList.add('dn');
+        modalDelete.classList.add("dn");
         // Обновляем значение конечного спидометра после удаления маршрута
         updateEndOdometer();
         saveToLocalStorage();
@@ -857,11 +895,6 @@ document
   });
 
 saveinchange();
-
-
-
-
-
 
 function initAutocomplete(input) {
   // Опции для автозаполнения
@@ -882,7 +915,7 @@ function initAutocomplete(input) {
     if (place.geometry) {
       let streetName = "";
       let cityName = "";
-      let houseNumber = "";  // Переменная для хранения номера дома
+      let houseNumber = ""; // Переменная для хранения номера дома
 
       // Проходим по компонентам адреса, чтобы найти название улицы, города и номер дома
       place.address_components.forEach((component) => {
@@ -906,16 +939,16 @@ function initAutocomplete(input) {
         }
 
         // console.log("Полный адрес:", fullAddress);
-        input.value = fullAddress;  // Записываем полный адрес в инпут
-        saveToLocalStorage();  // Сохраняем в localStorage
+        input.value = fullAddress; // Записываем полный адрес в инпут
+        saveToLocalStorage(); // Сохраняем в localStorage
       }
     }
   });
 }
 
-routesContainer.addEventListener('click', (e) => {
+routesContainer.addEventListener("click", (e) => {
   // Инициализируем автозаполнение для каждого инпута с классом "suggestions"
-  if (e.target.classList.contains('suggestions')) {
+  if (e.target.classList.contains("suggestions")) {
     initAutocomplete(e.target);
   }
 });
@@ -924,48 +957,48 @@ routesContainer.addEventListener('click', (e) => {
 // document.querySelectorAll('.suggestions').forEach(input => {
 //   initAutocomplete(input);
 // });
-const buttonSendCancel = document.getElementById('buttonSend-Cancel')
-const buttonSendSend = document.getElementById('buttonSend-Send')
-const modalSend = document.getElementById('modalSend')
-const submit = document.querySelector('.btn--send');
+const buttonSendCancel = document.getElementById("buttonSend-Cancel");
+const buttonSendSend = document.getElementById("buttonSend-Send");
+const modalSend = document.getElementById("modalSend");
+const submit = document.querySelector(".btn--send");
 
-submit.addEventListener('click', (e) => {
+submit.addEventListener("click", (e) => {
   e.preventDefault();
-  console.log('sdsd');
+  console.log("sdsd");
 
   let er = [];
-  let req = document.querySelectorAll('.req');
-  let allBox = document.querySelectorAll('.route');
+  let req = document.querySelectorAll(".req");
+  let allBox = document.querySelectorAll(".route");
 
   // Скрытие всех родительских элементов до проверки
   if (allBox) {
     allBox.forEach((box) => {
-      let boxTitle = box.querySelector('.route__title');
-      let boxBody = box.querySelector('.route__row-box');
-      boxTitle.classList.remove('active');
-      boxBody.classList.remove('active');
+      let boxTitle = box.querySelector(".route__title");
+      let boxBody = box.querySelector(".route__row-box");
+      boxTitle.classList.remove("active");
+      boxBody.classList.remove("active");
     });
   }
 
   // Проверка всех обязательных полей
   for (let input of req) {
-    input.classList.remove('errore');
-    if (input.value.trim() === '') {
-      input.classList.add('errore');
-      let box = input.closest('.route');
+    input.classList.remove("errore");
+    if (input.value.trim() === "") {
+      input.classList.add("errore");
+      let box = input.closest(".route");
 
       if (box) {
-        let boxTitle = box.querySelector('.route__title');
-        let boxBody = box.querySelector('.route__row-box');
-        boxTitle.classList.add('active');
-        boxBody.classList.add('active');
+        let boxTitle = box.querySelector(".route__title");
+        let boxBody = box.querySelector(".route__row-box");
+        boxTitle.classList.add("active");
+        boxBody.classList.add("active");
       }
 
       // Прокрутка к первому пустому полю
       const rect = input.getBoundingClientRect();
       window.scrollTo({
         top: window.scrollY + rect.top - 75, // Прокрутка на 75 пикселей выше
-        behavior: 'smooth'                   // Плавная прокрутка
+        behavior: "smooth", // Плавная прокрутка
       });
 
       er.push(input);
@@ -976,55 +1009,51 @@ submit.addEventListener('click', (e) => {
   console.log(er);
 
   if (er.length == 0) {
-    modalSend.classList.remove('dn');
+    modalSend.classList.remove("dn");
   }
 });
 
-buttonSendSend.addEventListener('click', (e) => {
-
-  handleFormSubmit()
-})
-buttonSendCancel.addEventListener('click', () => {
-  modalSend.classList.add('dn')
-})
-
-
-
+buttonSendSend.addEventListener("click", (e) => {
+  handleFormSubmit();
+});
+buttonSendCancel.addEventListener("click", () => {
+  modalSend.classList.add("dn");
+});
 
 fetch(googleApiAdress)
-  .then(response => {
+  .then((response) => {
     if (!response.ok) {
-      throw new Error('Ошибка сети');
+      throw new Error("Ошибка сети");
     }
     return response.json();
   })
-  .then(data => {
+  .then((data) => {
     // console.log('Данные из столбца B:', data.columnB);
     // console.log('Данные из столбца C:', data.columnC);
-    console.log('vse dannie', data);
+    console.log("vse dannie", data);
 
-    employee.innerHTML = '';
+    employee.innerHTML = "";
     if (data.columnB) {
-      data.columnB.forEach(item => {
-        let newOption = document.createElement('option');
+      data.columnB.forEach((item) => {
+        let newOption = document.createElement("option");
         newOption.value = item;
-        employee.appendChild(newOption)
-      })
+        employee.appendChild(newOption);
+      });
     }
     if (data.columnC) {
-      data.columnC.forEach(item => {
-        let newOption = document.createElement('option');
+      data.columnC.forEach((item) => {
+        let newOption = document.createElement("option");
         newOption.value = item;
-        cars.appendChild(newOption)
-      })
+        cars.appendChild(newOption);
+      });
     }
     if (data.columnD) {
-      data.columnD.forEach(item => {
-        let newOption = document.createElement('option');
+      data.columnD.forEach((item) => {
+        let newOption = document.createElement("option");
         newOption.value = item;
         newOption.textContent = item;
-        unit.appendChild(newOption)
-      })
+        unit.appendChild(newOption);
+      });
     }
     const savedData = localStorage.getItem("formData");
     if (savedData) {
@@ -1032,7 +1061,7 @@ fetch(googleApiAdress)
 
       document.getElementById("unit").value = data.unit || "";
     }
-    console.log('loading finish');
+    console.log("loading finish");
 
     const load = document.getElementById("load");
     if (load) {
@@ -1047,30 +1076,24 @@ fetch(googleApiAdress)
         );
       }, 1000);
     }
-
   })
-  .catch(error => {
-    console.error('Ошибка:', error);
+  .catch((error) => {
+    console.error("Ошибка:", error);
   });
 
-
-
-
-
-const tgLink = document.querySelector('.tgLink');
-tgLink.addEventListener('click', () => {
+const tgLink = document.querySelector(".tgLink");
+tgLink.addEventListener("click", () => {
   if (window.cordova && window.cordova.InAppBrowser) {
-    window.cordova.InAppBrowser.open('https://t.me/Alexandrr32', '_system');  // Открытие ссылки в стандартном браузере
+    window.cordova.InAppBrowser.open("https://t.me/Alexandrr32", "_system"); // Открытие ссылки в стандартном браузере
   } else {
-    window.open('https://t.me/Alexandrr32', "_blank");
+    window.open("https://t.me/Alexandrr32", "_blank");
   }
-})
+});
 const checCard = document.querySelector("#searchCard__value");
 const buttonCheck = document.querySelector("#searchCard__btn");
 
 // buttonCheck.addEventListener("click", () => {
 //   let value = checCard.value.toUpperCase().replace(/\s+/g, '');
-
 
 //   if (value !== "") {
 //     let pdfUrl = `https://l-cs.ohholding.com.ua/storage//object_cards/pdf/2/${value}.pdf`;
@@ -1082,11 +1105,8 @@ const buttonCheck = document.querySelector("#searchCard__btn");
 //       window.open(pdfUrl, "_blank");
 //     }
 
-
 //   }
 // });
-
-
 
 // Глобальные переменные для функций-обработчиков
 let handleRouteClick = null;
@@ -1094,49 +1114,69 @@ let openPdf = null;
 
 // Основная логика
 buttonCheck.addEventListener("click", () => {
-  let value = checCard.value.toUpperCase().replace(/\s+/g, '');
+  let value = checCard.value.toUpperCase().replace(/\s+/g, "");
+  if (!searchCardErroreBox.classList.contains("dn")) {
+    searchCardErroreBox.classList.add("dn");
+  }
+  if (!spinner.classList.contains("dn")) {
+    spinner.classList.add("dn");
+  }
 
-  const routeRoute = document.getElementById('routeRoute');
-  const nameCard = document.getElementById('nameCard');
-  const adressCard = document.getElementById('adressCard');
+  const routeRoute = document.getElementById("routeRoute");
+  const nameCard = document.getElementById("nameCard");
+  const adressCard = document.getElementById("adressCard");
 
   adressCard.textContent = ``;
   nameCard.textContent = ``;
-  routeRoute.classList.remove('active');
-  routeCard.classList.remove('active');
+  routeRoute.classList.remove("active");
+  routeCard.classList.remove("active");
   let pdfUrl = ``;
 
   if (value !== "") {
+    spinner.classList.remove("dn");
+    searchCardErrore.textContent = `${value}`;
     // Удаляем старые обработчики
-    if (handleRouteClick) routeRoute.removeEventListener('click', handleRouteClick);
-    if (openPdf) routeCard.removeEventListener('click', openPdf);
+    if (handleRouteClick)
+      routeRoute.removeEventListener("click", handleRouteClick);
+    if (openPdf) routeCard.removeEventListener("click", openPdf);
 
     // Создаём новый обработчик для открытия PDF
     openPdf = () => {
       if (window.cordova && window.cordova.InAppBrowser) {
-        window.cordova.InAppBrowser.open(pdfUrl, '_system');
+        window.cordova.InAppBrowser.open(pdfUrl, "_system");
       } else {
         window.open(pdfUrl, "_blank");
       }
     };
-    routeCard.addEventListener('click', openPdf);
+
+    routeCard.addEventListener("click", openPdf);
 
     pdfUrl = `https://l-cs.ohholding.com.ua/storage/object_cards/pdf/2/${value}.pdf`;
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    
-    fetch(proxyUrl + pdfUrl)
-      .then(response => response.arrayBuffer())
-      .then(data => {
-        pdfjsLib.getDocument(data).promise.then(pdf => {
-          routeCard.classList.add('active');
-          let numPages = pdf.numPages;
-          let allText = '';
+    // const proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
-          let readPage = pageNum => {
-            return pdf.getPage(pageNum).then(page => {
-              return page.getTextContent().then(textContent => {
-                let pageText = textContent.items.map(item => item.str).join(' ');
-                allText += pageText + '\n';
+    fetch("https://corsproxy.io/?url=" + encodeURIComponent(pdfUrl))
+      .then((response) => {
+        if (!response.ok) {
+          searchCardErroreBox.classList.remove("dn");
+          spinner.classList.add("dn");
+          throw new Error("Network response was not ok");
+        }
+        return response.arrayBuffer();
+      })
+      .then((data) => {
+        pdfjsLib.getDocument(data).promise.then((pdf) => {
+          // routeCard.classList.add("active");
+          let numPages = pdf.numPages;
+          let allText = "";
+          spinner.classList.add("dn");
+          routeCard.classList.add("active");
+          let readPage = (pageNum) => {
+            return pdf.getPage(pageNum).then((page) => {
+              return page.getTextContent().then((textContent) => {
+                let pageText = textContent.items
+                  .map((item) => item.str)
+                  .join(" ");
+                allText += pageText + "\n";
                 return pageText;
               });
             });
@@ -1157,26 +1197,27 @@ buttonCheck.addEventListener("click", () => {
             const matches1 = text.match(regex1);
 
             // Удаляем старый обработчик
-            if (handleRouteClick) routeRoute.removeEventListener('click', handleRouteClick);
+            if (handleRouteClick)
+              routeRoute.removeEventListener("click", handleRouteClick);
 
             // Создаём новый обработчик
             if (matches1) {
               latitude = matches1[1];
               longitude = matches1[2];
-              routeRoute.classList.add('active');
+              routeRoute.classList.add("active");
 
               handleRouteClick = () => {
                 const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
                 if (window.cordova && window.cordova.InAppBrowser) {
-                  window.cordova.InAppBrowser.open(googleMapsUrl, '_system');
+                  window.cordova.InAppBrowser.open(googleMapsUrl, "_system");
                 } else {
                   window.open(googleMapsUrl, "_blank");
                 }
               };
 
-              routeRoute.addEventListener('click', handleRouteClick);
+              routeRoute.addEventListener("click", handleRouteClick);
             } else {
-              routeRoute.classList.remove('active');
+              routeRoute.classList.remove("active");
               latitude = null;
               longitude = null;
             }
