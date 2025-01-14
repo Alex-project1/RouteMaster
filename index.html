@@ -280,15 +280,28 @@
     <h1>Пошук карточки об'єкту</h1>
     <input type="text" id="searchCard__value" placeholder="введіть номер">
     <div id="searchCard__btn">ПОШУК</div>
+
+    <div class="resultCardBox">
+
+      <div class="nameCard  text">Назва об'єкту:  <span id="nameCard"></span></div>
+      <div class="adressCard text"> Адреса:  <span id="adressCard"></span></div>
+
+      <div class="routeCardBtns">
+        <div class="routeCard routeCardBtn btn" id="routeCard" >Картка</div>
+        <div class="routeRoute routeCardBtn btn" id="routeRoute">Їхати</div>
+
+      </div>
+    </div>
   </div>
+  <div class="pdf-viewer" id="pdf-viewer"></div>
 
 
   <div class="footer">
     Powered by <a class="tgLink" href="https://t.me/Alexandrr32" target="_blank">Кирилюк О.</a>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
 </html>
 <script type="module" src="/src/js/main.js"></script>

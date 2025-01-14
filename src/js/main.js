@@ -8,7 +8,7 @@ const googleApiAdress = zp;
 const employee = document.getElementById('employee');
 const cars = document.getElementById('cars');
 const unit = document.getElementById('unit');
-
+const routeCard = document.getElementById('routeCard');
 let routeCounter = 0;
 const routesContainer = document.getElementById('routesContainer')
 const forward = document.querySelector(".forward");
@@ -426,7 +426,7 @@ function updateEndOdometer() {
       totalDistance += parseFloat(input.value) || 0;
     });
   document.getElementById("dailyMileage").textContent = totalDistance;
-  document.getElementById("dailyKm").textContent = totalDistance +' км';
+  document.getElementById("dailyKm").textContent = totalDistance + ' км';
 
   // Рассчитываем и обновляем конечное значение спидометра
   const endOdometer = startOdometer + totalDistance;
@@ -434,7 +434,7 @@ function updateEndOdometer() {
   document.getElementById("endOdometerValue").textContent =
     endOdometer.toFixed(1);
   document.getElementById("endOd").textContent =
-    endOdometer.toFixed(1) +' км';
+    endOdometer.toFixed(1) + ' км';
   document
     .getElementById("signalsHolding")
     .addEventListener("input", updateTotalSignals);
@@ -748,7 +748,7 @@ async function handleFormSubmit(event) {
     }
   } catch (error) {
     console.log(error);
-    
+
     const box = document.querySelector(".box");
     const lastBtn = document.querySelector(".lastBtn");
 
@@ -1032,28 +1032,39 @@ fetch(googleApiAdress)
 
       document.getElementById("unit").value = data.unit || "";
     }
-  console.log('loading finish');
-  
-      const load = document.getElementById("load");
-      if (load) {
-        setTimeout(() => {
-          load.classList.add("finish");
-          load.addEventListener(
-            "transitionend",
-            () => {
-              load.remove();
-            },
-            { once: true }
-          );
-        }, 1000);
-      }
-   
+    console.log('loading finish');
+
+    const load = document.getElementById("load");
+    if (load) {
+      setTimeout(() => {
+        load.classList.add("finish");
+        load.addEventListener(
+          "transitionend",
+          () => {
+            load.remove();
+          },
+          { once: true }
+        );
+      }, 1000);
+    }
+
   })
   .catch(error => {
     console.error('Ошибка:', error);
   });
 
 
+
+
+
+const tgLink = document.querySelector('.tgLink');
+tgLink.addEventListener('click', () => {
+  if (window.cordova && window.cordova.InAppBrowser) {
+    window.cordova.InAppBrowser.open('https://t.me/Alexandrr32', '_system');  // Открытие ссылки в стандартном браузере
+  } else {
+    window.open('https://t.me/Alexandrr32', "_blank");
+  }
+})
 const checCard = document.querySelector("#searchCard__value");
 const buttonCheck = document.querySelector("#searchCard__btn");
 
@@ -1070,13 +1081,149 @@ buttonCheck.addEventListener("click", () => {
     } else {
       window.open(pdfUrl, "_blank");
     }
+
+
   }
 });
-const tgLink = document.querySelector('.tgLink');
-tgLink.addEventListener('click', ()=>{
-  if (window.cordova && window.cordova.InAppBrowser) {
-    window.cordova.InAppBrowser.open('https://t.me/Alexandrr32', '_system');  // Открытие ссылки в стандартном браузере
-  } else {
-    window.open('https://t.me/Alexandrr32', "_blank");
-  }
-})
+
+// buttonCheck.addEventListener("click", () => {
+//   let value = checCard.value.toUpperCase().replace(/\s+/g, '');
+
+//   const routeRoute = document.getElementById('routeRoute');
+//   const nameCard = document.getElementById('nameCard');
+//   const adressCard = document.getElementById('adressCard');
+
+  
+//   adressCard.textContent = ``;
+//   nameCard.textContent = ``;
+//   routeRoute.classList.remove('active');
+//   routeCard.classList.remove('active');
+//   let pdfUrl = ``
+  
+//   if (value !== "") {
+//         function openPdf() {  
+       
+//       if (window.cordova && window.cordova.InAppBrowser) {
+//         window.cordova.InAppBrowser.open(pdfUrl, '_system');
+//       } else {
+//         window.open(pdfUrl, "_blank");
+//       }
+//     }
+//     routeCard.addEventListener('click',  openPdf);
+
+//     pdfUrl = `https://l-cs.ohholding.com.ua/storage//object_cards/pdf/2/${value}.pdf`;
+//     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+//     console.log('--------------');
+//     console.log(pdfUrl);
+//     console.log('--------------');
+
+//     // Открытие PDF с помощью InAppBrowser
+
+
+//     // Добавляем новый обработчик
+
+
+//     // Загружаем PDF и извлекаем текст
+//     fetch(proxyUrl + pdfUrl)
+//       .then(response => response.arrayBuffer())
+//       .then(data => {
+//         // Инициализируем PDF.js
+//         pdfjsLib.getDocument(data).promise.then(pdf => {
+//           routeCard.classList.add('active');
+//           let numPages = pdf.numPages;
+//           let allText = '';
+
+//           // Прочитаем все страницы
+//           let readPage = pageNum => {
+//             return pdf.getPage(pageNum).then(page => {
+//               return page.getTextContent().then(textContent => {
+//                 let pageText = textContent.items.map(item => item.str).join(' ');
+//                 allText += pageText + '\n'; // Собираем текст со всех страниц
+//                 return pageText;
+//               }).catch(err => console.error('Ошибка при чтении страницы:', err));
+//             }).catch(err => console.error('Ошибка при получении страницы:', err));
+//           };
+
+//           // Создаём промис для чтения всех страниц
+//           let pagePromises = [];
+//           for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+//             pagePromises.push(readPage(pageNum));
+//           }
+
+//           // После обработки всех страниц
+//           Promise.all(pagePromises).then(() => {
+//             // Пример текста из документа
+//             const text = allText;
+
+//             // Сбрасываем переменные
+//             let latitude = null;
+//             let longitude = null;
+//             let address = '';
+//             let result = '';
+
+//             // Регулярное выражение для поиска координат
+//             const regex1 = /Варіанти під'їзду:[^0-9]*?(\d+\.\d+),\s*(\d+\.\d+)/;
+//             const matches1 = text.match(regex1);
+
+//             routeRoute.classList.remove('active');
+
+//             // Сброс координат
+//             function handleRouteClick() {
+//               if (latitude && longitude) {
+//                 const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+//                 if (window.cordova && window.cordova.InAppBrowser) {
+//                   window.cordova.InAppBrowser.open(googleMapsUrl, '_system');
+//                 } else {
+//                   window.open(googleMapsUrl, "_blank");
+//                 }
+//               }
+//             }
+
+//             routeRoute.removeEventListener('click', handleRouteClick);
+
+//             if (matches1) {
+//               latitude = matches1[1];
+//               longitude = matches1[2];
+//               routeRoute.classList.add('active');
+//               routeRoute.addEventListener('click', handleRouteClick);
+//             } else {
+//               routeRoute.classList.remove('active');
+//               routeRoute.removeEventListener('click', handleRouteClick);
+//               latitude = null;
+//               longitude = null;
+//             }
+
+//             // Регулярное выражение для текста между "Міст охр. м. Запоріжжя" и "радіоканал"
+//             const regex2 = / м\. Запоріжжя(.*?)радіоканал/;
+//             const matches2 = text.match(regex2);
+
+//             if (matches2) {
+//               result = matches2[1].trim();
+//               nameCard.textContent = result;
+//             } else {
+//               console.log("Текст не найден");
+//             }
+
+//             // Регулярное выражение для текста между "Адреса об'єкта :" и "Дата початку надання"
+//             const regex3 = /Адреса об'єкта\s*:\s*(.*?)\s*Дата початку надання/;
+//             const matches3 = text.match(regex3);
+
+//             if (matches3) {
+//               address = matches3[1].trim();
+//               adressCard.textContent = address;
+//             } else {
+//               console.log("Адреса не знайдена");
+//             }
+//           });
+//         }).catch(err => {
+//           console.error('Ошибка при загрузке PDF:', err);
+//           routeCard.classList.remove('active');
+//           routeRoute.classList.remove('active');
+//         });
+//       }).catch(error => {
+//         console.error('Ошибка при загрузке PDF:', error);
+//         routeCard.classList.remove('active');
+//         routeRoute.classList.remove('active');
+//       });
+//   }
+// });
