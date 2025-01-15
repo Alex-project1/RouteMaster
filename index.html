@@ -282,7 +282,7 @@
       <input type="text" id="searchCard__value" placeholder="введіть номер">
       <div id="searchCard__btn">ПОШУК</div>
       <div id='preloader'>
-        <div class='spinner dn' id="spinner">
+       <div class='spinner dn' id="spinner">
           <div class='loader'>
             <div class='moving-dot'></div>
             <div class='moving-dot'></div>
@@ -292,12 +292,13 @@
             <div class='moving-dot'></div>
           </div>
         </div>
-        <div class="searchCardErrore dn">Помилка пошуку <span id="searchCardErrore"></span></div>
       </div>
 
     </div>
     <div class="resultCardBox">
-
+      <div class="searchCardErrore">Результати пошуку: <span id="searchCardErrore"></span> <span id="searchCardErroreText" class="dn">ПОМИЛКА</span></div>
+       
+      <div class="nameClient  text">Клієнт: <span id="nameClient"></span></div>
       <div class="nameCard  text">Назва об'єкту: <span id="nameCard"></span></div>
       <div class="adressCard text"> Адреса: <span id="adressCard"></span></div>
 

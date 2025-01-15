@@ -6,7 +6,7 @@ const zp =
   "https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec";
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
-const googleApiAdress = zp;
+const googleApiAdress = dp;
 const employee = document.getElementById("employee");
 const cars = document.getElementById("cars");
 const unit = document.getElementById("unit");
@@ -20,8 +20,7 @@ const resulBtn = document.getElementById("resulBtn");
 const resultsBody = document.getElementById("results");
 const searchCardErrore = document.getElementById("searchCardErrore");
 const spinner = document.getElementById("spinner");
-const searchCardErroreBox = document.querySelector(".searchCardErrore");
-
+const searchCardErroreText = document.getElementById('searchCardErroreText')
 resulBtn.addEventListener("click", () => {
   resultsBody.classList.toggle("active");
 });
@@ -289,81 +288,61 @@ function loadFromLocalStorage() {
                 <div class="hide__box">
 
                     <div class="route__row streetRow">
-                        <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${
-                          index + 1
-                        }" required="" value="${route.from}">
-                        <input class="input req" type="time" required="" value="${
-                          route.departureTime
-                        }">
+                        <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${index + 1
+        }" required="" value="${route.from}">
+                        <input class="input req" type="time" required="" value="${route.departureTime
+        }">
                     </div>
                     <div class="route__row streetRow">
-                        <input class="input req suggestions" type="text" placeholder="Куди" id="to${
-                          index + 1
-                        }" required="" value="${route.to}">
-                        <input class="input req" type="time" required="" value="${
-                          route.arrivalTime
-                        }">
+                        <input class="input req suggestions" type="text" placeholder="Куди" id="to${index + 1
+        }" required="" value="${route.to}">
+                        <input class="input req" type="time" required="" value="${route.arrivalTime
+        }">
                     </div>
                     <div class="route__row last" id="last">
                         <input class="input distance req" type="number"  placeholder="Відстань(км)" required=""
                         value="${route.distance}">
 
-                           <select class="input req" id="target${
-                             index + 1
-                           }" required>
-                    <option data-toggle="arest${
-                      index + 1
-                    }" value="" selected>                    мета поїздки</option>
+                           <select class="input req" id="target${index + 1
+        }" required>
+                    <option data-toggle="arest${index + 1
+        }" value="" selected>                    мета поїздки</option>
                     
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="signal" data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="signal" data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
 
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання ВБ">Спрацювання ВБ</option>
-                    <option data-toggle="arest${
-                      index + 1
-                    }"  data-value="point" value="Точка відстою">Точка відстою</option>
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="patrol" value="Патруль">Патруль</option>
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="pickupV" value="Підвіз ВБ">Підвіз ВБ</option>
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="wash" value="Мийка">Мийка</option>
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="service" value="СТО">СТО</option>                    
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="check" value="Перевірка">Перевірка</option>                    
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="change" value="Перезмінка">Перезмінка</option>                    
-                    <option data-toggle="arest${
-                      index + 1
-                    }" data-value="other" value="Інше">Інше</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання ВБ">Спрацювання ВБ</option>
+                    <option data-toggle="arest${index + 1
+        }"  data-value="point" value="Точка відстою">Точка відстою</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="patrol" value="Патруль">Патруль</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="pickupV" value="Підвіз ВБ">Підвіз ВБ</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="wash" value="Мийка">Мийка</option>
+                    <option data-toggle="arest${index + 1
+        }" data-value="service" value="СТО">СТО</option>                    
+                    <option data-toggle="arest${index + 1
+        }" data-value="check" value="Перевірка">Перевірка</option>                    
+                    <option data-toggle="arest${index + 1
+        }" data-value="change" value="Перезмінка">Перезмінка</option>                    
+                    <option data-toggle="arest${index + 1
+        }" data-value="other" value="Інше">Інше</option>
                   </select>
                   
                       
                         </div>
 
 
-  <div class="isCombat ${
-    route.purpose.includes("Спрацювання") ? "active" : ""
-  }"" id="arest${index + 1}">
+  <div class="isCombat ${route.purpose.includes("Спрацювання") ? "active" : ""
+        }"" id="arest${index + 1}">
   <div class="isCombat__overflow">
     <span>Бойова??</span>
     <div class="isCombat__box ${route.isCombat ? "combat" : ""}"></div>
@@ -377,15 +356,13 @@ function loadFromLocalStorage() {
 
                   <div class="arrested__row">
                     <span>Затримано</span>
-                    <input class="input req" value="${
-                      route.delayed
-                    }" type="number" id="arest">
+                    <input class="input req" value="${route.delayed
+        }" type="number" id="arest">
                   </div>
                   <div class="arrested__row">
                     <span>передано до полиції</span>
-                    <input class="input req" value="${
-                      route.transferred
-                    }" type="number" >
+                    <input class="input req" value="${route.transferred
+        }" type="number" >
                   </div>
  </div>
 
@@ -394,9 +371,8 @@ function loadFromLocalStorage() {
 
 
                         <div class="route__row">
-                        <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5"> ${
-                          route.message
-                        }</textarea>
+                        <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5"> ${route.message
+        }</textarea>
                     </div>
             
                     <button type="button" class="deleteRoute">Видалити</button>
@@ -1108,139 +1084,151 @@ const buttonCheck = document.querySelector("#searchCard__btn");
 //   }
 // });
 
+
+
+// Логика поиска карточек **************************************
+
 // Глобальные переменные для функций-обработчиков
 let handleRouteClick = null;
 let openPdf = null;
 
-// Основная логика
-buttonCheck.addEventListener("click", () => {
+
+
+
+
+
+const myHeaders = new Headers();
+myHeaders.append("Authorization", "Basic YS5raXJpbHVrOm03OTdnTGZaOEo=");
+myHeaders.append("Accept", "application/json");
+
+
+
+
+buttonCheck.addEventListener('click', () => {
+  const routeRoute = document.getElementById("routeRoute");
+  const nameCard = document.getElementById("nameCard");
+  const nameClient = document.getElementById("nameClient");
+  const adressCard = document.getElementById("adressCard");
+  nameClient.textContent = ``;
+  nameCard.textContent = ``;
+  adressCard.textContent = ``;
+
   let value = checCard.value.toUpperCase().replace(/\s+/g, "");
-  if (!searchCardErroreBox.classList.contains("dn")) {
-    searchCardErroreBox.classList.add("dn");
+  if (!searchCardErroreText.classList.contains("dn")) {
+    searchCardErroreText.classList.add("dn");
   }
   if (!spinner.classList.contains("dn")) {
     spinner.classList.add("dn");
   }
 
-  const routeRoute = document.getElementById("routeRoute");
-  const nameCard = document.getElementById("nameCard");
-  const adressCard = document.getElementById("adressCard");
 
-  adressCard.textContent = ``;
-  nameCard.textContent = ``;
+
   routeRoute.classList.remove("active");
   routeCard.classList.remove("active");
-  let pdfUrl = ``;
+  // поиск карточки
+  let cardData = ``;
 
   if (value !== "") {
+
+  }
+  // поиск координат
+
+
+
+
+
+
+
+  if (value !== '') {
+    cardData = `https://l-cs.ohholding.com.ua/api/v2/object-card/by-account-number/${value}`
+
     spinner.classList.remove("dn");
     searchCardErrore.textContent = `${value}`;
-    // Удаляем старые обработчики
-    if (handleRouteClick)
-      routeRoute.removeEventListener("click", handleRouteClick);
-    if (openPdf) routeCard.removeEventListener("click", openPdf);
 
-    // Создаём новый обработчик для открытия PDF
-    openPdf = () => {
-      if (window.cordova && window.cordova.InAppBrowser) {
-        window.cordova.InAppBrowser.open(pdfUrl, "_system");
-      } else {
-        window.open(pdfUrl, "_blank");
-      }
-    };
 
-    routeCard.addEventListener("click", openPdf);
-
-    pdfUrl = `https://l-cs.ohholding.com.ua/storage/object_cards/pdf/2/${value}.pdf`;
-    // const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-
-    fetch("https://corsproxy.io/?url=" + encodeURIComponent(pdfUrl))
+    fetch(cardData, {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    })
       .then((response) => {
+        // Проверка на успешный ответ (status 200)
         if (!response.ok) {
-          searchCardErroreBox.classList.remove("dn");
-          spinner.classList.add("dn");
           throw new Error("Network response was not ok");
         }
-        return response.arrayBuffer();
+        return response.json();  // Используем .json() для автоматического парсинга
       })
-      .then((data) => {
-        pdfjsLib.getDocument(data).promise.then((pdf) => {
-          // routeCard.classList.add("active");
-          let numPages = pdf.numPages;
-          let allText = "";
+      .then((result) => {
+
+        const data = result.data
+        // Теперь можно работать с объектом, например:
+        if (data.length > 0) {
+          console.log('estm');
           spinner.classList.add("dn");
-          routeCard.classList.add("active");
-          let readPage = (pageNum) => {
-            return pdf.getPage(pageNum).then((page) => {
-              return page.getTextContent().then((textContent) => {
-                let pageText = textContent.items
-                  .map((item) => item.str)
-                  .join(" ");
-                allText += pageText + "\n";
-                return pageText;
-              });
-            });
-          };
+          console.log(data);
 
-          let pagePromises = [];
-          for (let pageNum = 1; pageNum <= numPages; pageNum++) {
-            pagePromises.push(readPage(pageNum));
-          }
+          // routeCard.classList.add("active");
+          nameClient.textContent = `${data[0].client_name}`
+          nameCard.textContent = `${data[0].object_title}`
+          adressCard.textContent = `${data[0].object_address}`
 
-          Promise.all(pagePromises).then(() => {
-            const text = allText;
+          // const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=YOUR_ORIGIN&destination=${data[0].coordinates.lat},${data[0].coordinates.lng}`;
+          if (data[0].coordinates.lat !== null) {
+            const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${data[0].coordinates.lat},${data[0].coordinates.lng}`;
 
-            let latitude = null;
-            let longitude = null;
-
-            const regex1 = /Варіанти під'їзду:[^0-9]*?(\d+\.\d+),\s*(\d+\.\d+)/;
-            const matches1 = text.match(regex1);
-
-            // Удаляем старый обработчик
+            // Удаляем старые обработчики
             if (handleRouteClick)
               routeRoute.removeEventListener("click", handleRouteClick);
 
-            // Создаём новый обработчик
-            if (matches1) {
-              latitude = matches1[1];
-              longitude = matches1[2];
-              routeRoute.classList.add("active");
+            handleRouteClick = () => {
 
-              handleRouteClick = () => {
-                const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-                if (window.cordova && window.cordova.InAppBrowser) {
-                  window.cordova.InAppBrowser.open(googleMapsUrl, "_system");
-                } else {
-                  window.open(googleMapsUrl, "_blank");
-                }
-              };
+              if (window.cordova && window.cordova.InAppBrowser) {
+                window.cordova.InAppBrowser.open(googleMapsUrl, "_system");
+              } else {
+                window.open(googleMapsUrl, "_blank");
+              }
+            };
+            routeRoute.classList.add('active')
+            routeRoute.addEventListener("click", handleRouteClick);
 
-              routeRoute.addEventListener("click", handleRouteClick);
-            } else {
-              routeRoute.classList.remove("active");
-              latitude = null;
-              longitude = null;
-            }
+            if (openPdf) routeCard.removeEventListener("click", openPdf);
+            let pdfUrl = `https://l-cs.ohholding.com.ua/storage//object_cards/pdf/${data[0].region_id}/${data[0].account_number}.pdf`
+          
+         
+            // Создаём новый обработчик для открытия PDF
+            openPdf = () => {
+              console.log('open');
 
-            const regex2 = / м\. Запоріжжя(.*?)радіоканал/;
-            const matches2 = text.match(regex2);
+              if (window.cordova && window.cordova.InAppBrowser) {
+                window.cordova.InAppBrowser.open(pdfUrl, "_system");
+              } else {
+                window.open(pdfUrl, "_blank");
+              }
+            };
 
-            if (matches2) {
-              nameCard.textContent = matches2[1].trim();
-            } else {
-              console.log("Текст не найден");
-            }
+            routeCard.classList.add('active')
+            routeCard.addEventListener("click", openPdf);
+          } else {
+            console.log('coord net');
 
-            const regex3 = /Адреса об'єкта\s*:\s*(.*?)\s*Дата початку надання/;
-            const matches3 = text.match(regex3);
+          }
 
-            if (matches3) {
-              adressCard.textContent = matches3[1].trim();
-            } else {
-              console.log("Адреса не знайдена");
-            }
-          });
-        });
+
+        } else {
+          console.log('net');
+
+          spinner.classList.add("dn");
+          searchCardErroreText.classList.remove("dn");
+
+        }
+
+      })
+      .catch((error) => {
+        console.error("Ошибка:", error);  // Логируем ошибку, если она есть
+
+        searchCardErroreText.classList.remove("dn");
+
+        spinner.classList.add("dn");
       });
   }
-});
+})
