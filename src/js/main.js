@@ -1,12 +1,14 @@
 import "../styles/style.scss";
 import { specificKilometer } from "./specificKilometer.js";
 import { whoseSingnal } from "./whoseSingnal.js";
+import { dataFromGoogle } from "./dataFromGoogle.js";
 // localStorage.clear();
 const zp =
-  "https://script.google.com/macros/s/AKfycbxDkeCMID-_54GCl5ohyLhpvZhrTdZC4RQ6PJP47JUnrdIVxblDz-AWCkfQEyGlhURu/exec";
+  "https://script.google.com/macros/s/AKfycbzYmRjVAs3-xWVgOVu05Pl0ag45-kR2AEJ09jE43ZVTQMPNOH8z5g2Cmd8Bo0xK1xFy/exec";
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
-const googleApiAdress = dp;
+const kr = 'https://script.google.com/macros/s/AKfycby27hfmv5uhWfQIpdbLcDFo6qCH7pVZAEp4Aogv_j-SRY155_kWlFp3iVRALev_tsoR/exec'
+const googleApiAdress = kr;
 const employee = document.getElementById("employee");
 const cars = document.getElementById("cars");
 const unit = document.getElementById("unit");
@@ -14,7 +16,7 @@ const routeCard = document.getElementById("routeCard");
 let routeCounter = 0;
 const routesContainer = document.getElementById("routesContainer");
 const forward = document.querySelector(".forward");
-const modalContainer = document.querySelector(".modal__save ");
+const modalContainer = document.querySelector(".modal__save");
 let routeTitles;
 const resulBtn = document.getElementById("resulBtn");
 const resultsBody = document.getElementById("results");
@@ -206,7 +208,43 @@ forward.addEventListener("click", () => {
 // Функция для загрузки данных из localStorage
 function loadFromLocalStorage() {
   // console.log("reload");
+  const initData = localStorage.getItem("initData");
+  if (initData) {
+    const data = JSON.parse(initData);
+    console.log(data, 'initData');
+    if (data.columnB) {
+      data.columnB.forEach((item) => {
+        let newOption = document.createElement("option");
+        newOption.value = item;
+        employee.appendChild(newOption);
+      });
+    }
+    if (data.columnC) {
+      data.columnC.forEach((item) => {
+        let newOption = document.createElement("option");
+        newOption.value = item;
+        cars.appendChild(newOption);
+      });
+    }
+    if (data.columnD) {
+      let unit = document.getElementById("unit");
+      let options = unit.querySelectorAll("option");
 
+      // Удаляем все опции, начиная с 2-й (индекс 1) и дальше
+      options.forEach((option, index) => {
+        if (index > 0) {
+          option.remove();
+        }
+      });
+      data.columnD.forEach((item) => {
+        let newOption = document.createElement("option");
+        newOption.value = item;
+        newOption.textContent = item;
+        unit.appendChild(newOption);
+      });
+    }
+
+  }
   const savedData = localStorage.getItem("formData");
   if (savedData) {
     const data = JSON.parse(savedData);
@@ -403,6 +441,7 @@ function loadFromLocalStorage() {
       container.appendChild(routeDiv);
     });
   }
+
   hide();
   updateEndOdometer();
   saveinchange();
@@ -645,11 +684,13 @@ async function handleFormSubmit(event) {
 
   // Вставляем в документ
   document.body.appendChild(modalSendForm);
+
   let signalsCombat = 0;
   let signalsHolding = Number(document.getElementById("signalsHolding").value);
   let signalsVenbest = Number(document.getElementById("signalsVenbest").value);
   let signalsDop = Number(document.getElementById("signalsDop").value);
   let totalSignal = signalsHolding + signalsVenbest + signalsDop;
+
   const data = {
     date: document.getElementById("date").value,
     unit: document.getElementById("unit").value,
@@ -715,7 +756,6 @@ async function handleFormSubmit(event) {
   document.querySelectorAll("#routesContainer .route").forEach((route) => {
     const inputs = route.querySelectorAll(".input");
     const isCombatBox = route.querySelector(".isCombat__box");
-    // console.log(isCombatBox);
     let isCombat = "нет";
     if (isCombatBox) {
       if (isCombatBox.classList.contains("combat")) {
@@ -739,9 +779,9 @@ async function handleFormSubmit(event) {
   data.signalsCombat = signalsCombat;
 
   try {
-    console.log("---------------------------");
-    console.log(data);
-    console.log("---------------------------");
+    // console.log("---------------------------");
+    // console.log(data);
+    // console.log("---------------------------");
 
     const response = await fetch(googleApiAdress, {
       method: "POST",
@@ -753,10 +793,6 @@ async function handleFormSubmit(event) {
     });
 
     const result = await response.json();
-    // console.log("---------------------------");
-    // console.log("---------------------------");
-    // console.log("---------------------------");
-    // console.log(result);
 
     if (result.status === "success") {
       alert("Данные успешно сохранены в Google Таблицу!");
@@ -777,7 +813,8 @@ async function handleFormSubmit(event) {
       lastBtn.addEventListener("click", reload);
     }, 300);
   }
-}
+} // Закрывающая скобка для функции handleFormSubmit
+
 
 // Инициализация обработчиков
 function init() {
@@ -996,66 +1033,7 @@ buttonSendCancel.addEventListener("click", () => {
   modalSend.classList.add("dn");
 });
 
-fetch(googleApiAdress)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("Ошибка сети");
-    }
-    return response.json();
-  })
-  .then((data) => {
-    // console.log('Данные из столбца B:', data.columnB);
-    // console.log('Данные из столбца C:', data.columnC);
-    console.log("vse dannie", data);
 
-    employee.innerHTML = "";
-    if (data.columnB) {
-      data.columnB.forEach((item) => {
-        let newOption = document.createElement("option");
-        newOption.value = item;
-        employee.appendChild(newOption);
-      });
-    }
-    if (data.columnC) {
-      data.columnC.forEach((item) => {
-        let newOption = document.createElement("option");
-        newOption.value = item;
-        cars.appendChild(newOption);
-      });
-    }
-    if (data.columnD) {
-      data.columnD.forEach((item) => {
-        let newOption = document.createElement("option");
-        newOption.value = item;
-        newOption.textContent = item;
-        unit.appendChild(newOption);
-      });
-    }
-    const savedData = localStorage.getItem("formData");
-    if (savedData) {
-      const data = JSON.parse(savedData);
-
-      document.getElementById("unit").value = data.unit || "";
-    }
-    console.log("loading finish");
-
-    const load = document.getElementById("load");
-    if (load) {
-      setTimeout(() => {
-        load.classList.add("finish");
-        load.addEventListener(
-          "transitionend",
-          () => {
-            load.remove();
-          },
-          { once: true }
-        );
-      }, 1000);
-    }
-  })
-  .catch((error) => {
-    console.error("Ошибка:", error);
-  });
 
 const tgLink = document.querySelector(".tgLink");
 tgLink.addEventListener("click", () => {
@@ -1192,22 +1170,31 @@ buttonCheck.addEventListener('click', () => {
             routeRoute.addEventListener("click", handleRouteClick);
 
             if (openPdf) routeCard.removeEventListener("click", openPdf);
-            let pdfUrl = `https://l-cs.ohholding.com.ua/storage//object_cards/pdf/${data[0].region_id}/${data[0].account_number}.pdf`
-          
-         
-            // Создаём новый обработчик для открытия PDF
-            openPdf = () => {
-              console.log('open');
+            // object_card_url
 
-              if (window.cordova && window.cordova.InAppBrowser) {
-                window.cordova.InAppBrowser.open(pdfUrl, "_system");
-              } else {
-                window.open(pdfUrl, "_blank");
-              }
-            };
 
-            routeCard.classList.add('active')
-            routeCard.addEventListener("click", openPdf);
+
+
+            if (data[0].object_card_url !== null) {
+              console.log(data[0].object_card_url);
+
+              let pdfUrl = `${data[0].object_card_url}`
+
+
+              // Создаём новый обработчик для открытия PDF
+              openPdf = () => {
+
+                if (window.cordova && window.cordova.InAppBrowser) {
+                  window.cordova.InAppBrowser.open(pdfUrl, "_system");
+                } else {
+                  window.open(pdfUrl, "_blank");
+                }
+              };
+
+              routeCard.classList.add('active')
+              routeCard.addEventListener("click", openPdf);
+
+            }
           } else {
             console.log('coord net');
 
@@ -1232,3 +1219,4 @@ buttonCheck.addEventListener('click', () => {
       });
   }
 })
+dataFromGoogle(googleApiAdress)
