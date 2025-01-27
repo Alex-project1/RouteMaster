@@ -8,7 +8,7 @@ const zp =
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
 const kr = 'https://script.google.com/macros/s/AKfycby27hfmv5uhWfQIpdbLcDFo6qCH7pVZAEp4Aogv_j-SRY155_kWlFp3iVRALev_tsoR/exec'
-const googleApiAdress = kr;
+const googleApiAdress = zp;
 const employee = document.getElementById("employee");
 const cars = document.getElementById("cars");
 const unit = document.getElementById("unit");
@@ -779,9 +779,9 @@ async function handleFormSubmit(event) {
   data.signalsCombat = signalsCombat;
 
   try {
-    // console.log("---------------------------");
-    // console.log(data);
-    // console.log("---------------------------");
+    console.log("---------------------------");
+    console.log(data);
+    console.log("---------------------------");
 
     const response = await fetch(googleApiAdress, {
       method: "POST",
@@ -836,7 +836,7 @@ init();
 function saveinchange() {
   // console.log("save");
 
-  document.querySelectorAll("input, select").forEach((element) => {
+  document.querySelectorAll("input, select,textarea").forEach((element) => {
     element.addEventListener("input", saveToLocalStorage); // Для инпутов
     element.addEventListener("change", saveToLocalStorage); // Для селектов
   });
@@ -1220,3 +1220,5 @@ buttonCheck.addEventListener('click', () => {
   }
 })
 dataFromGoogle(googleApiAdress)
+
+
