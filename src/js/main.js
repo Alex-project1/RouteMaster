@@ -8,7 +8,7 @@ const zp =
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
 const kr = 'https://script.google.com/macros/s/AKfycby27hfmv5uhWfQIpdbLcDFo6qCH7pVZAEp4Aogv_j-SRY155_kWlFp3iVRALev_tsoR/exec'
-const googleApiAdress = zp;
+const googleApiAdress = dp;
 const employee = document.getElementById("employee");
 const cars = document.getElementById("cars");
 const unit = document.getElementById("unit");
@@ -350,7 +350,7 @@ function loadFromLocalStorage() {
         }" data-value="signal" data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
 
                     <option data-toggle="arest${index + 1
-        }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання ВБ">Спрацювання ВБ</option>
+        }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання Партн.">Спрацювання Партн.</option>
                     <option data-toggle="arest${index + 1
         }"  data-value="point" value="Точка відстою">Точка відстою</option>
                     <option data-toggle="arest${index + 1
@@ -362,7 +362,7 @@ function loadFromLocalStorage() {
                     <option data-toggle="arest${index + 1
         }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
                     <option data-toggle="arest${index + 1
-        }" data-value="pickupV" value="Підвіз ВБ">Підвіз ВБ</option>
+        }" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
                     <option data-toggle="arest${index + 1
         }" data-value="wash" value="Мийка">Мийка</option>
                     <option data-toggle="arest${index + 1
@@ -547,13 +547,13 @@ function addEventListeners() {
                             <select class="input req" id="target" required>
                     <option data-toggle="arest${routeCounter}" value="" selected>Мета поїздки</option>
                     <option data-toggle="arest${routeCounter}" data-value="signal" value="Спрацювання ОХ" data-valuewhose="signalHolding">Спрацювання ОХ</option>
-                    <option data-toggle="arest${routeCounter}" data-value="signal" value="Спрацювання ВБ" data-valuewhose="signalVenbest">Спрацювання ВБ</option>
+                    <option data-toggle="arest${routeCounter}" data-value="signal" value="Спрацювання Партн." data-valuewhose="signalVenbest">Спрацювання Партн.</option>
                     <option data-toggle="arest${routeCounter}" data-value="point" value="Точка відстою">Точка відстою</option>
                     <option data-toggle="arest${routeCounter}" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
                     <option data-toggle="arest${routeCounter}" data-value="patrol" value="Патруль">Патруль</option>
                     <option data-toggle="arest${routeCounter}" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
                     <option data-toggle="arest${routeCounter}" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
-                    <option data-toggle="arest${routeCounter}" data-value="pickupV" value="Підвіз ВБ">Підвіз ВБ</option>
+                    <option data-toggle="arest${routeCounter}" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
                     <option data-toggle="arest${routeCounter}" data-value="wash" value="Мийка">Мийка</option>
                     <option data-toggle="arest${routeCounter}" data-value="service" value="СТО">СТО</option>
                     <option data-toggle="arest${routeCounter}" data-value="check" value="Перевірка">Перевірка</option>
