@@ -170,7 +170,7 @@ textarea {
 .route__row input:focus,
 .route__row select:focus,
 .route__row textarea:focus {
-  border-color: #4caf50;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   /* Активный цвет для фокуса */
 }
 
@@ -479,14 +479,22 @@ textarea {
   padding: 5px 10px;
 }
 
-.totalH {
-  background-color: #1263dc;
-}
 
-.totalV {
-  background-color: #e5e920;
-}
 
+// .totalH {
+//   background-color: #1263dc;
+// }
+
+// .totalV {
+//   background-color: #e5e920;
+// }
+.totalSignals-box{
+  width: 150px;
+  margin: 0 auto;
+  padding: 5px 0;
+  background: linear-gradient(to bottom, #1263dc 0%, #e5e920 100%);
+
+}
 .totalArest {
   margin-top: 10px;
   font-size: 18px;
@@ -763,4 +771,20 @@ textarea {
   .routeCardBtn {
     width: 110px;
   }
+}
+.req,.total, #searchCard__value {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), 
+              inset 2px 2px 5px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  background: white;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.req:focus, .total:focus,#searchCard__value {
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.4), 
+              inset 2px 2px 8px rgba(255, 255, 255, 0.3);
+  outline: none;
+
 }

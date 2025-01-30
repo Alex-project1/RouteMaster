@@ -2,13 +2,14 @@ import "../styles/style.scss";
 import { specificKilometer } from "./specificKilometer.js";
 import { whoseSingnal } from "./whoseSingnal.js";
 import { dataFromGoogle } from "./dataFromGoogle.js";
+import { isSignal } from "./isSignal.js";
 // localStorage.clear();
 const zp =
   "https://script.google.com/macros/s/AKfycbzYmRjVAs3-xWVgOVu05Pl0ag45-kR2AEJ09jE43ZVTQMPNOH8z5g2Cmd8Bo0xK1xFy/exec";
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
 const kr = 'https://script.google.com/macros/s/AKfycby27hfmv5uhWfQIpdbLcDFo6qCH7pVZAEp4Aogv_j-SRY155_kWlFp3iVRALev_tsoR/exec'
-const googleApiAdress = dp;
+const googleApiAdress = zp;
 const employee = document.getElementById("employee");
 const cars = document.getElementById("cars");
 const unit = document.getElementById("unit");
@@ -42,39 +43,7 @@ function hide() {
 }
 // сворачивание маршрута начало *****************************
 // Боевая или не боевая сработка начало ****************************
-document.addEventListener("change", (event) => {
-  // Проверяем, является ли изменённый элемент селектом
-  if (event.target.matches("select")) {
-    const select = event.target;
-    const selectedOption = select.options[select.selectedIndex]; // Получаем выбранный оптион
-    const toggleId = selectedOption.dataset.toggle; // Получаем значение data-toggle
-    // Если у выбранной опции есть атрибут data-toggle
-    if (toggleId) {
-      const arrestedDiv = document.getElementById(toggleId);
-
-      // Проверяем значение data-value
-      if (arrestedDiv && selectedOption.dataset.value === "signal") {
-        arrestedDiv.classList.add("active");
-        arrestedDiv.closest(".route").classList.add("signal");
-        // console.log("daaaaaaa");
-      } else if (arrestedDiv && selectedOption.dataset.value !== "signal") {
-        // console.log("neeeee");
-        arrestedDiv.classList.remove("active");
-        const routeDiv = arrestedDiv.closest(".route");
-        routeDiv.classList.remove("signal");
-        const isCombatBox = routeDiv.querySelector(".isCombat__box ");
-        const arrestedBox = routeDiv.querySelector(".arrested");
-        const inputs = arrestedBox.querySelectorAll("input");
-        inputs.forEach((input) => {
-          input.value = 0;
-        });
-        isCombatBox.classList.remove("combat");
-        arrestedBox.classList.add("dn");
-        routeDiv.classList.remove("combat");
-      }
-    }
-  }
-});
+isSignal()
 // Боевая или не боевая сработка конец ****************************
 // Функция-обработчик
 function toggleRoute(event) {
@@ -438,6 +407,7 @@ function loadFromLocalStorage() {
           }
         }
       }
+    
       container.appendChild(routeDiv);
     });
   }
@@ -782,7 +752,7 @@ async function handleFormSubmit(event) {
     console.log("---------------------------");
     console.log(data);
     console.log("---------------------------");
-
+    localStorage.clear();
     const response = await fetch(googleApiAdress, {
       method: "POST",
       headers: {
@@ -1222,3 +1192,111 @@ buttonCheck.addEventListener('click', () => {
 dataFromGoogle(googleApiAdress)
 
 
+
+// тестовые маршруты 
+// for(let i = 0; i<120; i++){
+//   const routeDiv = document.createElement("div");
+//   routeDiv.classList.add("route");
+
+//   routeDiv.innerHTML = `
+//   <div class="route__title" data-toggle="box${i + 1}">
+//   <h2>Поїздка <span>${i + 1}</span> </h2>
+//   <div class="route__hide">Згорнути</div>
+
+//   </div>
+//   <div class="route__row-box "  id="box${i + 1}">
+//   <div>
+//       <div class="hide__box">
+
+//           <div class="route__row streetRow">
+//               <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${i + 1
+// }" required="" value="dc">
+//               <input class="input req" type="time" required="" value="14:30">
+//           </div>
+//           <div class="route__row streetRow">
+//               <input class="input req suggestions" type="text" placeholder="Куди" id="to${i + 1
+// }" required="" value="dfgdfg">
+//               <input class="input req" type="time" required=""  value="14:30">
+//           </div>
+//           <div class="route__row last" id="last">
+//               <input class="input distance req" type="number"  placeholder="Відстань(км)" required=""
+//               value="1212">
+
+//                  <select class="input req" id="target${i + 1
+// }" required>
+//           <option data-toggle="arest${i + 1
+// }" value="" selected>                    мета поїздки</option>
+          
+//           <option data-toggle="arest${i + 1
+// }" data-value="signal" selected data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
+
+//           <option data-toggle="arest${i + 1
+// }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання Партн.">Спрацювання Партн.</option>
+//           <option data-toggle="arest${i + 1
+// }"  data-value="point" value="Точка відстою">Точка відстою</option>
+//           <option data-toggle="arest${i + 1
+// }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
+//           <option data-toggle="arest${i + 1
+// }" data-value="patrol" value="Патруль">Патруль</option>
+//           <option data-toggle="arest${i + 1
+// }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
+//           <option data-toggle="arest${i + 1
+// }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
+//           <option data-toggle="arest${i + 1
+// }" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
+//           <option data-toggle="arest${i + 1
+// }" data-value="wash" value="Мийка">Мийка</option>
+//           <option data-toggle="arest${i + 1
+// }" data-value="service" value="СТО">СТО</option>                    
+//           <option data-toggle="arest${i + 1
+// }" data-value="check" value="Перевірка">Перевірка</option>                    
+//           <option data-toggle="arest${i + 1
+// }" data-value="change" value="Перезмінка">Перезмінка</option>                    
+//           <option data-toggle="arest${i + 1
+// }" data-value="other" value="Інше">Інше</option>
+//         </select>
+        
+            
+//               </div>
+
+
+// <div class="isCombat" id="arest${i + 1}">
+// <div class="isCombat__overflow">
+// <span>Бойова??</span>
+// <div class="isCombat__box"></div>
+// </div>
+// </div>
+
+//                 <div class="arrested"  >
+
+
+// <div class="overflow">
+
+//         <div class="arrested__row">
+//           <span>Затримано</span>
+//           <input class="input req" value="45" type="number" id="arest">
+//         </div>
+//         <div class="arrested__row">
+//           <span>передано до полиції</span>
+//           <input class="input req" value="42" type="number" >
+//         </div>
+// </div>
+
+//       </div>
+
+
+
+//               <div class="route__row">
+//               <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5">ghj</textarea>
+//           </div>
+  
+//           <button type="button" class="deleteRoute">Видалити</button>
+//       </div>
+
+//   </div>
+// </div>
+//   `;
+//   const container = document.querySelector('#routesContainer');
+  
+//   container.appendChild(routeDiv);
+// }
