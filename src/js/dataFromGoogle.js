@@ -2,8 +2,8 @@ export function dataFromGoogle(googleApiAdress){
     const load = document.getElementById("load");
     let dataInits=[]
     if(localStorage.initData){
-        console.log('данные есть в локалсторейдж');
-        console.log(localStorage.getItem("initData"));
+        // console.log('данные есть в локалсторейдж');
+        // console.log(localStorage.getItem("initData"));
         if (load) {
             setTimeout(() => {
               load.classList.add("finish");
@@ -18,7 +18,7 @@ export function dataFromGoogle(googleApiAdress){
           }
     }else{
         
-        console.log('данных нет в локалсторейдж');
+        // console.log('данных нет в локалсторейдж');
         try {
     
     
@@ -34,7 +34,7 @@ export function dataFromGoogle(googleApiAdress){
           
                   // console.log('Данные из столбца B:', data.columnB);
                   // console.log('Данные из столбца C:', data.columnC);
-                  console.log("vse dannie", data);
+                  // console.log("vse dannie", data);
           
                   employee.innerHTML = "";
                   if (data.columnB) {
@@ -78,7 +78,7 @@ export function dataFromGoogle(googleApiAdress){
           
                     document.getElementById("unit").value = data.unit || "";
                   }
-                  console.log("loading finish");
+                  // console.log("loading finish");
           
            
                   if (load) {

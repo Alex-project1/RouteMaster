@@ -27,6 +27,11 @@ const searchCardErroreText = document.getElementById('searchCardErroreText')
 resulBtn.addEventListener("click", () => {
   resultsBody.classList.toggle("active");
 });
+// функция для получения времени в пути
+function getTimeInMinutes(timeStr) {
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  return hours * 60 + minutes;
+}
 // сворачивание маршрута начало ******************
 function hide() {
   routeTitles = document.querySelectorAll(".route__title");
@@ -180,7 +185,7 @@ function loadFromLocalStorage() {
   const initData = localStorage.getItem("initData");
   if (initData) {
     const data = JSON.parse(initData);
-    console.log(data, 'initData');
+    // console.log(data, 'initData');
     if (data.columnB) {
       data.columnB.forEach((item) => {
         let newOption = document.createElement("option");
@@ -217,7 +222,7 @@ function loadFromLocalStorage() {
   const savedData = localStorage.getItem("formData");
   if (savedData) {
     const data = JSON.parse(savedData);
-    console.log(data, "-------");
+    // console.log(data, "-------");
 
     document.getElementById("date").value = data.date || "";
     document.getElementById("unit").value = data.unit || "";
@@ -401,7 +406,7 @@ function loadFromLocalStorage() {
             options[i].selected = true;
             if (route.purpose.includes("Спрацювання")) {
               routeDiv.classList.add("signal");
-              console.log("!!!!!!!!!!!!!!!!!!!!!!");
+              // console.log("!!!!!!!!!!!!!!!!!!!!!!");
             }
             break;
           }
@@ -483,7 +488,7 @@ function addEventListeners() {
     });
 
   document.getElementById("addRoute").addEventListener("click", () => {
-    console.log("ds");
+    // console.log("ds");
 
     routeCounter++;
     const container = document.getElementById("routesContainer");
@@ -733,6 +738,15 @@ async function handleFormSubmit(event) {
         signalsCombat++;
       }
     }
+
+// console.log(route);
+
+    const arrivalTime =getTimeInMinutes(inputs[3].value);
+    const departureTime = getTimeInMinutes(inputs[1].value);
+    const travelTime = arrivalTime -departureTime  ;
+  
+    // console.log(`Время в пути: ${travelTime} минут`)
+    // console.log(data);
     data.routes.push({
       from: inputs[0].value || "",
       departureTime: inputs[1].value || "",
@@ -744,14 +758,15 @@ async function handleFormSubmit(event) {
       transferred: inputs[7].value || "",
       message: inputs[8].value || "",
       isCombat: isCombat,
+      travelTime:travelTime,
     });
   });
   data.signalsCombat = signalsCombat;
 
   try {
-    console.log("---------------------------");
-    console.log(data);
-    console.log("---------------------------");
+    // console.log("---------------------------");
+    // console.log(data);
+    // console.log("---------------------------");
     localStorage.clear();
     const response = await fetch(googleApiAdress, {
       method: "POST",
@@ -947,7 +962,8 @@ const submit = document.querySelector(".btn--send");
 
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-  console.log("sdsd");
+
+  
 
   let er = [];
   let req = document.querySelectorAll(".req");
@@ -1111,9 +1127,9 @@ buttonCheck.addEventListener('click', () => {
         const data = result.data
         // Теперь можно работать с объектом, например:
         if (data.length > 0) {
-          console.log('estm');
+          // console.log('estm');
           spinner.classList.add("dn");
-          console.log(data);
+          // console.log(data);
 
           // routeCard.classList.add("active");
           nameClient.textContent = `${data[0].client_name}`
@@ -1146,7 +1162,7 @@ buttonCheck.addEventListener('click', () => {
 
 
             if (data[0].object_card_url !== null) {
-              console.log(data[0].object_card_url);
+              // console.log(data[0].object_card_url);
 
               let pdfUrl = `${data[0].object_card_url}`
 
@@ -1194,7 +1210,7 @@ dataFromGoogle(googleApiAdress)
 
 
 // тестовые маршруты 
-// for(let i = 0; i<120; i++){
+// for(let i = 0; i<2; i++){
 //   const routeDiv = document.createElement("div");
 //   routeDiv.classList.add("route");
 
