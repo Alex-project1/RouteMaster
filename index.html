@@ -190,7 +190,7 @@
             type="number" required></label>
         <label class="disabledLabel">Спрацювань ПАРТНЕРІВ: <input disabled id="signalsVenbest" class="total disabled"
             type="number" required></label>
-        <label>Дод. спрацювання: <input value="0" id="signalsDop" class="total" type="number" ></label>
+        <label>Дод. спрацювання: <input value="0" id="signalsDop" class="total" type="number"></label>
       </div>
       <div class="results">
         <div class="result__btn" id="resulBtn">
@@ -219,7 +219,7 @@
             <div class="totalSignals">Усього спрацювань: <span id="totalSignals">0</span></div>
             <div class="totalSignals-box">
 
-              <div class="totalH">ХОЛДІНГ: <span id="totalH">0</span></div>           
+              <div class="totalH">ХОЛДІНГ: <span id="totalH">0</span></div>
               <div class="totalV">ПАРТНЕРІВ: <span id="totalV">0</span></div>
             </div>
 
@@ -282,7 +282,26 @@
       </div>
     </div>
   </div>
+  <div class="modal__cities dn">
+    <div class="modal__cities-box">
+      <img class="logo" src="/logo.png" alt="">
+      <div class="modal__message save">
+      Вітаю! 
+      <span>
 
+        Для початку роботи оберіть будь-ласка місто!
+      </span>
+      </div>
+      <div class="modal__cities-items">
+        <div class="modal__cities-item" data-city="zp">м. Запоріжжя</div>
+        <div class="modal__cities-item" data-city="dp">м. Дніпро</div>
+        <div class="modal__cities-item" data-city="kr">м. Криві Ріг</div>
+      </div>
+     <div class="modal__cities-btn" id="selectCityBtn" disabled>
+      ОБРАТИ
+     </div>
+    </div>
+  </div>
 
   <div class="searchCard">
     <div class="searchCard__inner">
@@ -290,7 +309,7 @@
       <input type="text" id="searchCard__value" placeholder="введіть номер">
       <div id="searchCard__btn">ПОШУК</div>
       <div id='preloader'>
-       <div class='spinner dn' id="spinner">
+        <div class='spinner dn' id="spinner">
           <div class='loader'>
             <div class='moving-dot'></div>
             <div class='moving-dot'></div>
@@ -304,8 +323,9 @@
 
     </div>
     <div class="resultCardBox">
-      <div class="searchCardErrore">Результати пошуку: <span id="searchCardErrore"></span> <span id="searchCardErroreText" class="dn">ПОМИЛКА</span></div>
-       
+      <div class="searchCardErrore">Результати пошуку: <span id="searchCardErrore"></span> <span
+          id="searchCardErroreText" class="dn">ПОМИЛКА</span></div>
+
       <div class="nameClient  text">Клієнт: <span id="nameClient"></span></div>
       <div class="nameCard  text">Назва об'єкту: <span id="nameCard"></span></div>
       <div class="adressCard text"> Адреса: <span id="adressCard"></span></div>

@@ -68,7 +68,8 @@
 .modal__sendForm,
 .modal__save,
 .modal__delete,
-.modal__send {
+.modal__send,
+.modal__cities {
   position: fixed;
   width: 100dvw;
   height: 100dvh;
@@ -338,7 +339,8 @@
 
 .modal__save,
 .modal__delete,
-.modal__send {
+.modal__send,
+.modal__cities {
   transition: all 0.3s;
 
   &.dn {
@@ -352,19 +354,24 @@
   position: relative;
   padding-bottom: 20px;
 }
-.searchCardErrore{
+
+.searchCardErrore {
   text-align: left;
-  span{
+
+  span {
     font-weight: 700;
   }
-  #searchCardErroreText{
+
+  #searchCardErroreText {
     transition: opacity .3s;
     color: red;
-    &.dn{
+
+    &.dn {
       opacity: 0;
     }
   }
 }
+
 .spinner {
   position: absolute;
 
@@ -455,4 +462,102 @@
   95% {
     transform: translateX(0);
   }
+}
+
+
+/* Контейнер для содержимого модального окна */
+.modal__cities-box {
+  background: linear-gradient(to bottom, #d8ae5e 0%, #f2d7a5 100%);
+  padding: 20px;
+  border-radius: 20px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #4e4e4e;
+}
+
+/* Логотип */
+.modal__cities-box .logo {
+  width: 100px;
+  margin: 0 auto;
+}
+
+/* Сообщение */
+.modal__message.save {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #4e4e4e;
+
+  span {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+}
+
+/* Список городов */
+.modal__cities-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Элементы списка городов */
+.modal__cities-item {
+  padding: 12px;
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+}
+
+
+
+/* Выбранный город */
+.modal__cities-item.selected {
+  background-color: #d8ae5e;
+  color: white;
+}
+
+/* Стили для кнопки */
+.modal__cities-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: #f2d7a5;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: not-allowed;
+  opacity: 0.6;
+  text-align: center;
+  pointer-events: none;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Активная кнопка */
+.modal__cities-btn.active {
+  cursor: pointer;
+  background-color: #d8ae5e;
+  opacity: 1;
+}
+
+/* Анимация для появления/скрытия */
+@keyframes modalAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal__cities-box {
+  animation: modalAppear 0.3s ease-out;
 }

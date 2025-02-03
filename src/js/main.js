@@ -3,13 +3,14 @@ import { specificKilometer } from "./specificKilometer.js";
 import { whoseSingnal } from "./whoseSingnal.js";
 import { dataFromGoogle } from "./dataFromGoogle.js";
 import { isSignal } from "./isSignal.js";
+import { selectCities } from "./selectCities.js";
 // localStorage.clear();
 const zp =
   "https://script.google.com/macros/s/AKfycbzYmRjVAs3-xWVgOVu05Pl0ag45-kR2AEJ09jE43ZVTQMPNOH8z5g2Cmd8Bo0xK1xFy/exec";
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
 const kr = 'https://script.google.com/macros/s/AKfycby27hfmv5uhWfQIpdbLcDFo6qCH7pVZAEp4Aogv_j-SRY155_kWlFp3iVRALev_tsoR/exec'
-const googleApiAdress =kr;
+let googleApiAdress =zp
 const employee = document.getElementById("employee");
 const cars = document.getElementById("cars");
 const unit = document.getElementById("unit");
@@ -24,6 +25,7 @@ const resultsBody = document.getElementById("results");
 const searchCardErrore = document.getElementById("searchCardErrore");
 const spinner = document.getElementById("spinner");
 const searchCardErroreText = document.getElementById('searchCardErroreText')
+selectCities()
 resulBtn.addEventListener("click", () => {
   resultsBody.classList.toggle("active");
 });
@@ -767,8 +769,8 @@ async function handleFormSubmit(event) {
     // console.log("---------------------------");
     // console.log(data);
     // console.log("---------------------------");
-    localStorage.clear();
-    const response = await fetch(googleApiAdress, {
+  
+    const response = await fetch(`https://morning-lake-0dfa.kiriluka68.workers.dev/?url=${googleApiAdress}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -780,14 +782,7 @@ async function handleFormSubmit(event) {
     const result = await response.json();
 
     if (result.status === "success") {
-      alert("Данные успешно сохранены в Google Таблицу!");
-    } else {
-      alert(`Ошибка1: ${result.message}`);
-    }
-  } catch (error) {
-    console.log(error);
-
-    const box = document.querySelector(".box");
+      const box = document.querySelector(".box");
     const lastBtn = document.querySelector(".lastBtn");
 
     box.classList.add("finish");
@@ -797,6 +792,17 @@ async function handleFormSubmit(event) {
       lastBtn.classList.add("active");
       lastBtn.addEventListener("click", reload);
     }, 300);
+    } else {
+      alert(`Ошибка1: ${result.message}`);
+      console.log('ошибка 1');
+      
+    }
+  } catch (error) {
+    console.log(error);
+    alert(`Ошибка1: ${error}`);
+    console.log('ошибка 2');
+
+  
   }
 } // Закрывающая скобка для функции handleFormSubmit
 
@@ -1211,126 +1217,128 @@ dataFromGoogle(googleApiAdress)
 
 // тестовые маршруты 
 const testData = function(){
-const unit = document.getElementById('unit')
-const date = document.getElementById('date')
-const car = document.getElementById('car')
-const driver = document.getElementById('driver')
-const senior = document.getElementById('senior')
-const startOdometer = document.getElementById('startOdometer')
-unit.selectedIndex = 1;
-date.value = '2025-11-11'
-car.value = "Car"
-driver.value = "driver"
-senior.value = "senior"
-startOdometer.value = 55
-  for(let i = 0; i<2; i++){
-    const routeDiv = document.createElement("div");
-    routeDiv.classList.add("route");
-  
-    routeDiv.innerHTML = `
-    <div class="route__title" data-toggle="box${i + 1}">
-    <h2>Поїздка <span>${i + 1}</span> </h2>
-    <div class="route__hide">Згорнути</div>
-  
-    </div>
-    <div class="route__row-box "  id="box${i + 1}">
-    <div>
-        <div class="hide__box">
-  
-            <div class="route__row streetRow">
-                <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${i + 1
-  }" required="" value="dc">
-                <input class="input req" type="time" required="" value="14:30">
-            </div>
-            <div class="route__row streetRow">
-                <input class="input req suggestions" type="text" placeholder="Куди" id="to${i + 1
-  }" required="" value="dfgdfg">
-                <input class="input req" type="time" required=""  value="14:30">
-            </div>
-            <div class="route__row last" id="last">
-                <input class="input distance req" type="number"  placeholder="Відстань(км)" required=""
-                value="1212">
-  
-                   <select class="input req" id="target${i + 1
-  }" required>
-            <option data-toggle="arest${i + 1
-  }" value="" selected>                    мета поїздки</option>
-            
-            <option data-toggle="arest${i + 1
-  }" data-value="signal" selected data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
-  
-            <option data-toggle="arest${i + 1
-  }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання Партн.">Спрацювання Партн.</option>
-            <option data-toggle="arest${i + 1
-  }"  data-value="point" value="Точка відстою">Точка відстою</option>
-            <option data-toggle="arest${i + 1
-  }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
-            <option data-toggle="arest${i + 1
-  }" data-value="patrol" value="Патруль">Патруль</option>
-            <option data-toggle="arest${i + 1
-  }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
-            <option data-toggle="arest${i + 1
-  }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
-            <option data-toggle="arest${i + 1
-  }" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
-            <option data-toggle="arest${i + 1
-  }" data-value="wash" value="Мийка">Мийка</option>
-            <option data-toggle="arest${i + 1
-  }" data-value="service" value="СТО">СТО</option>                    
-            <option data-toggle="arest${i + 1
-  }" data-value="check" value="Перевірка">Перевірка</option>                    
-            <option data-toggle="arest${i + 1
-  }" data-value="change" value="Перезмінка">Перезмінка</option>                    
-            <option data-toggle="arest${i + 1
-  }" data-value="other" value="Інше">Інше</option>
-          </select>
-          
-              
+  setTimeout(() => {
+    
+    const unit = document.getElementById('unit')
+    const date = document.getElementById('date')
+    const car = document.getElementById('car')
+    const driver = document.getElementById('driver')
+    const senior = document.getElementById('senior')
+    const startOdometer = document.getElementById('startOdometer')
+    unit.selectedIndex = 1;
+    date.value = '2025-11-11'
+    car.value = "Car"
+    driver.value = "driver"
+    senior.value = "senior"
+    startOdometer.value = 55
+      for(let i = 0; i<2; i++){
+        const routeDiv = document.createElement("div");
+        routeDiv.classList.add("route");
+      
+        routeDiv.innerHTML = `
+        <div class="route__title" data-toggle="box${i + 1}">
+        <h2>Поїздка <span>${i + 1}</span> </h2>
+        <div class="route__hide">Згорнути</div>
+      
+        </div>
+        <div class="route__row-box "  id="box${i + 1}">
+        <div>
+            <div class="hide__box">
+      
+                <div class="route__row streetRow">
+                    <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${i + 1
+      }" required="" value="dc">
+                    <input class="input req" type="time" required="" value="14:30">
                 </div>
-  
-  
-  <div class="isCombat" id="arest${i + 1}">
-  <div class="isCombat__overflow">
-  <span>Бойова??</span>
-  <div class="isCombat__box"></div>
-  </div>
-  </div>
-  
-                  <div class="arrested"  >
-  
-  
-  <div class="overflow">
-  
-          <div class="arrested__row">
-            <span>Затримано</span>
-            <input class="input req" value="45" type="number" id="arest">
-          </div>
-          <div class="arrested__row">
-            <span>передано до полиції</span>
-            <input class="input req" value="42" type="number" >
-          </div>
-  </div>
-  
-        </div>
-  
-  
-  
-                <div class="route__row">
-                <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5">ghj</textarea>
+                <div class="route__row streetRow">
+                    <input class="input req suggestions" type="text" placeholder="Куди" id="to${i + 1
+      }" required="" value="dfgdfg">
+                    <input class="input req" type="time" required=""  value="14:30">
+                </div>
+                <div class="route__row last" id="last">
+                    <input class="input distance req" type="number"  placeholder="Відстань(км)" required=""
+                    value="1212">
+      
+                       <select class="input req" id="target${i + 1
+      }" required>
+                <option data-toggle="arest${i + 1
+      }" value="" selected>                    мета поїздки</option>
+                
+                <option data-toggle="arest${i + 1
+      }" data-value="signal" selected data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
+      
+                <option data-toggle="arest${i + 1
+      }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання Партн.">Спрацювання Партн.</option>
+                <option data-toggle="arest${i + 1
+      }"  data-value="point" value="Точка відстою">Точка відстою</option>
+                <option data-toggle="arest${i + 1
+      }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
+                <option data-toggle="arest${i + 1
+      }" data-value="patrol" value="Патруль">Патруль</option>
+                <option data-toggle="arest${i + 1
+      }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
+                <option data-toggle="arest${i + 1
+      }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
+                <option data-toggle="arest${i + 1
+      }" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
+                <option data-toggle="arest${i + 1
+      }" data-value="wash" value="Мийка">Мийка</option>
+                <option data-toggle="arest${i + 1
+      }" data-value="service" value="СТО">СТО</option>                    
+                <option data-toggle="arest${i + 1
+      }" data-value="check" value="Перевірка">Перевірка</option>                    
+                <option data-toggle="arest${i + 1
+      }" data-value="change" value="Перезмінка">Перезмінка</option>                    
+                <option data-toggle="arest${i + 1
+      }" data-value="other" value="Інше">Інше</option>
+              </select>
+              
+                  
+                    </div>
+      
+      
+      <div class="isCombat" id="arest${i + 1}">
+      <div class="isCombat__overflow">
+      <span>Бойова??</span>
+      <div class="isCombat__box"></div>
+      </div>
+      </div>
+      
+                      <div class="arrested"  >
+      
+      
+      <div class="overflow">
+      
+              <div class="arrested__row">
+                <span>Затримано</span>
+                <input class="input req" value="45" type="number" id="arest">
+              </div>
+              <div class="arrested__row">
+                <span>передано до полиції</span>
+                <input class="input req" value="42" type="number" >
+              </div>
+      </div>
+      
             </div>
-    
-            <button type="button" class="deleteRoute">Видалити</button>
+      
+      
+      
+                    <div class="route__row">
+                    <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5">ghj</textarea>
+                </div>
+        
+                <button type="button" class="deleteRoute">Видалити</button>
+            </div>
+      
         </div>
-  
-    </div>
-  </div>
-    `;
-    const container = document.querySelector('#routesContainer');
-    
-    container.appendChild(routeDiv);
-  }
+      </div>
+        `;
+        const container = document.querySelector('#routesContainer');
+        
+        container.appendChild(routeDiv);
+      }
+  }, 2500);
 }
-// setTimeout(() => {
-//   testData()
+
+  // testData()
   
-// }, 2000);
