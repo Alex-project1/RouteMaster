@@ -678,7 +678,9 @@ async function handleFormSubmit(api) {
   support.className = "support";
   support.classList.add('er-bnt');
   support.textContent = "Підтримка";
-
+  support.addEventListener('click',()=>{
+    location.reload();
+  })
   // Собираем финальную структуру
   modalSendForm.appendChild(logo);
   modalSendForm.appendChild(modalMessage);

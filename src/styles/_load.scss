@@ -85,6 +85,7 @@
   backdrop-filter: blur(5px);
   /* Эффект размытия */
   z-index: 1000;
+
 }
 
 .loading {
@@ -499,6 +500,11 @@
     font-size: 16px;
     margin-top: 5px;
   }
+  &.cities{
+    background-color: transparent;
+    text-shadow: 1px 2px 4px #fff;
+    font-weight: 600;
+  }
 }
 
 /* Список городов */
@@ -528,6 +534,8 @@
   background-color: #d8ae5e;
   color: white;
   font-weight: 500;
+  background: linear-gradient(to bottom, #d8ae5e 0%, #d8ae5e 50%, #f2d7a5 100%);
+  text-shadow: 1px 1px 4px #000;
 }
 
 /* Стили для кнопки */
@@ -543,14 +551,15 @@
   opacity: 0.6;
   text-align: center;
   pointer-events: none;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
+  transition: background-color 0.3s ease, opacity 0.3s ease, text-shadow .7s;
   position: relative;
   z-index: 44;
-  font-family: "Arial", sans-serif;
+  // font-family: "Arial", sans-serif;
 }
 
 /* Активная кнопка */
 .modal__cities-btn.active {
+  text-shadow: 1px 1px 4px #000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   pointer-events: auto;
   cursor: pointer;
@@ -602,3 +611,13 @@
   }
 }
 
+#dataLoad{
+  color: #fff;
+  font-size: 18px;
+  overflow: hidden;
+  height: 35px;
+  transition: opacity .3s;
+  &.hide{
+    opacity: 0;
+  }
+}
