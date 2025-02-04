@@ -57,6 +57,7 @@
 .load.finish {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
 }
 
 /* Дискретное скрытие */
@@ -165,7 +166,7 @@
   flex-direction: column;
   background-color: #f0f8ff;
   /* Светлый голубой фон */
-  border: 1px solid #4caf50;
+  border: 1px solid #ccc;
   /* Зелёная рамка */
   border-radius: 10px;
   padding: 20px;
@@ -197,6 +198,10 @@
   &.finish {
     opacity: 0;
   }
+  span{
+    font-size: 16px;
+    color: #000;
+  }
 }
 
 /* Анимация появления */
@@ -222,7 +227,7 @@
   text-transform: uppercase;
   font-size: 7dvw;
   transition: all 0.3s;
-  opacity: 0.4;
+  opacity: 0;
   transform: scale(0.5);
 
   // margin: 0 auto;
@@ -512,6 +517,8 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: "Arial", sans-serif;
 }
 
 
@@ -520,6 +527,7 @@
 .modal__cities-item.selected {
   background-color: #d8ae5e;
   color: white;
+  font-weight: 500;
 }
 
 /* Стили для кнопки */
@@ -536,12 +544,17 @@
   text-align: center;
   pointer-events: none;
   transition: background-color 0.3s ease, opacity 0.3s ease;
+  position: relative;
+  z-index: 44;
+  font-family: "Arial", sans-serif;
 }
 
 /* Активная кнопка */
 .modal__cities-btn.active {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
   cursor: pointer;
-  background-color: #d8ae5e;
+  background-color: #c99842;
   opacity: 1;
 }
 
@@ -561,3 +574,31 @@
 .modal__cities-box {
   animation: modalAppear 0.3s ease-out;
 }
+
+.erBox{
+ 
+  color: #fff;
+  font-weight: 700;
+  width: 90dvw;
+  .er-bnt{
+    text-align: center;
+    background-color: #e6c484;
+    padding: 15px;
+    border-radius: 10px;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: all 0.3s;
+    
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  &.active{
+    .er-bnt{
+      
+    opacity: 1;
+    transform: scale(1);
+    }
+  }
+}
+
