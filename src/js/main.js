@@ -1376,9 +1376,15 @@ const testData = function () {
 
 // Выбор города начало
 const modalCities = document.querySelector('.modal__cities');
-if (localStorage.initData) {
-  modalCities.classList.add('dn')
-  //  testData()
+
+if (localStorage.getItem("initData")) {
+  let initData = JSON.parse(localStorage.getItem("initData"));
+  if (initData && initData.city) {
+  
+    modalCities.classList.add('dn')
+    //  testData()
+  }
+
 }
 const citiesItems = document.querySelectorAll('.modal__cities-item');
 const selectCityBtn = document.getElementById('selectCityBtn');

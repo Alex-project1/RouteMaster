@@ -2,7 +2,7 @@ export function dataFromGoogle(googleApiAdress) {
   const load = document.getElementById("load");
   let dataInits = {};
 
-  if (!localStorage.initData) {
+  if (!localStorage.initData || !localStorage.initData.city) {
       try {
           fetch(googleApiAdress)
               .then((response) => {
