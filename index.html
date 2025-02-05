@@ -18,7 +18,9 @@
 
 <body>
 
-
+  <div class="hardReload">
+    <img src="reload.png" alt="">
+  </div>
 
 
   <div class="load" id="load">
@@ -29,7 +31,15 @@
     <div class="load__title">
       Журнал нарядів
     </div>
-    <span id="dataLoad"></span>
+    <div class="dataLoad-box">
+      <span id="dataLoad"></span>
+      <span class="ellipses">
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
+      </span>
+
+    </div>
   </div>
   <div class="container">
     <!-- import '../styles/style.scss'; -->
@@ -342,6 +352,20 @@
 
   <div class="footer">
     Powered by <a class="tgLink" href="https://t.me/Alexandrr32" target="_blank">Кирилюк О.</a>
+  </div>
+  <div class="moadHarReload dn">
+    <div class="moadHarReload-box">
+      <div class="moadHarReload-text">
+        Ви справді бажаєте скинути дані?
+        <span>Усі дані буде скинуто, усі поля очищено, вибране місто буде скинуте!</span>
+      </div>
+    </div>
+    <div class="moadHarReload__btns">
+      
+      <div class="moadHarReload__btn moadHarReload__btns-cancel" id="hardResetCansel">Скасувати</div>
+      
+            <div class="moadHarReload__btn moadHarReload__btns-reload" id="hardResetReset">Скинути</div>
+    </div>
   </div>
 
 </body>

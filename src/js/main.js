@@ -4,6 +4,23 @@ import { whoseSingnal } from "./whoseSingnal.js";
 import { dataFromGoogle } from "./dataFromGoogle.js";
 import { isSignal } from "./isSignal.js";
 // localStorage.clear();
+const hardReload = document.querySelector('.hardReload');
+const moadHarReload = document.querySelector('.moadHarReload');
+const hardResetCansel = document.getElementById('hardResetCansel')
+const hardResetReset = document.getElementById('hardResetReset')
+hardReload.addEventListener('click',()=>{
+  console.log('sdsdf');
+  // reload()
+  moadHarReload.classList.remove('dn')
+  
+})
+hardResetCansel.addEventListener('click', ()=>{
+  if( !moadHarReload.classList.contains('dn'))  moadHarReload.classList.add('dn')
+})
+hardResetReset.addEventListener('click',()=>{
+  reload()
+})
+
 const load = document.getElementById("load");
 if (load) {
   setTimeout(() => {

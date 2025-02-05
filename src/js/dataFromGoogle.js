@@ -5,13 +5,13 @@ export async function dataFromGoogle(googleApiAdress) {
     if (!localStorage.initData || !localStorage.initData.city) {
       if (dataLoad){
         dataLoad.innerHTML = "";
-          dataLoad.textContent = "Формую дані...";
+          dataLoad.textContent = "Формую дані";
       }
   
       try {
         if (dataLoad){
             dataLoad.innerHTML = "";
-            dataLoad.textContent = "Формую запит...";
+            dataLoad.textContent = "Формую запит";
 
         }
         
@@ -24,7 +24,7 @@ export async function dataFromGoogle(googleApiAdress) {
   
         employee.innerHTML = "";
   
-        await updateSection("Формую перелік співробітників...", () => {
+        await updateSection("Формую перелік співробітників", () => {
           if (data.columnB) {
             dataInits.employee = data.columnB;
             data.columnB.forEach((item) => {
@@ -35,7 +35,7 @@ export async function dataFromGoogle(googleApiAdress) {
           }
         });
   
-        await updateSection("Формую перелік автівок...", () => {
+        await updateSection("Формую перелік автівок", () => {
           if (data.columnC) {
             dataInits.cars = data.columnC;
             data.columnC.forEach((item) => {
@@ -46,7 +46,7 @@ export async function dataFromGoogle(googleApiAdress) {
           }
         });
   
-        await updateSection("Формую перелік нарядів...", () => {
+        await updateSection("Формую перелік нарядів", () => {
           if (data.columnD) {
             dataInits.units = data.columnD;
             let unit = document.getElementById("unit");
@@ -89,7 +89,7 @@ export async function dataFromGoogle(googleApiAdress) {
         dataLoad.textContent = ""; // Очищаем старый текст
         dataLoad.classList.add('hide')
 
-        await new Promise((resolve) => setTimeout(resolve, 300)); // Небольшая задержка
+        await new Promise((resolve) => setTimeout(resolve, 150)); // Небольшая задержка
         dataLoad.textContent = text;
         dataLoad.classList.remove('hide')
     }

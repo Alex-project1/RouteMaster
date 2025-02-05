@@ -70,7 +70,8 @@
 .modal__save,
 .modal__delete,
 .modal__send,
-.modal__cities {
+.modal__cities,
+.moadHarReload {
   position: fixed;
   width: 100dvw;
   height: 100dvh;
@@ -159,7 +160,8 @@
   }
 }
 
-.modal__message {
+.modal__message,
+.moadHarReload-box {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,7 +201,8 @@
   &.finish {
     opacity: 0;
   }
-  span{
+
+  span {
     font-size: 16px;
     color: #000;
   }
@@ -346,7 +349,8 @@
 .modal__save,
 .modal__delete,
 .modal__send,
-.modal__cities {
+.modal__cities,
+.moadHarReload {
   transition: all 0.3s;
 
   &.dn {
@@ -490,17 +494,21 @@
 }
 
 /* Сообщение */
-.modal__message.save {
+.modal__message.save,
+.moadHarReload-box {
   font-size: 24px;
   font-weight: 500;
   margin-bottom: 20px;
   color: #4e4e4e;
+  box-shadow: 2px 2px 4px #000;
 
   span {
     font-size: 16px;
     margin-top: 5px;
+    display: block;
   }
-  &.cities{
+
+  &.cities {
     background-color: transparent;
     text-shadow: 1px 2px 4px #fff;
     font-weight: 600;
@@ -584,12 +592,13 @@
   animation: modalAppear 0.3s ease-out;
 }
 
-.erBox{
- 
+.erBox {
+
   color: #fff;
   font-weight: 700;
   width: 90dvw;
-  .er-bnt{
+
+  .er-bnt {
     text-align: center;
     background-color: #e6c484;
     padding: 15px;
@@ -598,26 +607,113 @@
     text-transform: uppercase;
     font-size: 14px;
     transition: all 0.3s;
-    
+
     opacity: 0;
     transform: scale(0.5);
   }
-  &.active{
-    .er-bnt{
-      
-    opacity: 1;
-    transform: scale(1);
+
+  &.active {
+    .er-bnt {
+
+      opacity: 1;
+      transform: scale(1);
     }
   }
 }
 
-#dataLoad{
-  color: #fff;
-  font-size: 18px;
+#dataLoad {
+  background: linear-gradient(to bottom, #d8ae5e 0%, #f2d7a5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+  font-weight: 600;
   overflow: hidden;
   height: 35px;
-  transition: opacity .3s;
-  &.hide{
+  transition: opacity 0.3s;
+
+  &.hide {
     opacity: 0;
   }
+}
+
+.ellipses span {
+  opacity: 0;
+  animation: dots 1s infinite;
+  background: linear-gradient(to bottom, #d8ae5e 0%, #f2d7a5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.ellipses span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.ellipses span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.ellipses span:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes dots {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.hardReload {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+.moadHarReload {
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.moadHarReload__btns {
+  width: 100%;
+  max-width: 90dvw;
+  display: flex;
+  justify-content: space-around;
+  text-shadow: 2px 2px 2px #000;
+
+  .moadHarReload__btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    min-width: 140px;
+
+    &s-cancel {
+      background: linear-gradient(45deg, #2196f3, #64b5f6);
+      color: #fff;
+      border: none;
+    }
+
+    &s-reload {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: #fff;
+      border: none;
+    }
+  }
+
 }
