@@ -354,12 +354,18 @@
   transition: all 0.3s;
 
   &.dn {
-    pointer-events: none;
     opacity: 0;
+    pointer-events: none;
     transform: scale(0.4);
   }
 }
-
+.moadHarReload.dn{
+  
+  .moadHarReload__btn{
+    
+    pointer-events: none;
+  }
+}
 .searchCard__inner {
   position: relative;
   padding-bottom: 20px;
