@@ -1434,6 +1434,8 @@ if (localStorage.getItem("initData")) {
 }
 const citiesItems = document.querySelectorAll('.modal__cities-item');
 const selectCityBtn = document.getElementById('selectCityBtn');
+const selectedCitySpan = document.querySelector('.selectedCitySpan');
+
 let selectedCity
 function activateButton() {
   selectCityBtn.disabled = false;
@@ -1452,18 +1454,33 @@ citiesItems.forEach(item => {
     if (item.classList.contains('selected')) {
       item.classList.remove('selected')
       deactivateButton()
+      selectedCitySpan.textContent = ``
       console.log(selectedCity);
     } else {
       citiesItems.forEach(city => city.classList.remove('selected'));
       selectedCity = item.getAttribute('data-city');
-      // Добавляем класс 'selected' для выбранного города
-
+      if(selectedCity == 'zp'){
+        selectedCitySpan.textContent = `ЗАПОРІЖЖЯ`
+      }
+      if(selectedCity == 'dp'){
+        selectedCitySpan.textContent = `ДНІПРО`
+      }
+      if(selectedCity == 'kr'){
+        selectedCitySpan.textContent = `КРИВИЙ РІГ`
+      }
       item.classList.add('selected');
       console.log(selectedCity);
-
+      
       // Активируем кнопку
       activateButton();
-
+ 
+    
+        document.getElementById("selectCityBtn").scrollIntoView({
+          behavior: "smooth", // Плавная прокрутка
+          block: "start" // Прокрутка к началу элемента
+        });
+    
+      
     }
   });
 });

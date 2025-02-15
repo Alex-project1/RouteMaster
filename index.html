@@ -194,9 +194,9 @@
       <div class="signals">
 
         <label class="disabledLabel">Спрацювань ХОЛДІНГ: <input disabled id="signalsHolding" class="total disabled"
-            type="number" required></label>
+            type="number" required value="0"></label>
         <label class="disabledLabel">Спрацювань ПАРТНЕРІВ: <input disabled id="signalsVenbest" class="total disabled"
-            type="number" required></label>
+            type="number" required value="0"></label>
         <label>Дод. спрацювання: <input value="0" id="signalsDop" class="total" type="number"></label>
       </div>
       <div class="results">
@@ -300,17 +300,34 @@
         </span>
       </div>
       <div class="modal__cities-items">
-        <div class="modal__cities-item" data-city="zp"> <img src="./public/zp.svg" alt=""> м. Запоріжжя</div>
+        <div class="modal__cities-item" data-city="zp">
+          <div class="herb__box">
+
+            <img src="./zp.svg" alt=""> 
+          </div>
+          м. Запоріжжя
+          </div>
         <div class="modal__cities-item" data-city="dp">
-         <img src="./public/dp.png" alt="">
-          м. Дніпро</div>
+          <div class="herb__box">
+            <img src="./dp.png" alt="">
+
+          </div>
+          м. Дніпро
+        </div>
         <div class="modal__cities-item" data-city="kr">
-          <img src="./public/kr.png" alt="">
-          м. Кривий Ріг</div>
-   
+          <div class="herb__box">
+
+            <img src="./kr.png" alt="">
+          </div>
+          м. Кривий Ріг
+        </div>
+        <div class="selectCityBtn__box">
+
+          Обране місто: <span class="selectedCitySpan"></span>
           <div class="modal__cities-btn" id="selectCityBtn">
             ОБРАТИ
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -335,8 +352,8 @@
 
     </div>
     <div class="resultCardBox">
-      <div class="searchCardErrore">Результати пошуку: <span id="searchCardErrore"></span> <span
-          id="searchCardErroreText" class="dn">ПОМИЛКА</span></div>
+      <div class="searchCardErrore">Результати пошуку: <span id="searchCardErrore"></span> <br> <span
+          id="searchCardErroreText" class="dn">Не знайдено</span></div>
 
       <div class="nameClient  text">Клієнт: <span id="nameClient"></span></div>
       <div class="nameCard  text">Назва об'єкту: <span id="nameCard"></span></div>
