@@ -4,20 +4,33 @@ import { whoseSingnal } from "./whoseSingnal.js";
 import { dataFromGoogle } from "./dataFromGoogle.js";
 import { isSignal } from "./isSignal.js";
 // localStorage.clear();
+// console.log('localStorage',localStorage);
+function formDataLocal() {
+
+  if (localStorage.getItem("formData")) {
+    let formData = JSON.parse(localStorage.getItem("formData"));
+    // console.log('formData');
+    // console.log(formData);
+    // console.log('formData');
+
+  }
+}
+formDataLocal()
 const hardReload = document.querySelector('.hardReload');
 const moadHarReload = document.querySelector('.moadHarReload');
 const hardResetCansel = document.getElementById('hardResetCansel')
 const hardResetReset = document.getElementById('hardResetReset')
-hardReload.addEventListener('click',()=>{
-  console.log('sdsdf');
+hardReload.addEventListener('click', () => {
+  // console.log('sdsdf');
   // reload()
   moadHarReload.classList.remove('dn')
-  
+
+
 })
-hardResetCansel.addEventListener('click', ()=>{
-  if( !moadHarReload.classList.contains('dn'))  moadHarReload.classList.add('dn')
+hardResetCansel.addEventListener('click', () => {
+  if (!moadHarReload.classList.contains('dn')) moadHarReload.classList.add('dn')
 })
-hardResetReset.addEventListener('click',()=>{
+hardResetReset.addEventListener('click', () => {
   reload()
 })
 
@@ -25,6 +38,7 @@ const load = document.getElementById("load");
 if (load) {
   setTimeout(() => {
     load.classList.add("finish");
+
     // load.addEventListener(
     //   "transitionend",
     //   () => {
@@ -55,10 +69,12 @@ const searchCardErrore = document.getElementById("searchCardErrore");
 const spinner = document.getElementById("spinner");
 const searchCardErroreText = document.getElementById('searchCardErroreText')
 
+
 if (localStorage.getItem("initData")) {
   let initData = JSON.parse(localStorage.getItem("initData"));
   console.log(initData);
   googleApiAdress = initData.city; // Используйте let или var
+
 
 }
 
@@ -117,23 +133,16 @@ function saveToLocalStorage() {
     totalTransferred: 0,
     totalDelayed: 0,
   };
+  data.routes = [];
+  data.extendedOdometr = [];
 
   // Получаем данные маршрутов
   document.querySelectorAll("#routesContainer .route").forEach((route) => {
     const inputs = route.querySelectorAll(".input");
     const isCombatBox = route.querySelector(".isCombat__box");
-    // console.log(isCombatBox);
-    let isCombat = false;
-    if (isCombatBox) {
-      if (isCombatBox.classList.contains("combat")) {
-        isCombat = true;
-      }
-    }
-    // console.log("*********************************");
-    // console.log(inputs);
-    // console.log("*********************************");
-
-    data.routes.push({
+    let isCombat = isCombatBox?.classList.contains("combat") || false;
+  
+    const newRoute = {
       from: inputs[0].value,
       departureTime: inputs[1].value,
       to: inputs[2].value,
@@ -144,8 +153,24 @@ function saveToLocalStorage() {
       transferred: inputs[7].value || 0,
       message: inputs[8].value,
       isCombat: isCombat,
-    });
+    };
+  
+    // Проверяем, есть ли уже такой маршрут в массиве
+    const isDuplicate = data.routes.some(
+      (route) =>
+        route.from === newRoute.from &&
+        route.departureTime === newRoute.departureTime &&
+        route.to === newRoute.to &&
+        route.arrivalTime === newRoute.arrivalTime &&
+        route.distance === newRoute.distance &&
+        route.purpose === newRoute.purpose
+    );
+  
+    if (!isDuplicate) {
+      data.routes.push(newRoute);
+    }
   });
+  
 
   // Получаем данные километража
   const kilometers = specificKilometer();
@@ -153,7 +178,7 @@ function saveToLocalStorage() {
   data.signalHolding = whoseSingnals.signalHolding;
   data.signalVenbest = whoseSingnals.signalVenbest;
   // Добавляем данные в extendedOdometr
-  data.extendedOdometr.push({
+  data.extendedOdometr = [{
     signal: kilometers.signal || 0,
     point: kilometers.point || 0,
     familiarization: kilometers.familiarization || 0,
@@ -166,7 +191,8 @@ function saveToLocalStorage() {
     check: kilometers.check || 0,
     change: kilometers.change || 0,
     other: kilometers.other || 0,
-  });
+  }];
+  
   let totalTransferred = 0;
 
   // Перебираем все маршруты
@@ -260,7 +286,7 @@ function loadFromLocalStorage() {
   const savedData = localStorage.getItem("formData");
   if (savedData) {
     const data = JSON.parse(savedData);
-    // console.log(data, "-------");
+    console.log("-------", data, "-------");
 
     document.getElementById("date").value = data.date || "";
     document.getElementById("unit").value = data.unit || "";
@@ -312,6 +338,7 @@ function loadFromLocalStorage() {
     routeCounter = data.routes.length;
 
     const container = document.getElementById("routesContainer");
+    container.innerHTML = ``
     data.routes.forEach((route, index) => {
       // console.log("route");
       // console.log(route);
@@ -690,12 +717,12 @@ async function handleFormSubmit(api) {
   lastBtn.className = "lastBtn";
   lastBtn.textContent = "Оновити";
   const erBox = document.createElement('div')
-  erBox.className ='erBox'
+  erBox.className = 'erBox'
   const support = document.createElement("div");
   support.className = "support";
   support.classList.add('er-bnt');
   support.textContent = "Підтримка";
-  support.addEventListener('click',()=>{
+  support.addEventListener('click', () => {
     location.reload();
   })
   // Собираем финальную структуру
@@ -842,7 +869,7 @@ async function handleFormSubmit(api) {
       console.log('ошибка 1');
       erBox.classList.add('active')
       box.innerHTML = `<p>Помилка1! <br/> <span> ${result.message}</span></p>`;
-      
+
     }
   } catch (error) {
     console.log(error);
@@ -1399,7 +1426,7 @@ const modalCities = document.querySelector('.modal__cities');
 if (localStorage.getItem("initData")) {
   let initData = JSON.parse(localStorage.getItem("initData"));
   if (initData && initData.city) {
-  
+
     modalCities.classList.add('dn')
     //  testData()
   }
