@@ -357,6 +357,9 @@
     opacity: 0;
     pointer-events: none;
     transform: scale(0.4);
+    #selectCityBtn{
+      pointer-events: none;
+    }
   }
 }
 

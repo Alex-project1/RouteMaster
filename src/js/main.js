@@ -844,6 +844,8 @@ async function handleFormSubmit(api) {
     const box = document.querySelector(".box");
     const lastBtn = document.querySelector(".lastBtn");
     let googleApiAdress = api;
+    console.log(data);
+    
     const response = await fetch(`https://morning-lake-0dfa.kiriluka68.workers.dev/?url=${googleApiAdress}`, {
       method: "POST",
       headers: {
@@ -1213,7 +1215,8 @@ buttonCheck.addEventListener('click', () => {
         if (data.length > 0) {
           // console.log('estm');
           spinner.classList.add("dn");
-          // console.log(data);
+          console.log(data);
+          console.log(data[0].coordinates.lat);
 
           // routeCard.classList.add("active");
           nameClient.textContent = `${data[0].client_name}`
@@ -1221,7 +1224,9 @@ buttonCheck.addEventListener('click', () => {
           adressCard.textContent = `${data[0].object_address}`
 
           // const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=YOUR_ORIGIN&destination=${data[0].coordinates.lat},${data[0].coordinates.lng}`;
-          if (data[0].coordinates.lat !== null) {
+          if (data[0].coordinates.lat ) {
+            console.log('coordinaty');
+            
             const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${data[0].coordinates.lat},${data[0].coordinates.lng}`;
 
             // Удаляем старые обработчики
@@ -1245,31 +1250,31 @@ buttonCheck.addEventListener('click', () => {
 
 
 
-            if (data[0].object_card_url !== null) {
-              // console.log(data[0].object_card_url);
-
-              let pdfUrl = `${data[0].object_card_url}`
-
-
-              // Создаём новый обработчик для открытия PDF
-              openPdf = () => {
-
-                if (window.cordova && window.cordova.InAppBrowser) {
-                  window.cordova.InAppBrowser.open(pdfUrl, "_system");
-                } else {
-                  window.open(pdfUrl, "_blank");
-                }
-              };
-
-              routeCard.classList.add('active')
-              routeCard.addEventListener("click", openPdf);
-
-            }
+          
           } else {
             console.log('coord net');
 
           }
+          if (data[0].object_card_url !== null) {
+            console.log(data[0].object_card_url);
 
+            let pdfUrl = `${data[0].object_card_url}`
+
+
+            // Создаём новый обработчик для открытия PDF
+            openPdf = () => {
+
+              if (window.cordova && window.cordova.InAppBrowser) {
+                window.cordova.InAppBrowser.open(pdfUrl, "_system");
+              } else {
+                window.open(pdfUrl, "_blank");
+              }
+            };
+
+            routeCard.classList.add('active')
+            routeCard.addEventListener("click", openPdf);
+
+          }
 
         } else {
           console.log('net');
