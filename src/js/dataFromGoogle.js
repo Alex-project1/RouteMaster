@@ -20,8 +20,11 @@ export async function dataFromGoogle(googleApiAdress) {
         if (!response.ok) throw new Error("Ошибка сети");
   
         const data = await response.json();
+        
+        
         if (!data || typeof data !== "object") return;
-  
+        
+        console.log("!!!!!!!!!!!!!",data);
         employee.innerHTML = "";
   
         await updateSection("Формую перелік співробітників", () => {
@@ -46,6 +49,18 @@ export async function dataFromGoogle(googleApiAdress) {
           }
         });
   
+        await updateSection("Формую перелік адрес", () => {
+          if (data.columnE) {
+            dataInits.streetsList = data.columnE;
+            // allStreetNames= data.columnE
+            // data.columnE.forEach((item) => {
+            //   let newOption = document.createElement("option");
+            //   newOption.value = item;
+            //   streetsList.appendChild(newOption);
+            // });
+          }
+        });
+  
         await updateSection("Формую перелік нарядів", () => {
           if (data.columnD) {
             dataInits.units = data.columnD;
@@ -67,6 +82,8 @@ export async function dataFromGoogle(googleApiAdress) {
   
         data.city = googleApiAdress;
         localStorage.setItem("initData", JSON.stringify(data));
+        // localStorage.setItem("dataInits", dataInits);
+
   
         if (localStorage.getItem("formData")) {
           const formData = JSON.parse(localStorage.getItem("formData"));
@@ -74,6 +91,7 @@ export async function dataFromGoogle(googleApiAdress) {
         }
   
         finishLoading();
+        location.reload()
       } catch (error) {
         finishLoading();
         console.error("Ошибка:", error);

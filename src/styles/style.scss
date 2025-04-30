@@ -5,6 +5,7 @@ body {
   font-family: "Lato", serif;
   margin: 20px;
   background: linear-gradient(to bottom, #d8ae5e 0%, #f2d7a5 100%);
+  min-height: 100dvh;
 }
 
 option {
@@ -18,6 +19,7 @@ option {
   max-width: 900px;
   padding: 15px 0;
   margin: 0 auto;
+  width: 100%;
 }
 .req,.total, #searchCard__value {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), 
@@ -62,7 +64,7 @@ textarea {
   // justify-content: space-between;
   gap: 25px;
   max-width: 500px;
-  margin: 0 auto;
+  margin: 0 auto ;
   // position: sticky;
   // top: 0;
   // background: linear-gradient(to bottom, #d8ae5e 0%, #f2d7a5 100%);
@@ -795,3 +797,42 @@ textarea {
   }
 }
 
+
+.autocomplete-list {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), inset 2px 2px 5px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  
+}
+.autocomplete-list li {
+  padding: 8px;
+  cursor: pointer;
+  // box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), inset 2px 2px 5px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+ 
+}
+.autocomplete-list li:hover {
+  background-color: #eee;
+}
+.routsBox, #map{
+  margin-top: 80px;
+  transition: opacity .3s;
+  &.hide{
+    opacity: 0;
+  }
+}
+.dnone{
+  display: none;
+}
+#locateMeBtn{
+  position: relative;
+  z-index: 9999;
+}

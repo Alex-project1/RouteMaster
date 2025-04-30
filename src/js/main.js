@@ -5,6 +5,46 @@ import { dataFromGoogle } from "./dataFromGoogle.js";
 import { isSignal } from "./isSignal.js";
 // localStorage.clear();
 // console.log('localStorage',localStorage);
+//**************************** */
+// Функция для получения адресов через Nominatim API
+let allStreetNames =''
+console.log(localStorage);
+
+
+// console.log('localStorage.getItem("initData")',localStorage.getItem("initData"));
+
+async function getAddresses(query) {
+  const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=UA`);
+  const data = await response.json();
+  console.log(data);
+
+  return data.map(street => ({ display_name: street.display_name }));
+}
+
+// Функция для отображения подсказок
+function showSuggestions(inputElement, suggestions) {
+  const suggestionList = document.createElement('ul');
+  suggestions.forEach(suggestion => {
+    const suggestionItem = document.createElement('li');
+    suggestionItem.textContent = suggestion.display_name;
+    suggestionItem.addEventListener('click', () => {
+      inputElement.value = suggestion.display_name; // Заполняем инпут выбранным адресом
+      suggestionList.remove(); // Убираем список после выбора
+    });
+    suggestionList.appendChild(suggestionItem);
+  });
+
+  // Очищаем старые подсказки
+  const existingList = inputElement.parentElement.querySelector('ul');
+  if (existingList) {
+    existingList.remove();
+  }
+
+  inputElement.parentElement.appendChild(suggestionList);
+}
+
+
+//**************************** */
 function formDataLocal() {
 
   if (localStorage.getItem("formData")) {
@@ -49,13 +89,16 @@ if (load) {
   }, 1000);
 }
 const zp =
-  "https://script.google.com/macros/s/AKfycbzYmRjVAs3-xWVgOVu05Pl0ag45-kR2AEJ09jE43ZVTQMPNOH8z5g2Cmd8Bo0xK1xFy/exec";
+  "https://script.google.com/macros/s/AKfycbw-eakkUUrATU_CEeW8kys38dbJRGPlcWwbgr-1dAmYZwPXoQpsL0QZ7NHhCmA4Strh/exec";
+
+
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
 const kr = 'https://script.google.com/macros/s/AKfycby27hfmv5uhWfQIpdbLcDFo6qCH7pVZAEp4Aogv_j-SRY155_kWlFp3iVRALev_tsoR/exec'
 let googleApiAdress
 const employee = document.getElementById("employee");
 const cars = document.getElementById("cars");
+const streetsList = document.getElementById("streetsList");
 const unit = document.getElementById("unit");
 const routeCard = document.getElementById("routeCard");
 let routeCounter = 0;
@@ -141,7 +184,7 @@ function saveToLocalStorage() {
     const inputs = route.querySelectorAll(".input");
     const isCombatBox = route.querySelector(".isCombat__box");
     let isCombat = isCombatBox?.classList.contains("combat") || false;
-  
+
     const newRoute = {
       from: inputs[0].value,
       departureTime: inputs[1].value,
@@ -154,7 +197,7 @@ function saveToLocalStorage() {
       message: inputs[8].value,
       isCombat: isCombat,
     };
-  
+
     // Проверяем, есть ли уже такой маршрут в массиве
     const isDuplicate = data.routes.some(
       (route) =>
@@ -165,12 +208,12 @@ function saveToLocalStorage() {
         route.distance === newRoute.distance &&
         route.purpose === newRoute.purpose
     );
-  
+
     if (!isDuplicate) {
       data.routes.push(newRoute);
     }
   });
-  
+
 
   // Получаем данные километража
   const kilometers = specificKilometer();
@@ -192,7 +235,7 @@ function saveToLocalStorage() {
     change: kilometers.change || 0,
     other: kilometers.other || 0,
   }];
-  
+
   let totalTransferred = 0;
 
   // Перебираем все маршруты
@@ -264,6 +307,17 @@ function loadFromLocalStorage() {
         cars.appendChild(newOption);
       });
     }
+    if (data.columnE) {
+      data.columnE.forEach((item) => {
+        // let newOption = document.createElement("option");
+        // newOption.value = item;
+        // streetsList.appendChild(newOption);
+      });
+      allStreetNames =data.columnE
+      // console.log('allStreetNames',allStreetNames);
+      
+    }
+
     if (data.columnD) {
       let unit = document.getElementById("unit");
       let options = unit.querySelectorAll("option");
@@ -364,15 +418,17 @@ function loadFromLocalStorage() {
             <div>
                 <div class="hide__box">
 
-                    <div class="route__row streetRow">
-                        <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${index + 1
+                    <div class="route__row streetRow" style="position: relative;">
+                        <input list="streetsList" class="input req suggestions" data-index="${index}" type="text" placeholder="Звідки" id="from${index + 1
         }" required="" value="${route.from}">
+        <ul class="autocomplete-list" id="autocomplete-${index}"></ul>
                         <input class="input req" type="time" required="" value="${route.departureTime
         }">
                     </div>
-                    <div class="route__row streetRow">
-                        <input class="input req suggestions" type="text" placeholder="Куди" id="to${index + 1
+                    <div class="route__row streetRow" style="position: relative;">
+                        <input list="streetsList" class="input req suggestions" data-index="${index +1}" type="text" placeholder="Куди" id="to${index + 1
         }" required="" value="${route.to}">
+        <ul class="autocomplete-list" id="autocomplete-${index+1}"></ul>
                         <input class="input req" type="time" required="" value="${route.arrivalTime
         }">
                     </div>
@@ -572,12 +628,14 @@ function addEventListeners() {
         <div>
             <div class="hide__box">
 
-                <div class="route__row streetRow">
-                    <input class="input req suggestions" type="text" placeholder="Звідки" id="from${routeCounter}" required="" value="">
+                <div class="route__row streetRow" style="position: relative;">
+                    <input data-index="${routeCounter}" list="streetsList" class="input req suggestions" type="text" placeholder="Звідки" id="from${routeCounter}" required="" value="">
+                    <ul class="autocomplete-list" id="autocomplete-${routeCounter}"></ul>
                     <input class="input req" type="time" required="" value="">
                 </div>
-                <div class="route__row streetRow">
-                    <input class="input req suggestions" type="text" placeholder="куди" id="to${routeCounter}"  required="" value="">
+                <div class="route__row streetRow" style="position: relative;">
+                    <input data-index="${routeCounter +1}" list="streetsList" class="input req suggestions" type="text" placeholder="куди" id="to${routeCounter}"  required="" value="">
+                    <ul class="autocomplete-list" id="autocomplete-${routeCounter+1}"></ul>
                     <input class="input req" type="time" required="" value="">
                 </div>
                 <div class="route__row last" id="last">
@@ -845,7 +903,7 @@ async function handleFormSubmit(api) {
     const lastBtn = document.querySelector(".lastBtn");
     let googleApiAdress = api;
     console.log(data);
-    
+
     const response = await fetch(`https://morning-lake-0dfa.kiriluka68.workers.dev/?url=${googleApiAdress}`, {
       method: "POST",
       headers: {
@@ -978,67 +1036,8 @@ document
 
 saveinchange();
 
-function initAutocomplete(input) {
-  // Опции для автозаполнения
-  const options = {
-    componentRestrictions: { country: "UA" },
-    fields: ["address_components", "geometry"],
-    types: ["address"],
-  };
 
-  // Создаем объект автозаполнения для текущего input
-  const autocomplete = new google.maps.places.Autocomplete(input, options);
 
-  // Добавляем обработчик события на изменение места (когда пользователь выбрал предложение из автозаполнения)
-  autocomplete.addListener("place_changed", function () {
-    const place = autocomplete.getPlace();
-
-    // Если геометрия (координаты) места присутствуют, продолжаем обработку
-    if (place.geometry) {
-      let streetName = "";
-      let cityName = "";
-      let houseNumber = ""; // Переменная для хранения номера дома
-
-      // Проходим по компонентам адреса, чтобы найти название улицы, города и номер дома
-      place.address_components.forEach((component) => {
-        if (component.types.includes("route")) {
-          streetName = component.long_name;
-        }
-        if (component.types.includes("locality")) {
-          cityName = component.long_name;
-        }
-        if (component.types.includes("street_number")) {
-          houseNumber = component.long_name;
-        }
-      });
-
-      // Если улица найдена, комбинируем полный адрес
-      if (streetName) {
-        let fullAddress = streetName;
-
-        if (houseNumber) {
-          fullAddress += `, ${houseNumber}`;
-        }
-
-        // console.log("Полный адрес:", fullAddress);
-        input.value = fullAddress; // Записываем полный адрес в инпут
-        saveToLocalStorage(); // Сохраняем в localStorage
-      }
-    }
-  });
-}
-
-routesContainer.addEventListener("click", (e) => {
-  // Инициализируем автозаполнение для каждого инпута с классом "suggestions"
-  if (e.target.classList.contains("suggestions")) {
-    initAutocomplete(e.target);
-  }
-});
-
-// Инициализация автозаполнения для всех инпутов с классом "suggestions" при загрузке страницы
-// document.querySelectorAll('.suggestions').forEach(input => {
-//   initAutocomplete(input);
-// });
 const buttonSendCancel = document.getElementById("buttonSend-Cancel");
 const buttonSendSend = document.getElementById("buttonSend-Send");
 const modalSend = document.getElementById("modalSend");
@@ -1209,6 +1208,7 @@ buttonCheck.addEventListener('click', () => {
         return response.json();  // Используем .json() для автоматического парсинга
       })
       .then((result) => {
+        console.log('resultSearch:', result);
 
         const data = result.data
         // Теперь можно работать с объектом, например:
@@ -1224,9 +1224,9 @@ buttonCheck.addEventListener('click', () => {
           adressCard.textContent = `${data[0].object_address}`
 
           // const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=YOUR_ORIGIN&destination=${data[0].coordinates.lat},${data[0].coordinates.lng}`;
-          if (data[0].coordinates.lat ) {
+          if (data[0].coordinates.lat) {
             console.log('coordinaty');
-            
+
             const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${data[0].coordinates.lat},${data[0].coordinates.lng}`;
 
             // Удаляем старые обработчики
@@ -1250,7 +1250,7 @@ buttonCheck.addEventListener('click', () => {
 
 
 
-          
+
           } else {
             console.log('coord net');
 
@@ -1328,14 +1328,18 @@ const testData = function () {
         <div>
             <div class="hide__box">
       
-                <div class="route__row streetRow">
-                    <input class="input req suggestions"  type="text" placeholder="Звідки" id="from${i + 1
+                <div class="route__row streetRow" style="position: relative;">
+                    <input data-index="${i}" list="streetsList" class="input req suggestions"  type="text" placeholder="Звідки" id="from${i + 1
         }" required="" value="dc">
+          <ul class="autocomplete-list" id="autocomplete-${i}"></ul>
+
                     <input class="input req" type="time" required="" value="14:30">
                 </div>
-                <div class="route__row streetRow">
-                    <input class="input req suggestions" type="text" placeholder="Куди" id="to${i + 1
+                <div class="route__row streetRow" style="position: relative;">
+                    <input data-index="${i +1}" list="streetsList" class="input req suggestions" type="text" placeholder="Куди" id="to${i + 1
         }" required="" value="dfgdfg">
+          <ul class="autocomplete-list" id="autocomplete-${i+1}"></ul>
+
                     <input class="input req" type="time" required=""  value="14:30">
                 </div>
                 <div class="route__row last" id="last">
@@ -1464,28 +1468,28 @@ citiesItems.forEach(item => {
     } else {
       citiesItems.forEach(city => city.classList.remove('selected'));
       selectedCity = item.getAttribute('data-city');
-      if(selectedCity == 'zp'){
+      if (selectedCity == 'zp') {
         selectedCitySpan.textContent = `ЗАПОРІЖЖЯ`
       }
-      if(selectedCity == 'dp'){
+      if (selectedCity == 'dp') {
         selectedCitySpan.textContent = `ДНІПРО`
       }
-      if(selectedCity == 'kr'){
+      if (selectedCity == 'kr') {
         selectedCitySpan.textContent = `КРИВИЙ РІГ`
       }
       item.classList.add('selected');
       console.log(selectedCity);
-      
+
       // Активируем кнопку
       activateButton();
- 
-    
-        document.getElementById("selectCityBtn").scrollIntoView({
-          behavior: "smooth", // Плавная прокрутка
-          block: "start" // Прокрутка к началу элемента
-        });
-    
-      
+
+
+      document.getElementById("selectCityBtn").scrollIntoView({
+        behavior: "smooth", // Плавная прокрутка
+        block: "start" // Прокрутка к началу элемента
+      });
+
+
     }
   });
 });
@@ -1521,3 +1525,41 @@ selectCityBtn.addEventListener("click", () => {
 
 
 // Выбор города конец
+// console.log(allStreetNames.length);
+
+  
+
+  document.addEventListener("input", (e) => {
+    if (e.target.classList.contains("suggestions")) {
+      const value = e.target.value.toLowerCase();
+      const index = e.target.getAttribute('data-index')
+      console.log('index', index);
+      
+      const listEl = document.getElementById(`autocomplete-${index}`);
+  
+      listEl.innerHTML = "";
+      // console.log('allStreetNames',allStreetNames);
+  
+      if (!value) {
+        listEl.style.display = "none";
+        return;
+      }
+  
+      const matches = allStreetNames.filter((item) =>
+        item.toLowerCase().includes(value)
+      );
+  
+      matches.slice(0, 10).forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        li.addEventListener("click", () => {
+          e.target.value = item;
+          listEl.style.display = "none";
+        });
+        listEl.appendChild(li);
+      });
+  
+      listEl.style.display = matches.length ? "block" : "none";
+    }
+  });
+

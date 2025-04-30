@@ -11,8 +11,16 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgs1UleSCfaYKQDhqldEYhSTFWV0Kmxnk&libraries=places"></script>
+  <!-- <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgs1UleSCfaYKQDhqldEYhSTFWV0Kmxnk&libraries=places"></script> -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet.markercluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+  <!-- Leaflet.markercluster JS -->
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
 </head>
 
@@ -38,53 +46,54 @@
 
     </div>
   </div>
-  <div class="container">
-    <!-- import '../styles/style.scss'; -->
-    <h1 class="title">
-      <img class="logoTitle" src="/logo.png" alt="">
-      Журнал нарядів
+  <div class="routsBox">
+    <div class="container">
+      <!-- import '../styles/style.scss'; -->
+      <h1 class="title">
+        <img class="logoTitle" src="/logo.png" alt="">
+        Журнал нарядів
 
-    </h1>
+      </h1>
 
-    <form id="logForm">
+      <form id="logForm">
 
-      <div class="head">
-
-
-        <label>Дата: <input class="req" type="date" id="date" required></label>
-        <label>Наряд:
-          <select class="req" id="unit" required>
-            <option value="" selected>Оберіть наряд</option>
-            <option value="Наряд 1">Наряд 1</option>
-            <option value="Наряд 2">Наряд 2</option>
-            <option value="Наряд 3">Наряд 3</option>
-            <option value="Наряд 4">Наряд 4</option>
-            <option value="Наряд 5">Наряд 5</option>
-            <option value="Наряд 6">Наряд 6</option>
-            <option value="Наряд 7">Наряд 7</option>
-            <option value="Наряд 8">Наряд 8</option>
-            <option value="Наряд 9">Наряд 9</option>
-            <option value="Наряд 10">Наряд 10</option>
-          </select>
-        </label>
-        <label>Водій: <input list="employee" class="req" type="text" id="driver" required></label>
-        <label>Старший:
-          <input list="employee" class="req" id="senior" required>
+        <div class="head">
 
 
-        </label>
-        <label>Авто: <input list="cars" class="req" type="text" id="car" required></label>
-        <label>Спідометр (початок): <input class="req" type="number" id="startOdometer" required></label>
-      </div>
-      <datalist id="employee">
+          <label>Дата: <input class="req" type="date" id="date" required></label>
+          <label>Наряд:
+            <select class="req" id="unit" required>
+              <option value="" selected>Оберіть наряд</option>
+              <option value="Наряд 1">Наряд 1</option>
+              <option value="Наряд 2">Наряд 2</option>
+              <option value="Наряд 3">Наряд 3</option>
+              <option value="Наряд 4">Наряд 4</option>
+              <option value="Наряд 5">Наряд 5</option>
+              <option value="Наряд 6">Наряд 6</option>
+              <option value="Наряд 7">Наряд 7</option>
+              <option value="Наряд 8">Наряд 8</option>
+              <option value="Наряд 9">Наряд 9</option>
+              <option value="Наряд 10">Наряд 10</option>
+            </select>
+          </label>
+          <label>Водій: <input list="employee" class="req" type="text" id="driver" required></label>
+          <label>Старший:
+            <input list="employee" class="req" id="senior" required>
 
-      </datalist>
-      <datalist id="cars">
 
-      </datalist>
-      <h2 class="routs__title">Маршрути</h2>
-      <div id="routesContainer">
-        <!-- <div class="route">
+          </label>
+          <label>Авто: <input list="cars" class="req" type="text" id="car" required></label>
+          <label>Спідометр (початок): <input class="req" type="number" id="startOdometer" required></label>
+        </div>
+        <datalist id="employee">
+
+        </datalist>
+        <datalist id="cars">
+
+        </datalist>
+        <h2 class="routs__title">Маршрути</h2>
+        <div id="routesContainer">
+          <!-- <div class="route">
           <div class="route__title" data-toggle="${index + 1}">
             <h2>Маршрут <span>${index + 1}</span> </h2>
             <div class="route__hide">Свернуть</div>
@@ -179,78 +188,113 @@
             </div>
           </div>
         </div> -->
-        <!-- Маршруты будут добавляться сюда -->
+          <!-- Маршруты будут добавляться сюда -->
 
-      </div>
-      <div class="addRoute__box">
-        <button type="button" id="addRoute">Додати маршрут</button>
-
-      </div>
-      <div class="dailyOdometer">
-        Пробіг за добу: <span id="dailyKm">0</span>
-      </div>
-      <div class="endOd">Спідометр: <span id="endOd"></span></div>
-
-      <div class="signals">
-
-        <label class="disabledLabel">Спрацювань ХОЛДІНГ: <input disabled id="signalsHolding" class="total disabled"
-            type="number" required value="0"></label>
-        <label class="disabledLabel">Спрацювань ПАРТНЕРІВ: <input disabled id="signalsVenbest" class="total disabled"
-            type="number" required value="0"></label>
-        <label>Дод. спрацювання: <input value="0" id="signalsDop" class="total" type="number"></label>
-      </div>
-      <div class="results">
-        <div class="result__btn" id="resulBtn">
-          <h2 class="results__title">Підсумки роботи</h2>
         </div>
-        <div class="result__info" id="results">
-          <div class="resultHideBox">
+        <div class="addRoute__box">
+          <button type="button" id="addRoute">Додати маршрут</button>
 
-            <div id="endOdometer">Спідометр (кінець): <span id="endOdometerValue">0</span></div>
-            <div class="dailyMileage">Пробіг за добу: <span id="dailyMileage">0</span> </div>
-            <div class="extended"> - Спрацювання: <span id="signal">0</span> </div>
-            <div class="extended"> - Точка відстою: <span id="point">0</span> </div>
-            <div class="extended"> - Ознайомлення: <span id="familiarization">0</span> </div>
-            <div class="extended"> - Патруль: <span id="patrol">0</span> </div>
-            <div class="extended"> - Туалет/Обід: <span id="breaks">0</span> </div>
-            <div class="extended"> - Підвіз ОХ: <span id="pickupH">0</span> </div>
-            <div class="extended"> - Підвіз ВБ: <span id="pickupV">0</span> </div>
-            <div class="extended"> - Мийка: <span id="wash">0</span> </div>
-            <div class="extended"> - СТО: <span id="service">0</span> </div>
-            <div class="extended"> - Перевірка: <span id="check">0</span> </div>
-            <div class="extended"> - Перезмінка: <span id="change">0</span> </div>
-            <div class="extended"> - Інше: <span id="other">0</span> </div>
+        </div>
+        <div class="dailyOdometer">
+          Пробіг за добу: <span id="dailyKm">0</span>
+        </div>
+        <div class="endOd">Спідометр: <span id="endOd"></span></div>
+
+        <div class="signals">
+
+          <label class="disabledLabel">Спрацювань ХОЛДІНГ: <input disabled id="signalsHolding" class="total disabled"
+              type="number" required value="0"></label>
+          <label class="disabledLabel">Спрацювань ПАРТНЕРІВ: <input disabled id="signalsVenbest" class="total disabled"
+              type="number" required value="0"></label>
+          <label>Дод. спрацювання: <input value="0" id="signalsDop" class="total" type="number"></label>
+        </div>
+        <div class="results">
+          <div class="result__btn" id="resulBtn">
+            <h2 class="results__title">Підсумки роботи</h2>
+          </div>
+          <div class="result__info" id="results">
+            <div class="resultHideBox">
+
+              <div id="endOdometer">Спідометр (кінець): <span id="endOdometerValue">0</span></div>
+              <div class="dailyMileage">Пробіг за добу: <span id="dailyMileage">0</span> </div>
+              <div class="extended"> - Спрацювання: <span id="signal">0</span> </div>
+              <div class="extended"> - Точка відстою: <span id="point">0</span> </div>
+              <div class="extended"> - Ознайомлення: <span id="familiarization">0</span> </div>
+              <div class="extended"> - Патруль: <span id="patrol">0</span> </div>
+              <div class="extended"> - Туалет/Обід: <span id="breaks">0</span> </div>
+              <div class="extended"> - Підвіз ОХ: <span id="pickupH">0</span> </div>
+              <div class="extended"> - Підвіз ВБ: <span id="pickupV">0</span> </div>
+              <div class="extended"> - Мийка: <span id="wash">0</span> </div>
+              <div class="extended"> - СТО: <span id="service">0</span> </div>
+              <div class="extended"> - Перевірка: <span id="check">0</span> </div>
+              <div class="extended"> - Перезмінка: <span id="change">0</span> </div>
+              <div class="extended"> - Інше: <span id="other">0</span> </div>
 
 
 
-            <div class="totalSignals">Усього спрацювань: <span id="totalSignals">0</span></div>
-            <div class="totalSignals-box">
+              <div class="totalSignals">Усього спрацювань: <span id="totalSignals">0</span></div>
+              <div class="totalSignals-box">
 
-              <div class="totalH">ХОЛДІНГ: <span id="totalH">0</span></div>
-              <div class="totalV">ПАРТНЕРІВ: <span id="totalV">0</span></div>
+                <div class="totalH">ХОЛДІНГ: <span id="totalH">0</span></div>
+                <div class="totalV">ПАРТНЕРІВ: <span id="totalV">0</span></div>
+              </div>
+
+              <div class="totalD">Додадкові: <span id="totalD">0</span></div>
+
+              <div class="arestedResult">
+                <div class="totalArest">Усього затримано: <span id="totalArest">0</span></div>
+                <div class="totalTransferred">- передано до полиції: <span id="totalTransferred">0</span></div>
+
+              </div>
             </div>
 
-            <div class="totalD">Додадкові: <span id="totalD">0</span></div>
+          </div>
 
-            <div class="arestedResult">
-              <div class="totalArest">Усього затримано: <span id="totalArest">0</span></div>
-              <div class="totalTransferred">- передано до полиції: <span id="totalTransferred">0</span></div>
 
+
+        </div>
+        <div class="btns">
+          <!-- <div id="saveBtn" class="btn btn--save">Сохранить </div> -->
+          <button class="btn btn--send" type="submit">Відправити</button>
+        </div>
+      </form>
+
+      <div class="searchCard">
+        <div class="searchCard__inner">
+          <h1>Пошук карточки об'єкту</h1>
+          <input type="text" id="searchCard__value" placeholder="введіть номер">
+          <div id="searchCard__btn">ПОШУК</div>
+          <div id='preloader'>
+            <div class='spinner dn' id="spinner">
+              <div class='loader'>
+                <div class='moving-dot'></div>
+                <div class='moving-dot'></div>
+                <div class='moving-dot'></div>
+                <div class='moving-dot'></div>
+                <div class='moving-dot'></div>
+                <div class='moving-dot'></div>
+              </div>
             </div>
           </div>
 
         </div>
+        <div class="resultCardBox">
+          <div class="searchCardErrore">Результати пошуку: <span id="searchCardErrore"></span> <br> <span
+              id="searchCardErroreText" class="dn">Не знайдено</span></div>
 
+          <div class="nameClient  text">Клієнт: <span id="nameClient"></span></div>
+          <div class="nameCard  text">Назва об'єкту: <span id="nameCard"></span></div>
+          <div class="adressCard text"> Адреса: <span id="adressCard"></span></div>
 
+          <div class="routeCardBtns">
+            <div class="routeCard routeCardBtn btn" id="routeCard">Картка</div>
+            <div class="routeRoute routeCardBtn btn" id="routeRoute">Їхати</div>
 
+          </div>
+        </div>
       </div>
-      <div class="btns">
-        <!-- <div id="saveBtn" class="btn btn--save">Сохранить </div> -->
-        <button class="btn btn--send" type="submit">Відправити</button>
-      </div>
-    </form>
+    </div>
   </div>
-
   <div class="modal__save dn">
     <div class="modal__save-box">
       <img class="logo" src="/logo.png" alt="">
@@ -303,10 +347,10 @@
         <div class="modal__cities-item" data-city="zp">
           <div class="herb__box">
 
-            <img src="./zp.svg" alt=""> 
+            <img src="./zp.svg" alt="">
           </div>
           м. Запоріжжя
-          </div>
+        </div>
         <div class="modal__cities-item" data-city="dp">
           <div class="herb__box">
             <img src="./dp.png" alt="">
@@ -332,46 +376,10 @@
     </div>
   </div>
 
-  <div class="searchCard">
-    <div class="searchCard__inner">
-      <h1>Пошук карточки об'єкту</h1>
-      <input type="text" id="searchCard__value" placeholder="введіть номер">
-      <div id="searchCard__btn">ПОШУК</div>
-      <div id='preloader'>
-        <div class='spinner dn' id="spinner">
-          <div class='loader'>
-            <div class='moving-dot'></div>
-            <div class='moving-dot'></div>
-            <div class='moving-dot'></div>
-            <div class='moving-dot'></div>
-            <div class='moving-dot'></div>
-            <div class='moving-dot'></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="resultCardBox">
-      <div class="searchCardErrore">Результати пошуку: <span id="searchCardErrore"></span> <br> <span
-          id="searchCardErroreText" class="dn">Не знайдено</span></div>
-
-      <div class="nameClient  text">Клієнт: <span id="nameClient"></span></div>
-      <div class="nameCard  text">Назва об'єкту: <span id="nameCard"></span></div>
-      <div class="adressCard text"> Адреса: <span id="adressCard"></span></div>
-
-      <div class="routeCardBtns">
-        <div class="routeCard routeCardBtn btn" id="routeCard">Картка</div>
-        <div class="routeRoute routeCardBtn btn" id="routeRoute">Їхати</div>
-
-      </div>
-    </div>
-  </div>
   <div class="pdf-viewer" id="pdf-viewer"></div>
 
 
-  <div class="footer">
-    Powered by <a class="tgLink" href="https://t.me/Alexandrr32" target="_blank">Кирилюк О.</a>
-  </div>
+
   <div class="moadHarReload dn">
     <div class="moadHarReload-box">
       <div class="moadHarReload-text">
@@ -386,37 +394,192 @@
       <div class="moadHarReload__btn moadHarReload__btns-reload" id="hardResetReset">Скинути</div>
     </div>
   </div>
-  <div class="hardReload">
-    <svg width="281" height="274" viewBox="0 0 281 274" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_263_5267)">
-        <path
-          d="M28.4618 228.638C76.9139 245.283 114.482 245.569 135.043 243.632C110.77 237.977 64.0951 223.81 8.02783 190.36C12.8188 204.052 19.6729 216.916 28.4618 228.638Z"
-          fill="#e5e920" />
-        <path
-          d="M163.378 1.47799C149.511 -0.523213 135.487 -0.492231 121.653 1.57323C87.0347 34.1973 69.9006 64.9463 62 83.0214C78.0235 65.232 110.928 33.1163 163.378 1.47799Z"
-          fill="#1263dc" />
-        <path
-          d="M4.2202 108.403C1.39604 119.616 0 131.211 0 142.996C0 146.204 0.0951322 149.54 0.31749 152.906C86.4958 211.165 146.053 220.06 174.388 220.06H174.673C138.85 210.118 59.6525 180.988 4.2202 108.403Z"
-          fill="#e5e920" />
-        <path
-          d="M63.0796 129.528C88.2094 103.766 149.417 50.2712 236.389 34.9914C225.569 25.5889 213.48 17.9008 200.344 12.0876C110.739 59.1332 75.9626 105.544 63.0796 129.528Z"
-          fill="#1263dc" />
-        <path
-          d="M211.005 127.239C216.494 163.167 218.873 217.233 200.09 273.999C213.638 268.027 226.108 260.053 237.214 250.206C237.944 152.842 214.464 100.714 199.646 77.6201C203.358 89.5642 207.832 106.623 211.006 127.238L211.005 127.239Z"
-          fill="#e5e920" />
-        <path
-          d="M240.767 98.0464C248.445 119.648 260.281 161.229 263.708 219.107C271.513 206.75 277.32 193.345 281 179.209C268.815 138.738 251.936 112.341 240.766 98.0464H240.767Z"
-          fill="#1263dc" />
-      </g>
-      <defs>
-        <clipPath id="clip0_263_5267">
-          <rect width="281" height="274" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
 
+
+  <div class="buttons">
+    <div class="container">
+
+      <div class="buttons__box">
+
+
+        <div class="button__routs routBtn">МАРШРУТИ</div>
+        <div class="button__routs mapBtn">Мапа</div>
+        <div class="hardReload">
+          <svg width="281" height="274" viewBox="0 0 281 274" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_263_5267)">
+              <path
+                d="M28.4618 228.638C76.9139 245.283 114.482 245.569 135.043 243.632C110.77 237.977 64.0951 223.81 8.02783 190.36C12.8188 204.052 19.6729 216.916 28.4618 228.638Z"
+                fill="#e5e920" />
+              <path
+                d="M163.378 1.47799C149.511 -0.523213 135.487 -0.492231 121.653 1.57323C87.0347 34.1973 69.9006 64.9463 62 83.0214C78.0235 65.232 110.928 33.1163 163.378 1.47799Z"
+                fill="#1263dc" />
+              <path
+                d="M4.2202 108.403C1.39604 119.616 0 131.211 0 142.996C0 146.204 0.0951322 149.54 0.31749 152.906C86.4958 211.165 146.053 220.06 174.388 220.06H174.673C138.85 210.118 59.6525 180.988 4.2202 108.403Z"
+                fill="#e5e920" />
+              <path
+                d="M63.0796 129.528C88.2094 103.766 149.417 50.2712 236.389 34.9914C225.569 25.5889 213.48 17.9008 200.344 12.0876C110.739 59.1332 75.9626 105.544 63.0796 129.528Z"
+                fill="#1263dc" />
+              <path
+                d="M211.005 127.239C216.494 163.167 218.873 217.233 200.09 273.999C213.638 268.027 226.108 260.053 237.214 250.206C237.944 152.842 214.464 100.714 199.646 77.6201C203.358 89.5642 207.832 106.623 211.006 127.238L211.005 127.239Z"
+                fill="#e5e920" />
+              <path
+                d="M240.767 98.0464C248.445 119.648 260.281 161.229 263.708 219.107C271.513 206.75 277.32 193.345 281 179.209C268.815 138.738 251.936 112.341 240.766 98.0464H240.767Z"
+                fill="#1263dc" />
+            </g>
+            <defs>
+              <clipPath id="clip0_263_5267">
+                <rect width="281" height="274" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+
+        </div>
+      </div>
+    </div>
   </div>
 
+
+
+
+  <div id="map" class="hide dnone" style="width: 100%; height: 85vh;">
+    <div style="text-align: right; margin: 10px;">
+      <button id="locateMeBtn"
+        style="padding: 8px 12px; background: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        📍 Знайти мене
+      </button>
+    </div>
+  </div>
+  <div class="footer">
+    Powered by <a class="tgLink" href="https://t.me/Alexandrr32" target="_blank">Кирилюк О.</a>
+  </div>
+  <script>
+    const routBtn = document.querySelector('.routBtn');
+    const mapBtn = document.querySelector('.mapBtn');
+    const routsBox = document.querySelector('.routsBox');
+    const mapBox = document.getElementById('map')
+    mapBtn.addEventListener('click', () => {
+      routsBox.classList.add('hide')
+      setTimeout(() => {
+        routsBox.classList.add('dnone')
+        mapBox.classList.remove('dnone')
+
+        mapBox.classList.remove('hide')
+      }, 300);
+    })
+    // Массив объектов
+    routBtn.addEventListener('click', () => {
+      mapBox.classList.add('hide')
+      setTimeout(() => {
+        mapBox.classList.add('dnone')
+        routsBox.classList.remove('dnone')
+
+        routsBox.classList.remove('hide')
+      }, 300);
+    })
+    // Массив объектов
+    // 47.841019174988965, 35.12101928509982
+    // 47.84718294009653, 35.12977401436128
+    const objects = [
+
+      { number: 2999, name: "Объект 2999", address: "Адрес 2999, Запорожье", lat: 47.749196, lon: 35.196975 },
+      { number: 3000, name: "Объект 3000", address: "Адрес 3000, Запорожье", lat: 47.899241, lon: 35.08821 },
+    ];
+    const map = L.map('map').setView([50.4501, 30.5234], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © OpenStreetMap contributors',
+    }).addTo(map);
+
+    // Создаем кластер-группу
+    const markers = L.markerClusterGroup();
+
+    // Добавляем маркеры в кластер-группу
+    objects.forEach(obj => {
+      const marker = L.marker([obj.lat, obj.lon]);
+      marker.bindPopup(
+        `<b>${obj.name}</b><br>${obj.address}<br><button onclick="routeTo(${obj.lat}, ${obj.lon})">Скласти маршрут</button>`
+      );
+      markers.addLayer(marker);
+    });
+
+    // Добавляем кластер на карту
+    map.addLayer(markers);
+
+    // Геолокация пользователя
+    navigator.geolocation.getCurrentPosition(position => {
+      const userLat = position.coords.latitude;
+      const userLon = position.coords.longitude;
+
+      const userMarker = L.marker([userLat, userLon], {
+        title: "Вы здесь",
+        icon: L.icon({
+          iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+        }),
+      }).addTo(map);
+
+      map.setView([userLat, userLon], 13);
+    }, error => {
+      console.warn("Геолокация недоступна");
+    });
+
+    // Функция построения маршрута
+    function routeTo(destLat, destLon) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const userLat = position.coords.latitude;
+        const userLon = position.coords.longitude;
+
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=${destLat},${destLon}&travelmode=driving`;
+        window.open(googleMapsUrl, '_blank');
+      }, error => {
+        alert("Не вдалося встановити ваше місцезнаходження.");
+      });
+    }
+
+    // Кнопка "Найти меня"
+    const locateMeBtn = document.getElementById('locateMeBtn');
+
+    locateMeBtn.addEventListener('click', () => {
+      navigator.geolocation.getCurrentPosition(position => {
+        const userLat = position.coords.latitude;
+        const userLon = position.coords.longitude;
+
+        map.setView([userLat, userLon], 15);
+
+        const circle = L.circle([userLat, userLon], {
+          color: 'blue',
+          fillColor: '#30f',
+          fillOpacity: 0.3,
+          radius: 100
+        }).addTo(map);
+
+        setTimeout(() => {
+          map.removeLayer(circle);
+        }, 5000);
+      }, error => {
+        alert("Не вдалося встановити ваше місцезнаходження.");
+      });
+    });
+
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- 
+  <datalist id="streetsList">
+
+  </datalist> -->
 </body>
 
 </html>
