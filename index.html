@@ -453,116 +453,25 @@
     Powered by <a class="tgLink" href="https://t.me/Alexandrr32" target="_blank">Кирилюк О.</a>
   </div>
   <script>
-    const routBtn = document.querySelector('.routBtn');
-    const mapBtn = document.querySelector('.mapBtn');
-    const routsBox = document.querySelector('.routsBox');
-    const mapBox = document.getElementById('map')
-    mapBtn.addEventListener('click', () => {
-      routsBox.classList.add('hide')
-      setTimeout(() => {
-        routsBox.classList.add('dnone')
-        mapBox.classList.remove('dnone')
 
-        mapBox.classList.remove('hide')
-      }, 300);
-    })
-    // Массив объектов
-    routBtn.addEventListener('click', () => {
-      mapBox.classList.add('hide')
-      setTimeout(() => {
-        mapBox.classList.add('dnone')
-        routsBox.classList.remove('dnone')
-
-        routsBox.classList.remove('hide')
-      }, 300);
-    })
-    // Массив объектов
-    // 47.841019174988965, 35.12101928509982
-    // 47.84718294009653, 35.12977401436128
-    const objects = [
-
-      { number: 2999, name: "Объект 2999", address: "Адрес 2999, Запорожье", lat: 47.749196, lon: 35.196975 },
-      { number: 3000, name: "Объект 3000", address: "Адрес 3000, Запорожье", lat: 47.899241, lon: 35.08821 },
-    ];
-    const map = L.map('map').setView([50.4501, 30.5234], 12);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data © OpenStreetMap contributors',
-    }).addTo(map);
-
-    // Создаем кластер-группу
-    const markers = L.markerClusterGroup();
-
-    // Добавляем маркеры в кластер-группу
-    objects.forEach(obj => {
-      const marker = L.marker([obj.lat, obj.lon]);
-      marker.bindPopup(
-        `<b>${obj.name}</b><br>${obj.address}<br><button onclick="routeTo(${obj.lat}, ${obj.lon})">Скласти маршрут</button>`
-      );
-      markers.addLayer(marker);
-    });
-
-    // Добавляем кластер на карту
-    map.addLayer(markers);
-
-    // Геолокация пользователя
-    navigator.geolocation.getCurrentPosition(position => {
-      const userLat = position.coords.latitude;
-      const userLon = position.coords.longitude;
-
-      const userMarker = L.marker([userLat, userLon], {
-        title: "Вы здесь",
-        icon: L.icon({
-          iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-          popupAnchor: [1, -34],
-        }),
-      }).addTo(map);
-
-      map.setView([userLat, userLon], 13);
-    }, error => {
-      console.warn("Геолокация недоступна");
-    });
-
-    // Функция построения маршрута
     function routeTo(destLat, destLon) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const userLat = position.coords.latitude;
-        const userLon = position.coords.longitude;
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLat = position.coords.latitude;
+          const userLon = position.coords.longitude;
 
-        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=${destLat},${destLon}&travelmode=driving`;
-        window.open(googleMapsUrl, '_blank');
-      }, error => {
-        alert("Не вдалося встановити ваше місцезнаходження.");
-      });
+          const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${destLat},${destLon}`;
+          if (window.cordova && window.cordova.InAppBrowser) {
+            window.cordova.InAppBrowser.open(googleMapsUrl, "_system");
+          } else {
+            window.open(googleMapsUrl, "_blank");
+          }
+        },
+        () => {
+          alert("Не вдалося встановити ваше місцезнаходження.");
+        }
+      );
     }
-
-    // Кнопка "Найти меня"
-    const locateMeBtn = document.getElementById('locateMeBtn');
-
-    locateMeBtn.addEventListener('click', () => {
-      navigator.geolocation.getCurrentPosition(position => {
-        const userLat = position.coords.latitude;
-        const userLon = position.coords.longitude;
-
-        map.setView([userLat, userLon], 15);
-
-        const circle = L.circle([userLat, userLon], {
-          color: 'blue',
-          fillColor: '#30f',
-          fillOpacity: 0.3,
-          radius: 100
-        }).addTo(map);
-
-        setTimeout(() => {
-          map.removeLayer(circle);
-        }, 5000);
-      }, error => {
-        alert("Не вдалося встановити ваше місцезнаходження.");
-      });
-    });
-
 
   </script>
 

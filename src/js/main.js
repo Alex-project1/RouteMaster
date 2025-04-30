@@ -7,27 +7,28 @@ import { isSignal } from "./isSignal.js";
 // console.log('localStorage',localStorage);
 //**************************** */
 // Функция для получения адресов через Nominatim API
-let allStreetNames =''
+let allStreetNames = "";
 console.log(localStorage);
-
 
 // console.log('localStorage.getItem("initData")',localStorage.getItem("initData"));
 
 async function getAddresses(query) {
-  const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=UA`);
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=UA`
+  );
   const data = await response.json();
   console.log(data);
 
-  return data.map(street => ({ display_name: street.display_name }));
+  return data.map((street) => ({ display_name: street.display_name }));
 }
 
 // Функция для отображения подсказок
 function showSuggestions(inputElement, suggestions) {
-  const suggestionList = document.createElement('ul');
-  suggestions.forEach(suggestion => {
-    const suggestionItem = document.createElement('li');
+  const suggestionList = document.createElement("ul");
+  suggestions.forEach((suggestion) => {
+    const suggestionItem = document.createElement("li");
     suggestionItem.textContent = suggestion.display_name;
-    suggestionItem.addEventListener('click', () => {
+    suggestionItem.addEventListener("click", () => {
       inputElement.value = suggestion.display_name; // Заполняем инпут выбранным адресом
       suggestionList.remove(); // Убираем список после выбора
     });
@@ -35,7 +36,7 @@ function showSuggestions(inputElement, suggestions) {
   });
 
   // Очищаем старые подсказки
-  const existingList = inputElement.parentElement.querySelector('ul');
+  const existingList = inputElement.parentElement.querySelector("ul");
   if (existingList) {
     existingList.remove();
   }
@@ -43,36 +44,32 @@ function showSuggestions(inputElement, suggestions) {
   inputElement.parentElement.appendChild(suggestionList);
 }
 
-
 //**************************** */
 function formDataLocal() {
-
   if (localStorage.getItem("formData")) {
     let formData = JSON.parse(localStorage.getItem("formData"));
     // console.log('formData');
     // console.log(formData);
     // console.log('formData');
-
   }
 }
-formDataLocal()
-const hardReload = document.querySelector('.hardReload');
-const moadHarReload = document.querySelector('.moadHarReload');
-const hardResetCansel = document.getElementById('hardResetCansel')
-const hardResetReset = document.getElementById('hardResetReset')
-hardReload.addEventListener('click', () => {
+formDataLocal();
+const hardReload = document.querySelector(".hardReload");
+const moadHarReload = document.querySelector(".moadHarReload");
+const hardResetCansel = document.getElementById("hardResetCansel");
+const hardResetReset = document.getElementById("hardResetReset");
+hardReload.addEventListener("click", () => {
   // console.log('sdsdf');
   // reload()
-  moadHarReload.classList.remove('dn')
-
-
-})
-hardResetCansel.addEventListener('click', () => {
-  if (!moadHarReload.classList.contains('dn')) moadHarReload.classList.add('dn')
-})
-hardResetReset.addEventListener('click', () => {
-  reload()
-})
+  moadHarReload.classList.remove("dn");
+});
+hardResetCansel.addEventListener("click", () => {
+  if (!moadHarReload.classList.contains("dn"))
+    moadHarReload.classList.add("dn");
+});
+hardResetReset.addEventListener("click", () => {
+  reload();
+});
 
 const load = document.getElementById("load");
 if (load) {
@@ -91,11 +88,11 @@ if (load) {
 const zp =
   "https://script.google.com/macros/s/AKfycbw-eakkUUrATU_CEeW8kys38dbJRGPlcWwbgr-1dAmYZwPXoQpsL0QZ7NHhCmA4Strh/exec";
 
-
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
-const kr = 'https://script.google.com/macros/s/AKfycby27hfmv5uhWfQIpdbLcDFo6qCH7pVZAEp4Aogv_j-SRY155_kWlFp3iVRALev_tsoR/exec'
-let googleApiAdress
+const kr =
+  "https://script.google.com/macros/s/AKfycby27hfmv5uhWfQIpdbLcDFo6qCH7pVZAEp4Aogv_j-SRY155_kWlFp3iVRALev_tsoR/exec";
+let googleApiAdress;
 const employee = document.getElementById("employee");
 const cars = document.getElementById("cars");
 const streetsList = document.getElementById("streetsList");
@@ -110,15 +107,12 @@ const resulBtn = document.getElementById("resulBtn");
 const resultsBody = document.getElementById("results");
 const searchCardErrore = document.getElementById("searchCardErrore");
 const spinner = document.getElementById("spinner");
-const searchCardErroreText = document.getElementById('searchCardErroreText')
-
+const searchCardErroreText = document.getElementById("searchCardErroreText");
 
 if (localStorage.getItem("initData")) {
   let initData = JSON.parse(localStorage.getItem("initData"));
   console.log(initData);
   googleApiAdress = initData.city; // Используйте let или var
-
-
 }
 
 resulBtn.addEventListener("click", () => {
@@ -145,7 +139,7 @@ function hide() {
 }
 // сворачивание маршрута начало *****************************
 // Боевая или не боевая сработка начало ****************************
-isSignal()
+isSignal();
 // Боевая или не боевая сработка конец ****************************
 // Функция-обработчик
 function toggleRoute(event) {
@@ -214,27 +208,28 @@ function saveToLocalStorage() {
     }
   });
 
-
   // Получаем данные километража
   const kilometers = specificKilometer();
   const whoseSingnals = whoseSingnal();
   data.signalHolding = whoseSingnals.signalHolding;
   data.signalVenbest = whoseSingnals.signalVenbest;
   // Добавляем данные в extendedOdometr
-  data.extendedOdometr = [{
-    signal: kilometers.signal || 0,
-    point: kilometers.point || 0,
-    familiarization: kilometers.familiarization || 0,
-    patrol: kilometers.patrol || 0,
-    breaks: kilometers.breaks || 0,
-    pickupH: kilometers.pickupH || 0,
-    pickupV: kilometers.pickupV || 0,
-    wash: kilometers.wash || 0,
-    service: kilometers.service || 0,
-    check: kilometers.check || 0,
-    change: kilometers.change || 0,
-    other: kilometers.other || 0,
-  }];
+  data.extendedOdometr = [
+    {
+      signal: kilometers.signal || 0,
+      point: kilometers.point || 0,
+      familiarization: kilometers.familiarization || 0,
+      patrol: kilometers.patrol || 0,
+      breaks: kilometers.breaks || 0,
+      pickupH: kilometers.pickupH || 0,
+      pickupV: kilometers.pickupV || 0,
+      wash: kilometers.wash || 0,
+      service: kilometers.service || 0,
+      check: kilometers.check || 0,
+      change: kilometers.change || 0,
+      other: kilometers.other || 0,
+    },
+  ];
 
   let totalTransferred = 0;
 
@@ -313,9 +308,8 @@ function loadFromLocalStorage() {
         // newOption.value = item;
         // streetsList.appendChild(newOption);
       });
-      allStreetNames =data.columnE
+      allStreetNames = data.columnE;
       // console.log('allStreetNames',allStreetNames);
-      
     }
 
     if (data.columnD) {
@@ -335,7 +329,6 @@ function loadFromLocalStorage() {
         unit.appendChild(newOption);
       });
     }
-
   }
   const savedData = localStorage.getItem("formData");
   if (savedData) {
@@ -392,7 +385,7 @@ function loadFromLocalStorage() {
     routeCounter = data.routes.length;
 
     const container = document.getElementById("routesContainer");
-    container.innerHTML = ``
+    container.innerHTML = ``;
     data.routes.forEach((route, index) => {
       // console.log("route");
       // console.log(route);
@@ -419,63 +412,85 @@ function loadFromLocalStorage() {
                 <div class="hide__box">
 
                     <div class="route__row streetRow" style="position: relative;">
-                        <input list="streetsList" class="input req suggestions" data-index="${index}" type="text" placeholder="Звідки" id="from${index + 1
-        }" required="" value="${route.from}">
+                        <input list="streetsList" class="input req suggestions" data-index="${index}" type="text" placeholder="Звідки" id="from${
+        index + 1
+      }" required="" value="${route.from}">
         <ul class="autocomplete-list" id="autocomplete-${index}"></ul>
-                        <input class="input req" type="time" required="" value="${route.departureTime
-        }">
+                        <input class="input req" type="time" required="" value="${
+                          route.departureTime
+                        }">
                     </div>
                     <div class="route__row streetRow" style="position: relative;">
-                        <input list="streetsList" class="input req suggestions" data-index="${index +1}" type="text" placeholder="Куди" id="to${index + 1
-        }" required="" value="${route.to}">
-        <ul class="autocomplete-list" id="autocomplete-${index+1}"></ul>
-                        <input class="input req" type="time" required="" value="${route.arrivalTime
-        }">
+                        <input list="streetsList" class="input req suggestions" data-index="${
+                          index + 1
+                        }" type="text" placeholder="Куди" id="to${
+        index + 1
+      }" required="" value="${route.to}">
+        <ul class="autocomplete-list" id="autocomplete-${index + 1}"></ul>
+                        <input class="input req" type="time" required="" value="${
+                          route.arrivalTime
+                        }">
                     </div>
                     <div class="route__row last" id="last">
                         <input class="input distance req" type="number"  placeholder="Відстань(км)" required=""
                         value="${route.distance}">
 
-                           <select class="input req" id="target${index + 1
-        }" required>
-                    <option data-toggle="arest${index + 1
-        }" value="" selected>                    мета поїздки</option>
+                           <select class="input req" id="target${
+                             index + 1
+                           }" required>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" value="" selected>                    мета поїздки</option>
                     
-                    <option data-toggle="arest${index + 1
-        }" data-value="signal" data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="signal" data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
 
-                    <option data-toggle="arest${index + 1
-        }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання Партн.">Спрацювання Партн.</option>
-                    <option data-toggle="arest${index + 1
-        }"  data-value="point" value="Точка відстою">Точка відстою</option>
-                    <option data-toggle="arest${index + 1
-        }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
-                    <option data-toggle="arest${index + 1
-        }" data-value="patrol" value="Патруль">Патруль</option>
-                    <option data-toggle="arest${index + 1
-        }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
-                    <option data-toggle="arest${index + 1
-        }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
-                    <option data-toggle="arest${index + 1
-        }" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
-                    <option data-toggle="arest${index + 1
-        }" data-value="wash" value="Мийка">Мийка</option>
-                    <option data-toggle="arest${index + 1
-        }" data-value="service" value="СТО">СТО</option>                    
-                    <option data-toggle="arest${index + 1
-        }" data-value="check" value="Перевірка">Перевірка</option>                    
-                    <option data-toggle="arest${index + 1
-        }" data-value="change" value="Перезмінка">Перезмінка</option>                    
-                    <option data-toggle="arest${index + 1
-        }" data-value="other" value="Інше">Інше</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання Партн.">Спрацювання Партн.</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }"  data-value="point" value="Точка відстою">Точка відстою</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="patrol" value="Патруль">Патруль</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="wash" value="Мийка">Мийка</option>
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="service" value="СТО">СТО</option>                    
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="check" value="Перевірка">Перевірка</option>                    
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="change" value="Перезмінка">Перезмінка</option>                    
+                    <option data-toggle="arest${
+                      index + 1
+                    }" data-value="other" value="Інше">Інше</option>
                   </select>
                   
                       
                         </div>
 
 
-  <div class="isCombat ${route.purpose.includes("Спрацювання") ? "active" : ""
-        }"" id="arest${index + 1}">
+  <div class="isCombat ${
+    route.purpose.includes("Спрацювання") ? "active" : ""
+  }"" id="arest${index + 1}">
   <div class="isCombat__overflow">
     <span>Бойова??</span>
     <div class="isCombat__box ${route.isCombat ? "combat" : ""}"></div>
@@ -489,13 +504,15 @@ function loadFromLocalStorage() {
 
                   <div class="arrested__row">
                     <span>Затримано</span>
-                    <input class="input req" value="${route.delayed
-        }" type="number" id="arest">
+                    <input class="input req" value="${
+                      route.delayed
+                    }" type="number" id="arest">
                   </div>
                   <div class="arrested__row">
                     <span>передано до полиції</span>
-                    <input class="input req" value="${route.transferred
-        }" type="number" >
+                    <input class="input req" value="${
+                      route.transferred
+                    }" type="number" >
                   </div>
  </div>
 
@@ -504,8 +521,9 @@ function loadFromLocalStorage() {
 
 
                         <div class="route__row">
-                        <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5"> ${route.message
-        }</textarea>
+                        <textarea  class="input"  placeholder="Примітки..." id="message" cols="20" rows="5"> ${
+                          route.message
+                        }</textarea>
                     </div>
             
                     <button type="button" class="deleteRoute">Видалити</button>
@@ -634,8 +652,12 @@ function addEventListeners() {
                     <input class="input req" type="time" required="" value="">
                 </div>
                 <div class="route__row streetRow" style="position: relative;">
-                    <input data-index="${routeCounter +1}" list="streetsList" class="input req suggestions" type="text" placeholder="куди" id="to${routeCounter}"  required="" value="">
-                    <ul class="autocomplete-list" id="autocomplete-${routeCounter+1}"></ul>
+                    <input data-index="${
+                      routeCounter + 1
+                    }" list="streetsList" class="input req suggestions" type="text" placeholder="куди" id="to${routeCounter}"  required="" value="">
+                    <ul class="autocomplete-list" id="autocomplete-${
+                      routeCounter + 1
+                    }"></ul>
                     <input class="input req" type="time" required="" value="">
                 </div>
                 <div class="route__row last" id="last">
@@ -774,15 +796,15 @@ async function handleFormSubmit(api) {
   const lastBtn = document.createElement("div");
   lastBtn.className = "lastBtn";
   lastBtn.textContent = "Оновити";
-  const erBox = document.createElement('div')
-  erBox.className = 'erBox'
+  const erBox = document.createElement("div");
+  erBox.className = "erBox";
   const support = document.createElement("div");
   support.className = "support";
-  support.classList.add('er-bnt');
+  support.classList.add("er-bnt");
   support.textContent = "Підтримка";
-  support.addEventListener('click', () => {
+  support.addEventListener("click", () => {
     location.reload();
-  })
+  });
   // Собираем финальную структуру
   modalSendForm.appendChild(logo);
   modalSendForm.appendChild(modalMessage);
@@ -904,19 +926,21 @@ async function handleFormSubmit(api) {
     let googleApiAdress = api;
     console.log(data);
 
-    const response = await fetch(`https://morning-lake-0dfa.kiriluka68.workers.dev/?url=${googleApiAdress}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-      // mode: "no-cors", // Запрос с режимом no-cors
-    });
+    const response = await fetch(
+      `https://morning-lake-0dfa.kiriluka68.workers.dev/?url=${googleApiAdress}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        // mode: "no-cors", // Запрос с режимом no-cors
+      }
+    );
 
     const result = await response.json();
 
     if (result.status === "success") {
-
       box.classList.add("finish");
       setTimeout(() => {
         box.innerHTML = `<p>Дякую, дані успішно відправлені!</p> `;
@@ -926,22 +950,18 @@ async function handleFormSubmit(api) {
       }, 300);
     } else {
       // alert(`Ошибка1: ${result.message}`);
-      console.log('ошибка 1');
-      erBox.classList.add('active')
+      console.log("ошибка 1");
+      erBox.classList.add("active");
       box.innerHTML = `<p>Помилка1! <br/> <span> ${result.message}</span></p>`;
-
     }
   } catch (error) {
     console.log(error);
     // alert(`Ошибка2: ${error}`);
-    console.log('ошибка 2');
-    erBox.classList.add('active')
+    console.log("ошибка 2");
+    erBox.classList.add("active");
     box.innerHTML = `<p>Помилка2! <br/> <span>${error}</span></p>`;
-
-
   }
 }
-
 
 // Инициализация обработчиков
 function init() {
@@ -1036,8 +1056,6 @@ document
 
 saveinchange();
 
-
-
 const buttonSendCancel = document.getElementById("buttonSend-Cancel");
 const buttonSendSend = document.getElementById("buttonSend-Send");
 const modalSend = document.getElementById("modalSend");
@@ -1045,8 +1063,6 @@ const submit = document.querySelector(".btn--send");
 
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-
-
 
   let er = [];
   let req = document.querySelectorAll(".req");
@@ -1096,15 +1112,11 @@ submit.addEventListener("click", (e) => {
 });
 
 buttonSendSend.addEventListener("click", (e) => {
-
   handleFormSubmit(googleApiAdress);
-
 });
 buttonSendCancel.addEventListener("click", () => {
   modalSend.classList.add("dn");
 });
-
-
 
 const tgLink = document.querySelector(".tgLink");
 tgLink.addEventListener("click", () => {
@@ -1133,27 +1145,17 @@ const buttonCheck = document.querySelector("#searchCard__btn");
 //   }
 // });
 
-
-
 // Логика поиска карточек **************************************
 
 // Глобальные переменные для функций-обработчиков
 let handleRouteClick = null;
 let openPdf = null;
 
-
-
-
-
-
 const myHeaders = new Headers();
 myHeaders.append("Authorization", "Basic YS5raXJpbHVrOm03OTdnTGZaOEo=");
 myHeaders.append("Accept", "application/json");
 
-
-
-
-buttonCheck.addEventListener('click', () => {
+buttonCheck.addEventListener("click", () => {
   const routeRoute = document.getElementById("routeRoute");
   const nameCard = document.getElementById("nameCard");
   const nameClient = document.getElementById("nameClient");
@@ -1170,47 +1172,37 @@ buttonCheck.addEventListener('click', () => {
     spinner.classList.add("dn");
   }
 
-
-
   routeRoute.classList.remove("active");
   routeCard.classList.remove("active");
   // поиск карточки
   let cardData = ``;
 
   if (value !== "") {
-
   }
   // поиск координат
 
-
-
-
-
-
-
-  if (value !== '') {
-    cardData = `https://l-cs.ohholding.com.ua/api/v2/object-card/by-account-number/${value}`
+  if (value !== "") {
+    cardData = `https://l-cs.ohholding.com.ua/api/v2/object-card/by-account-number/${value}`;
 
     spinner.classList.remove("dn");
     searchCardErrore.textContent = `${value}`;
 
-
     fetch(cardData, {
       method: "GET",
       headers: myHeaders,
-      redirect: "follow"
+      redirect: "follow",
     })
       .then((response) => {
         // Проверка на успешный ответ (status 200)
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.json();  // Используем .json() для автоматического парсинга
+        return response.json(); // Используем .json() для автоматического парсинга
       })
       .then((result) => {
-        console.log('resultSearch:', result);
+        console.log("resultSearch:", result);
 
-        const data = result.data
+        const data = result.data;
         // Теперь можно работать с объектом, например:
         if (data.length > 0) {
           // console.log('estm');
@@ -1219,13 +1211,13 @@ buttonCheck.addEventListener('click', () => {
           console.log(data[0].coordinates.lat);
 
           // routeCard.classList.add("active");
-          nameClient.textContent = `${data[0].client_name}`
-          nameCard.textContent = `${data[0].object_title}`
-          adressCard.textContent = `${data[0].object_address}`
+          nameClient.textContent = `${data[0].client_name}`;
+          nameCard.textContent = `${data[0].object_title}`;
+          adressCard.textContent = `${data[0].object_address}`;
 
           // const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=YOUR_ORIGIN&destination=${data[0].coordinates.lat},${data[0].coordinates.lng}`;
           if (data[0].coordinates.lat) {
-            console.log('coordinaty');
+            console.log("coordinaty");
 
             const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${data[0].coordinates.lat},${data[0].coordinates.lng}`;
 
@@ -1234,36 +1226,27 @@ buttonCheck.addEventListener('click', () => {
               routeRoute.removeEventListener("click", handleRouteClick);
 
             handleRouteClick = () => {
-
               if (window.cordova && window.cordova.InAppBrowser) {
                 window.cordova.InAppBrowser.open(googleMapsUrl, "_system");
               } else {
                 window.open(googleMapsUrl, "_blank");
               }
             };
-            routeRoute.classList.add('active')
+            routeRoute.classList.add("active");
             routeRoute.addEventListener("click", handleRouteClick);
 
             if (openPdf) routeCard.removeEventListener("click", openPdf);
             // object_card_url
-
-
-
-
-
           } else {
-            console.log('coord net');
-
+            console.log("coord net");
           }
           if (data[0].object_card_url !== null) {
             console.log(data[0].object_card_url);
 
-            let pdfUrl = `${data[0].object_card_url}`
-
+            let pdfUrl = `${data[0].object_card_url}`;
 
             // Создаём новый обработчик для открытия PDF
             openPdf = () => {
-
               if (window.cordova && window.cordova.InAppBrowser) {
                 window.cordova.InAppBrowser.open(pdfUrl, "_system");
               } else {
@@ -1271,49 +1254,41 @@ buttonCheck.addEventListener('click', () => {
               }
             };
 
-            routeCard.classList.add('active')
+            routeCard.classList.add("active");
             routeCard.addEventListener("click", openPdf);
-
           }
-
         } else {
-          console.log('net');
+          console.log("net");
 
           spinner.classList.add("dn");
           searchCardErroreText.classList.remove("dn");
-
         }
-
       })
       .catch((error) => {
-        console.error("Ошибка:", error);  // Логируем ошибку, если она есть
+        console.error("Ошибка:", error); // Логируем ошибку, если она есть
 
         searchCardErroreText.classList.remove("dn");
 
         spinner.classList.add("dn");
       });
   }
-})
+});
 
-
-
-
-// тестовые маршруты 
+// тестовые маршруты
 const testData = function () {
   setTimeout(() => {
-
-    const unit = document.getElementById('unit')
-    const date = document.getElementById('date')
-    const car = document.getElementById('car')
-    const driver = document.getElementById('driver')
-    const senior = document.getElementById('senior')
-    const startOdometer = document.getElementById('startOdometer')
+    const unit = document.getElementById("unit");
+    const date = document.getElementById("date");
+    const car = document.getElementById("car");
+    const driver = document.getElementById("driver");
+    const senior = document.getElementById("senior");
+    const startOdometer = document.getElementById("startOdometer");
     unit.selectedIndex = 1;
-    date.value = '2025-11-11'
-    car.value = "Car"
-    driver.value = "driver"
-    senior.value = "senior"
-    startOdometer.value = 55
+    date.value = "2025-11-11";
+    car.value = "Car";
+    driver.value = "driver";
+    senior.value = "senior";
+    startOdometer.value = 55;
     for (let i = 0; i < 2; i++) {
       const routeDiv = document.createElement("div");
       routeDiv.classList.add("route");
@@ -1329,16 +1304,20 @@ const testData = function () {
             <div class="hide__box">
       
                 <div class="route__row streetRow" style="position: relative;">
-                    <input data-index="${i}" list="streetsList" class="input req suggestions"  type="text" placeholder="Звідки" id="from${i + 1
-        }" required="" value="dc">
+                    <input data-index="${i}" list="streetsList" class="input req suggestions"  type="text" placeholder="Звідки" id="from${
+        i + 1
+      }" required="" value="dc">
           <ul class="autocomplete-list" id="autocomplete-${i}"></ul>
 
                     <input class="input req" type="time" required="" value="14:30">
                 </div>
                 <div class="route__row streetRow" style="position: relative;">
-                    <input data-index="${i +1}" list="streetsList" class="input req suggestions" type="text" placeholder="Куди" id="to${i + 1
-        }" required="" value="dfgdfg">
-          <ul class="autocomplete-list" id="autocomplete-${i+1}"></ul>
+                    <input data-index="${
+                      i + 1
+                    }" list="streetsList" class="input req suggestions" type="text" placeholder="Куди" id="to${
+        i + 1
+      }" required="" value="dfgdfg">
+          <ul class="autocomplete-list" id="autocomplete-${i + 1}"></ul>
 
                     <input class="input req" type="time" required=""  value="14:30">
                 </div>
@@ -1346,38 +1325,51 @@ const testData = function () {
                     <input class="input distance req" type="number"  placeholder="Відстань(км)" required=""
                     value="1212">
       
-                       <select class="input req" id="target${i + 1
-        }" required>
-                <option data-toggle="arest${i + 1
-        }" value="" selected>                    мета поїздки</option>
+                       <select class="input req" id="target${i + 1}" required>
+                <option data-toggle="arest${
+                  i + 1
+                }" value="" selected>                    мета поїздки</option>
                 
-                <option data-toggle="arest${i + 1
-        }" data-value="signal" selected data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="signal" selected data-valuewhose="signalHolding" value="Спрацювання ОХ">Спрацювання ОХ</option>
       
-                <option data-toggle="arest${i + 1
-        }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання Партн.">Спрацювання Партн.</option>
-                <option data-toggle="arest${i + 1
-        }"  data-value="point" value="Точка відстою">Точка відстою</option>
-                <option data-toggle="arest${i + 1
-        }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
-                <option data-toggle="arest${i + 1
-        }" data-value="patrol" value="Патруль">Патруль</option>
-                <option data-toggle="arest${i + 1
-        }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
-                <option data-toggle="arest${i + 1
-        }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
-                <option data-toggle="arest${i + 1
-        }" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
-                <option data-toggle="arest${i + 1
-        }" data-value="wash" value="Мийка">Мийка</option>
-                <option data-toggle="arest${i + 1
-        }" data-value="service" value="СТО">СТО</option>                    
-                <option data-toggle="arest${i + 1
-        }" data-value="check" value="Перевірка">Перевірка</option>                    
-                <option data-toggle="arest${i + 1
-        }" data-value="change" value="Перезмінка">Перезмінка</option>                    
-                <option data-toggle="arest${i + 1
-        }" data-value="other" value="Інше">Інше</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="signal" data-valuewhose="signalVenbest" value="Спрацювання Партн.">Спрацювання Партн.</option>
+                <option data-toggle="arest${
+                  i + 1
+                }"  data-value="point" value="Точка відстою">Точка відстою</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="familiarization" value="Ознайомлення">Ознайомлення</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="patrol" value="Патруль">Патруль</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="breaks" value="Туалет/Обід">Туалет/Обід</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="pickupH" value="Підвіз ОХ">Підвіз ОХ</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="pickupV" value="Підвіз Партн.">Підвіз Партн.</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="wash" value="Мийка">Мийка</option>
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="service" value="СТО">СТО</option>                    
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="check" value="Перевірка">Перевірка</option>                    
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="change" value="Перезмінка">Перезмінка</option>                    
+                <option data-toggle="arest${
+                  i + 1
+                }" data-value="other" value="Інше">Інше</option>
               </select>
               
                   
@@ -1420,76 +1412,69 @@ const testData = function () {
         </div>
       </div>
         `;
-      const container = document.querySelector('#routesContainer');
+      const container = document.querySelector("#routesContainer");
 
       container.appendChild(routeDiv);
     }
   }, 2500);
-}
-
-
+};
 
 // Выбор города начало
-const modalCities = document.querySelector('.modal__cities');
+const modalCities = document.querySelector(".modal__cities");
 
 if (localStorage.getItem("initData")) {
   let initData = JSON.parse(localStorage.getItem("initData"));
   if (initData && initData.city) {
-
-    modalCities.classList.add('dn')
+    modalCities.classList.add("dn");
     //  testData()
   }
-
 }
-const citiesItems = document.querySelectorAll('.modal__cities-item');
-const selectCityBtn = document.getElementById('selectCityBtn');
-const selectedCitySpan = document.querySelector('.selectedCitySpan');
+const citiesItems = document.querySelectorAll(".modal__cities-item");
+const selectCityBtn = document.getElementById("selectCityBtn");
+const selectedCitySpan = document.querySelector(".selectedCitySpan");
 
-let selectedCity
+let selectedCity;
 function activateButton() {
   selectCityBtn.disabled = false;
-  selectCityBtn.classList.add('active');
+  selectCityBtn.classList.add("active");
 }
 
 // Функция для деактивации кнопки
 function deactivateButton() {
   selectCityBtn.disabled = true;
-  selectCityBtn.classList.remove('active');
-  selectedCity = ''
+  selectCityBtn.classList.remove("active");
+  selectedCity = "";
 }
-citiesItems.forEach(item => {
-  item.addEventListener('click', () => {
+citiesItems.forEach((item) => {
+  item.addEventListener("click", () => {
     // Убираем класс 'selected' у всех городов
-    if (item.classList.contains('selected')) {
-      item.classList.remove('selected')
-      deactivateButton()
-      selectedCitySpan.textContent = ``
+    if (item.classList.contains("selected")) {
+      item.classList.remove("selected");
+      deactivateButton();
+      selectedCitySpan.textContent = ``;
       console.log(selectedCity);
     } else {
-      citiesItems.forEach(city => city.classList.remove('selected'));
-      selectedCity = item.getAttribute('data-city');
-      if (selectedCity == 'zp') {
-        selectedCitySpan.textContent = `ЗАПОРІЖЖЯ`
+      citiesItems.forEach((city) => city.classList.remove("selected"));
+      selectedCity = item.getAttribute("data-city");
+      if (selectedCity == "zp") {
+        selectedCitySpan.textContent = `ЗАПОРІЖЖЯ`;
       }
-      if (selectedCity == 'dp') {
-        selectedCitySpan.textContent = `ДНІПРО`
+      if (selectedCity == "dp") {
+        selectedCitySpan.textContent = `ДНІПРО`;
       }
-      if (selectedCity == 'kr') {
-        selectedCitySpan.textContent = `КРИВИЙ РІГ`
+      if (selectedCity == "kr") {
+        selectedCitySpan.textContent = `КРИВИЙ РІГ`;
       }
-      item.classList.add('selected');
+      item.classList.add("selected");
       console.log(selectedCity);
 
       // Активируем кнопку
       activateButton();
 
-
       document.getElementById("selectCityBtn").scrollIntoView({
         behavior: "smooth", // Плавная прокрутка
-        block: "start" // Прокрутка к началу элемента
+        block: "start", // Прокрутка к началу элемента
       });
-
-
     }
   });
 });
@@ -1511,7 +1496,6 @@ selectCityBtn.addEventListener("click", () => {
 
   // Добавляем новое свойство в объект
 
-
   // Сохраняем обновленный объект обратно в localStorage
 
   modalCities.classList.add("dn");
@@ -1523,43 +1507,199 @@ selectCityBtn.addEventListener("click", () => {
   // testData()
 });
 
-
 // Выбор города конец
 // console.log(allStreetNames.length);
 
-  
+document.addEventListener("input", (e) => {
+  if (e.target.classList.contains("suggestions")) {
+    const value = e.target.value.toLowerCase();
+    const index = e.target.getAttribute("data-index");
+    console.log("index", index);
 
-  document.addEventListener("input", (e) => {
-    if (e.target.classList.contains("suggestions")) {
-      const value = e.target.value.toLowerCase();
-      const index = e.target.getAttribute('data-index')
-      console.log('index', index);
-      
-      const listEl = document.getElementById(`autocomplete-${index}`);
-  
-      listEl.innerHTML = "";
-      // console.log('allStreetNames',allStreetNames);
-  
-      if (!value) {
-        listEl.style.display = "none";
-        return;
-      }
-  
-      const matches = allStreetNames.filter((item) =>
-        item.toLowerCase().includes(value)
-      );
-  
-      matches.slice(0, 10).forEach((item) => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        li.addEventListener("click", () => {
-          e.target.value = item;
-          listEl.style.display = "none";
-        });
-        listEl.appendChild(li);
-      });
-  
-      listEl.style.display = matches.length ? "block" : "none";
+    const listEl = document.getElementById(`autocomplete-${index}`);
+
+    listEl.innerHTML = "";
+    // console.log('allStreetNames',allStreetNames);
+
+    if (!value) {
+      listEl.style.display = "none";
+      return;
     }
-  });
 
+    const matches = allStreetNames.filter((item) =>
+      item.toLowerCase().includes(value)
+    );
+
+    matches.slice(0, 10).forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      li.addEventListener("click", () => {
+        e.target.value = item;
+        listEl.style.display = "none";
+      });
+      listEl.appendChild(li);
+    });
+
+    listEl.style.display = matches.length ? "block" : "none";
+  }
+});
+
+///////////////////////
+
+// DOM элементы
+const routBtn = document.querySelector(".routBtn");
+const mapBtn = document.querySelector(".mapBtn");
+const routsBox = document.querySelector(".routsBox");
+const mapBox = document.getElementById("map");
+const locateMeBtn = document.getElementById("locateMeBtn");
+fetch(
+  "https://l-cs.ohholding.com.ua/api/v2/object-card/coordinate/by-region/2",
+  {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  }
+)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Error seti: " + response.status);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log("data obj zp", data);
+    const objects = data.data;
+
+    let map; // переменная для карты
+    let mapInitialized = false; // чтобы не инициализировать повторно
+
+    mapBtn.addEventListener("click", () => {
+      routsBox.classList.add("hide");
+      setTimeout(() => {
+        routsBox.classList.add("dnone");
+        mapBox.classList.remove("dnone");
+        mapBox.classList.remove("hide");
+
+        if (!mapInitialized) {
+          initMap(); // инициализировать карту
+          mapInitialized = true;
+        } else {
+          map.invalidateSize(); // обновить размер
+        }
+      }, 300);
+    });
+
+    routBtn.addEventListener("click", () => {
+      mapBox.classList.add("hide");
+      setTimeout(() => {
+        mapBox.classList.add("dnone");
+        routsBox.classList.remove("dnone");
+        routsBox.classList.remove("hide");
+      }, 300);
+    });
+
+    function initMap() {
+      map = L.map("map").setView([50.4501, 30.5234], 12);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "Map data © OpenStreetMap contributors",
+      }).addTo(map);
+
+      const markers = L.markerClusterGroup();
+
+      objects.forEach((obj, i) => {
+        // Преобразуем строки в числа
+        const lat = parseFloat(obj.coordinates.lat);
+        const lng = parseFloat(obj.coordinates.lng);
+
+        // Проверяем, что координаты корректны
+        if (!isNaN(lat) && !isNaN(lng)) {
+          const marker = L.marker([lat, lng]);
+          marker.bindPopup(
+            `<b>${obj.account_number}</b><br>${obj.object_address}<br><button onclick="routeTo(${lat}, ${lng})">Скласти маршрут </button>`
+          );
+          markers.addLayer(marker);
+        } else {
+          console.error("Некорректные координаты:", obj.coordinates);
+        }
+      });
+
+      map.addLayer(markers);
+
+      // Геолокация
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLat = position.coords.latitude;
+          const userLon = position.coords.longitude;
+
+          const userMarker = L.marker([userLat, userLon], {
+            title: "Вы здесь",
+            icon: L.icon({
+              iconUrl:
+                "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png",
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+            }),
+          }).addTo(map);
+
+          map.setView([userLat, userLon], 13);
+        },
+        () => {
+          console.warn("Геолокация недоступна");
+        }
+      );
+    }
+
+    // Построение маршрута
+
+    // Кнопка "Знайти мене"
+    locateMeBtn.addEventListener("click", () => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLat = position.coords.latitude;
+          const userLon = position.coords.longitude;
+
+          map.setView([userLat, userLon], 15);
+
+          const circle = L.circle([userLat, userLon], {
+            color: "blue",
+            fillColor: "#30f",
+            fillOpacity: 0.3,
+            radius: 100,
+          }).addTo(map);
+
+          setTimeout(() => {
+            map.removeLayer(circle);
+          }, 5000);
+        },
+        (error) => {
+          console.log(error);
+          alert(
+            JSON.stringify(error) +
+              "Помилка геолокації (" +
+              error.code +
+              "): " +
+              error.message
+          );
+        }
+      );
+    });
+  });
+// Данные объектов
+// const objects = [
+//   {
+//     number: 2999,
+//     name: "Объект 2999",
+//     address: "Адрес 2999, Запорожье",
+//     lat: 47.749196,
+//     lon: 35.196975,
+//   },
+//   {
+//     number: 3000,
+//     name: "Объект 3000",
+//     address: "Адрес 3000, Запорожье",
+//     lat: 47.899241,
+//     lon: 35.08821,
+//   },
+// ];

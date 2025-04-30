@@ -1,5 +1,15 @@
 {
-    "platform": "android",
-    "release":"debug", 
-    "icon": "/logo-CnclC1RU.png"
+  "platform": "android",
+  "release": "debug",
+  "icon": "/logo-CnclC1RU.png",
+  "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
+  "webview": {
+    "geolocation": true,
+    "requiresLocationPermission": true
+  },
+  "plugins": {
+    "cordova-plugin-geolocation": {
+      "GPS_REQUIRED": "true"
+    }
+  }
 }
