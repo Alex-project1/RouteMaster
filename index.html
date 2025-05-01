@@ -403,7 +403,7 @@
 
 
         <div class="button__routs routBtn">МАРШРУТИ</div>
-        <div class="button__routs mapBtn">Мапа</div>
+        <div class="button__routs mapBtn hide">Мапа</div>
         <div class="hardReload">
           <svg width="281" height="274" viewBox="0 0 281 274" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_263_5267)">
@@ -441,36 +441,36 @@
 
 
 
-  <div id="map" class="hide dnone" style="width: 100%; height: 85vh;">
-    <div style="text-align: right; margin: 10px;">
-      <button id="locateMeBtn"
+
+    <div class="selectBox">
+
+      <select id="filterSelect" style="padding: 6px; border-radius: 4px;">
+        <option value="all">Усі наряди</option>
+      </select>
+      <!-- <button id="locateMeBtn"
         style="padding: 8px 12px; background: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer;">
         📍 Знайти мене
-      </button>
+      </button> -->
     </div>
-  </div>
+ 
+  
+  <div id="map" class="hide dnone" style="width: 100%; height: 75vh;"></div>
+  
   <div class="footer">
     Powered by <a class="tgLink" href="https://t.me/Alexandrr32" target="_blank">Кирилюк О.</a>
   </div>
+  
   <script>
 
     function routeTo(destLat, destLon) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const userLat = position.coords.latitude;
-          const userLon = position.coords.longitude;
-
+    
           const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${destLat},${destLon}`;
           if (window.cordova && window.cordova.InAppBrowser) {
             window.cordova.InAppBrowser.open(googleMapsUrl, "_system");
           } else {
             window.open(googleMapsUrl, "_blank");
           }
-        },
-        () => {
-          alert("Не вдалося встановити ваше місцезнаходження.");
-        }
-      );
+   
     }
 
   </script>
