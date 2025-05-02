@@ -57,14 +57,15 @@ textarea {
 }
 
 .title {
-  font-size: 30px;
+  font-size: 24px;
   text-align: center;
   display: flex;
   align-items: center;
+  // flex-direction: column;
   // justify-content: space-between;
   gap: 25px;
   max-width: 500px;
-  margin: 0 auto ;
+  margin: 10px auto 0 ;
   // position: sticky;
   // top: 0;
   // background: linear-gradient(to bottom, #d8ae5e 0%, #f2d7a5 100%);
@@ -823,7 +824,7 @@ textarea {
   background-color: #eee;
 }
 .routsBox{
-  margin-top: 80px;
+  margin-top: 150px;
   transition: opacity .3s;
   &.hide{
     opacity: 0;
@@ -831,8 +832,9 @@ textarea {
 }
 .selectBox{
 
-  margin-top: 80px;
+  margin-top: 160px;
   margin-bottom: 20px;
+  // padding-right: 50px;
 }
 #filterSelect {
   // max-width: 150px;

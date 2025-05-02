@@ -785,7 +785,9 @@
     }
   }
 }
-
+#map{
+  transition: opacity 0.3s;
+}
 .buttons {
   position: absolute;
   top: 0;
@@ -793,12 +795,14 @@
   transform: translateX(-50%);
   // left: 15px;
   // width: 100%;
-  width: 350px;
+  text-transform: uppercase;
+  width: 320px;
   &__box {
     display: flex;
     justify-content: space-between;
     gap: 15px;
     align-items: center;
+    margin-top: 10px;
   }
 }
 

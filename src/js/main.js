@@ -1563,6 +1563,7 @@ const routsBox = document.querySelector(".routsBox");
 const mapBox = document.getElementById("map");
 const locateMeBtn = document.getElementById("locateMeBtn");
 const filterSelect = document.getElementById("filterSelect");
+const selectBox = document.querySelector('.selectBox');
 
 let map,
   markers,
@@ -1605,10 +1606,12 @@ fetch(
     // Кнопки перемикання
     mapBtn.addEventListener("click", () => {
       routsBox.classList.add("hide");
+      selectBox.classList.remove('dnone')
+      mapBox.classList.remove("dnone");
       setTimeout(() => {
         routsBox.classList.add("dnone");
-        mapBox.classList.remove("dnone");
         mapBox.classList.remove("hide");
+        selectBox.classList.remove('hide')
 
         if (!mapInitialized) {
           initMap();
@@ -1621,9 +1624,11 @@ fetch(
 
     routBtn.addEventListener("click", () => {
       mapBox.classList.add("hide");
+      selectBox.classList.add('hide')
+      routsBox.classList.remove("dnone");
       setTimeout(() => {
         mapBox.classList.add("dnone");
-        routsBox.classList.remove("dnone");
+        selectBox.classList.add('dnone')
         routsBox.classList.remove("hide");
       }, 300);
     });
