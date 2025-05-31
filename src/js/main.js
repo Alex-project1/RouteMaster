@@ -86,8 +86,11 @@ if (load) {
     // );
   }, 1000);
 }
+
 const zp =
   "https://script.google.com/macros/s/AKfycbw-eakkUUrATU_CEeW8kys38dbJRGPlcWwbgr-1dAmYZwPXoQpsL0QZ7NHhCmA4Strh/exec";
+const kv =
+  "https://script.google.com/macros/s/AKfycbxo_Xda913XCVNeNvIt74IC3bemZzLIZLnLpLbPJeKQKF3_dYf6ZMDa1Z9UyKystcx2kg/exec";
 
 const dp =
   "https://script.google.com/macros/s/AKfycbzGnEK-gtVVojssszrzHxHCeO0q6Lu6oXDsk-CCKKlfpqjA6XeSQrZHHeAyclZdYAcSkA/exec";
@@ -1264,7 +1267,7 @@ const testData = function () {
     driver.value = "driver";
     senior.value = "senior";
     startOdometer.value = 55;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 15; i++) {
       const routeDiv = document.createElement("div");
       routeDiv.classList.add("route");
 
@@ -1423,6 +1426,9 @@ citiesItems.forEach((item) => {
       if (selectedCity == "kr") {
         selectedCitySpan.textContent = `КРИВИЙ РІГ`;
       }
+      if (selectedCity == "kv") {
+        selectedCitySpan.textContent = `КИЇВ`;
+      }
       item.classList.add("selected");
       console.log(selectedCity);
 
@@ -1459,7 +1465,13 @@ selectCityBtn.addEventListener("click", () => {
     localStorage.setItem("cityId", 8);
     localStorage.setItem("lat", 47.9105);
     localStorage.setItem("long", 33.3918);
+  }else if (selectedCity === "kv") {
+    googleApiAdress = kv;
+    localStorage.setItem("cityId", 1);
+    localStorage.setItem("lat",50.4501);
+    localStorage.setItem("long", 30.5234);
   }
+
 
   // Добавляем новое свойство в объект
 
